@@ -8,6 +8,12 @@ Gem::Specification.new do |spec|
   spec.description = "Baldur packages reusable Rails view helpers, components, styles, and Stimulus controllers."
   spec.homepage    = "https://github.com/varunmurkar/baldur"
   spec.license     = "MIT"
+  spec.metadata = {
+    "source_code_uri" => "https://github.com/varunmurkar/baldur",
+    "bug_tracker_uri" => "https://github.com/varunmurkar/baldur/issues",
+    "changelog_uri" => "https://github.com/varunmurkar/baldur/releases",
+    "rubygems_mfa_required" => "true"
+  }
 
   spec.files = Dir.chdir(__dir__) do
     Dir[
@@ -15,6 +21,7 @@ Gem::Specification.new do |spec|
       "README.md",
       "TODO.md",
       "LICENSE",
+      "SECURITY.md",
       "baldur.gemspec",
       "Gemfile"
     ].select { |path| File.file?(path) }

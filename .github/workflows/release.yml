@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    environment: release
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Verify package builds
+        run: gem build baldur.gemspec
+
+      - name: Run standalone tests
+        run: bundle exec ruby test/run_all.rb
+
+      - name: Generate release checksum
+        run: |
+          gem_file=$(ls baldur-*.gem)
+          sha512sum "$gem_file" > "$gem_file.sha512"
+
+      - name: Publish gem to RubyGems.org
+        uses: rubygems/release-gem@v1
+
+      - name: Publish GitHub release artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          gh release create "$tag"             --repo "$GITHUB_REPOSITORY"             --title "$tag"             --generate-notes             baldur-*.gem             baldur-*.gem.sha512

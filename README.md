@@ -15,7 +15,7 @@ Baldur is a reusable Rails UI engine for apps using the same frontend stack as t
 Baldur now declares `tailwindcss-rails` as a gem dependency, so hosts do not need to add that gem separately unless they want to pin a specific version.
 
 ```ruby
-gem "baldur"
+gem "baldur", "~> 0.1.2"
 ```
 
 2. Run:
@@ -44,6 +44,18 @@ bundle exec rails generate baldur:install_google_auth
 ```
 
 Default install behavior keeps Geist loaded through the host `fonts.css` scaffold. If a host app wants a different stack, it should update `fonts.css` and then map the loaded families in `theme.css`.
+
+## Security
+
+- New Baldur releases require MFA for RubyGems owners via gem metadata starting with `0.1.2`.
+- Release artifacts should be installed from RubyGems or GitHub releases and can be verified with the published `.sha512` checksum file.
+- Report vulnerabilities privately through GitHub Security Advisories.
+
+To verify a release artifact manually:
+
+```sh
+sha512sum -c baldur-0.1.2.gem.sha512
+```
 
 ## Styling Ownership
 
