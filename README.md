@@ -12,6 +12,8 @@ Baldur is a reusable Rails UI engine for apps using the same frontend stack as t
 
 1. Add Baldur to the target app `Gemfile`:
 
+Baldur now declares `tailwindcss-rails` as a gem dependency, so hosts do not need to add that gem separately unless they want to pin a specific version.
+
 ```ruby
 gem "baldur"
 ```
@@ -61,7 +63,7 @@ Tailwind provides the utility/base layer. Baldur is the source of truth for shar
 ## What The Installer Assumes
 
 - Tailwind entrypoint exists at `app/assets/tailwind/application.css`
-- Host app uses `tailwindcss-rails` engine builds
+- Host app gets `tailwindcss-rails` through Baldur or its own Gemfile and uses engine builds
 - Host app uses importmap Stimulus boot with `app/javascript/controllers`
 - Host app gets `app/assets/stylesheets/fonts.css` for font loading and `app/assets/stylesheets/theme.css` for brand and font-token overrides
 - Host app can import `app/assets/builds/tailwind/baldur.css` from `app/assets/tailwind/application.css`
