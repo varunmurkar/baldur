@@ -97,7 +97,7 @@ module Baldur
       native_options[:disabled] = true if disabled
       native_options[:tabindex] ||= "-1"
       native_options[:autocomplete] ||= "off"
-      native_options[:style] ||= "position:absolute; inset:auto; width:1px; height:1px; opacity:0; pointer-events:none;"
+      native_options[:class] = [ native_options[:class], "date-field__native--hidden" ].compact.join(" ")
 
       if min_date.present?
         min_date_value = case min_date

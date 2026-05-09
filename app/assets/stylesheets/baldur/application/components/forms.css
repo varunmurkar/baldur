@@ -145,6 +145,14 @@
     padding-right: calc(var(--space-4) + 40px);
   }
 
+  .date-field__native--hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .date-field__toggle {
     position: absolute;
     top: 50%;
