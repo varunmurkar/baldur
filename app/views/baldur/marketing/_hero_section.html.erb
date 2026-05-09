@@ -1,0 +1,259 @@
+<%
+  raise ArgumentError, "Unsupported marketing hero variant" unless variant.to_sym == :solar_system
+  hero_style_nonce = content_security_policy_nonce if respond_to?(:content_security_policy_nonce)
+%>
+<style nonce="<%= hero_style_nonce %>">
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-callout,
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source,
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-callout,
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-callout,
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-callout {
+    white-space: nowrap;
+    border-radius: 9999px;
+    background-color: var(--surface-tonal-2);
+    color: var(--color-on-surface);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-callout {
+    border: 1px solid var(--color-outline);
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    box-shadow: var(--elev-1);
+  }
+
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-callout {
+    border: 1px solid color-mix(in srgb, var(--color-outline) 50%, transparent);
+    padding: 0.5rem 0.75rem;
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-callout--1 { left: 22%; top: 28%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-callout--2 { left: 50%; top: 0%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-callout--3 { left: 80%; top: 32%; }
+
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--1 { left: 18%; top: 12%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--2 { left: 2%; top: 36%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--3 { left: 30%; top: 40%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--4 { left: 41%; top: 16%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--5 { left: 82%; top: 12%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--6 { left: 99%; top: 40%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--7 { left: 72%; top: 42%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__desktop-source--8 { left: 70%; top: 20%; }
+
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-callout--1 { left: 18%; top: 31%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-callout--2 { left: 50%; top: 9%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-callout--3 { left: 81%; top: 26%; }
+
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--1 { left: 18%; top: 18%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--2 { left: 10%; top: 43%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--3 { left: 27%; top: 52%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--4 { left: 40%; top: 20%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--5 { left: 82%; top: 18%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--6 { left: 90%; top: 43%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--7 { left: 73%; top: 52%; }
+  .marketing-hero[data-variant="solar_system"] .marketing-hero__mobile-source--8 { left: 60%; top: 25%; }
+</style>
+<section id="<%= id %>" class="<%= ["marketing-hero bg-surface px-12 sm:px-12", local_assigns[:classes]].compact.join(" ") %>" data-variant="<%= variant %>">
+  <div class="mx-auto max-w-6xl pt-24 text-center">
+    <h2 class="mx-auto max-w-4xl text-4xl text-on-surface md:text-6xl"><%= headline %></h2>
+    <p class="mx-auto mt-6 max-w-3xl text-lg text-soft"><%= body %></p>
+    <div class="mt-8 flex flex-col items-center gap-4">
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <%= ui_button(**primary_action) %>
+        <%= ui_button(**secondary_action) if secondary_action.present? %>
+      </div>
+      <% if supporting_action.present? %>
+        <%= link_to supporting_action.fetch(:href),
+                    class: "mt-1 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary",
+                    data: supporting_action[:data] do %>
+          <%= ui_icon(supporting_action[:icon].presence || "play", class_name: "h-4 w-4") %>
+          <span><%= supporting_action.fetch(:label) %></span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="relative mt-8 hidden h-[26rem] overflow-hidden md:block">
+      <div class="absolute bottom-[-22rem] left-1/2 h-[44rem] w-[44rem] -translate-x-1/2">
+        <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div class="absolute inset-[12rem] rounded-full border border-outline"></div>
+          <div class="absolute inset-[6rem] rounded-full border border-outline"></div>
+          <div class="absolute inset-0 rounded-full border border-outline"></div>
+        </div>
+
+        <% if (callout = Array(callouts)[0]) %>
+          <div class="marketing-hero__desktop-callout marketing-hero__desktop-callout--1">
+            <%= callout[:label] %>
+          </div>
+        <% end %>
+        <% if (callout = Array(callouts)[1]) %>
+          <div class="marketing-hero__desktop-callout marketing-hero__desktop-callout--2">
+            <%= callout[:label] %>
+          </div>
+        <% end %>
+        <% if (callout = Array(callouts)[2]) %>
+          <div class="marketing-hero__desktop-callout marketing-hero__desktop-callout--3">
+            <%= callout[:label] %>
+          </div>
+        <% end %>
+
+        <% if (source = Array(orbit_sources)[0]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--1">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+        <% if (source = Array(orbit_sources)[1]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--2">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+        <% if (source = Array(orbit_sources)[2]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--3">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+        <% if (source = Array(orbit_sources)[3]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--4">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+        <% if (source = Array(orbit_sources)[4]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--5">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+        <% if (source = Array(orbit_sources)[5]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--6">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+        <% if (source = Array(orbit_sources)[6]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--7">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+        <% if (source = Array(orbit_sources)[7]) %>
+          <div class="marketing-hero__desktop-source marketing-hero__desktop-source--8">
+            <div class="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[22px] border border-outline-variant bg-surface-high p-4 shadow-[var(--elev-1)]">
+              <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-9 w-auto object-contain" %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="absolute left-1/2 top-[48%] flex h-36 w-36 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-outline bg-surface shadow-[var(--elev-2)]">
+          <%= image_tag centerpiece_image.fetch(:src), alt: centerpiece_image.fetch(:alt), class: "relative -top-10 h-32 w-32 rounded-[2rem] object-cover" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 md:hidden">
+      <div class="relative mx-auto h-[24rem] max-w-sm overflow-hidden">
+        <div class="absolute bottom-[-12rem] left-1/2 h-[24rem] w-[24rem] -translate-x-1/2">
+          <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div class="absolute inset-[7.5rem] rounded-full border border-outline-variant/14"></div>
+            <div class="absolute inset-[3.75rem] rounded-full border border-outline-variant/10"></div>
+            <div class="absolute inset-0 rounded-full border border-outline-variant/8"></div>
+          </div>
+
+          <% if (callout = Array(callouts)[0]) %>
+            <div class="marketing-hero__mobile-callout marketing-hero__mobile-callout--1">
+              <%= callout[:label] %>
+            </div>
+          <% end %>
+          <% if (callout = Array(callouts)[1]) %>
+            <div class="marketing-hero__mobile-callout marketing-hero__mobile-callout--2">
+              <%= callout[:label] %>
+            </div>
+          <% end %>
+          <% if (callout = Array(callouts)[2]) %>
+            <div class="marketing-hero__mobile-callout marketing-hero__mobile-callout--3">
+              <%= callout[:label] %>
+            </div>
+          <% end %>
+
+          <% if (source = Array(orbit_sources)[0]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--1">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+          <% if (source = Array(orbit_sources)[1]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--2">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+          <% if (source = Array(orbit_sources)[2]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--3">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+          <% if (source = Array(orbit_sources)[3]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--4">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+          <% if (source = Array(orbit_sources)[4]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--5">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+          <% if (source = Array(orbit_sources)[5]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--6">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+          <% if (source = Array(orbit_sources)[6]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--7">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+          <% if (source = Array(orbit_sources)[7]) %>
+            <div class="marketing-hero__mobile-source marketing-hero__mobile-source--8">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-outline-variant/60 bg-surface-high p-3 shadow-[var(--elev-1)]">
+                <%= image_tag source.fetch(:asset_path), alt: "#{source.fetch(:name)} logo", class: "max-h-8 w-auto object-contain" %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="absolute left-1/2 top-[45%] flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/14 bg-surface shadow-[var(--elev-2)]">
+            <%= image_tag centerpiece_image.fetch(:src), alt: centerpiece_image.fetch(:alt), class: "relative -top-1.5 h-[4.5rem] w-[4.5rem] rounded-[1.75rem] object-cover" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

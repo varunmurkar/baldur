@@ -1,0 +1,63 @@
+@layer components {
+  .card {
+    background-color: var(--color-surface-highest);
+    color: var(--color-on-surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-outline-variant);
+    padding: var(--space-6);
+    animation: layer-enter var(--motion-duration-medium2) var(--motion-easing-emphasized-decelerate) both;
+    transition:
+      transform var(--motion-duration-short4) var(--motion-easing-standard),
+      border-color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Ensure dropdown menus can layer above subsequent cards.
+     Cards animate via transform (stacking context), so the open menu
+     must raise the card's stacking order, not only the menu's z-index. */
+  @supports selector(:has(*)) {
+    .card:has(.menu-select.is-open),
+    .card:has([data-tooltip-target="bubble"][data-state="open"]),
+    .card:has(.menu-wrapper[open]) {
+      position: relative;
+      z-index: 1000;
+    }
+  }
+
+  .card--outlined {
+    background-color: var(--color-surface);
+    border-color: var(--color-outline);
+  }
+
+  .card--primary {
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-outline-variant));
+  }
+
+  .card--surface {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    border-color: var(--color-outline-variant);
+  }
+
+  .card--attention {
+    background-color: var(--color-error-container);
+    color: var(--color-on-error-container);
+    border-color: color-mix(in srgb, var(--color-error) 30%, var(--color-outline-variant));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card {
+      animation: none;
+      transition: none;
+    }
+
+    .card:hover {
+      transform: none;
+    }
+  }
+}

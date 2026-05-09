@@ -1,0 +1,99 @@
+<%
+  resolved_billing_options = Array(billing_options)
+  initial_billing = resolved_billing_options.find { |option| option[:selected] }&.dig(:value) || resolved_billing_options.first&.dig(:value) || "monthly"
+  resolved_billing_options = resolved_billing_options.map do |option|
+    option_data = option.fetch(:data, {}).symbolize_keys
+
+    option.merge(
+      selected: option[:value] == initial_billing,
+      data: option_data.except(:action).merge(
+        action: ui_marketing_action_string("marketing-pricing#select", option_data[:action]),
+        marketing_pricing_target: "billingOption"
+      )
+    )
+  end
+%>
+<section class="<%= ["marketing-pricing-tables bg-surface px-6 py-20 sm:px-12", local_assigns[:classes]].compact.join(" ") %>" data-controller="marketing-pricing" data-marketing-pricing-billing-value="<%= initial_billing %>">
+  <div class="mx-auto max-w-6xl">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="text-sm font-semibold uppercase tracking-wide text-muted"><%= eyebrow %></p>
+      <h1 class="mt-4 text-4xl md:text-6xl"><%= headline %></h1>
+      <p class="mt-6 text-lg text-soft"><%= subheadline %></p>
+      <div class="mt-8 flex justify-center">
+        <%= ui_segmented_buttons(aria_label: "Billing period", items: resolved_billing_options) %>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-3">
+      <% Array(plans).each do |plan| %>
+        <% monthly = plan.dig(:prices, :monthly) %>
+        <% yearly = plan.dig(:prices, :yearly) %>
+        <% card_classes = [
+          "flex h-full flex-col rounded-[2rem] border p-6",
+          plan[:highlight_badge].present? ? "border-primary bg-primary/6 shadow-[var(--elev-2)]" : "border-outline bg-surface-high"
+        ].join(" ") %>
+        <article
+          class="<%= card_classes %>"
+          data-marketing-pricing-target="planCard"
+          data-plan-key="<%= plan[:key] %>"
+          data-monthly-primary="<%= monthly[:primary] %>"
+          data-monthly-secondary="<%= monthly[:secondary] %>"
+          data-yearly-primary="<%= yearly[:primary] %>"
+          data-yearly-secondary="<%= yearly[:secondary] %>"
+        >
+          <div>
+            <% if plan[:highlight_badge].present? %>
+              <p class="mb-3 inline-flex rounded-full bg-primary px-3 py-1 text-xs font-semibold text-on-primary"><%= plan[:highlight_badge] %></p>
+            <% end %>
+            <h2 class="text-2xl font-semibold"><%= plan[:name] %></h2>
+            <p class="mt-4 text-4xl font-semibold text-on-surface" data-role="price-primary"><%= monthly[:primary] %></p>
+            <p class="mt-2 text-sm text-soft" data-role="price-secondary"><%= monthly[:secondary] %></p>
+            <p class="mt-4 text-sm text-soft"><%= plan[:subtitle] %></p>
+          </div>
+
+          <ul class="mt-6 space-y-3 text-sm text-on-surface">
+            <% Array(plan[:card_bullets]).each do |bullet| %>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 text-primary"><%= ui_icon("check", class_name: "h-4 w-4") %></span>
+                <span><%= bullet %></span>
+              </li>
+            <% end %>
+          </ul>
+
+          <div class="mt-8 rounded-[1.5rem] bg-surface p-4 text-sm text-soft">
+            <p class="font-semibold text-on-surface">Additional usage credits</p>
+            <p class="mt-2"><%= plan.dig(:capabilities, :extra_credits) %></p>
+          </div>
+
+          <div class="mt-8 pt-4">
+            <%= ui_button(**plan.fetch(:cta)) %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+
+    <div class="mt-12 rounded-[2rem] border border-outline bg-surface-high p-6 lg:p-8">
+      <div class="max-w-3xl">
+        <h2 class="text-3xl font-semibold"><%= shared_capabilities[:title] %></h2>
+        <p class="mt-3 text-sm text-soft"><%= shared_capabilities[:subtitle] %></p>
+      </div>
+      <ul class="mt-8 space-y-4 text-sm text-soft">
+        <% Array(shared_capabilities[:items]).each do |item| %>
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 text-primary"><%= ui_icon("check", class_name: "h-4 w-4") %></span>
+            <p class="text-base">
+              <span class="font-semibold text-on-surface"><%= item[:title] %></span>
+              <%= item[:body] %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% if fair_use_link.present? %>
+      <div class="mt-6 text-center text-sm">
+        <%= link_to fair_use_link.fetch(:label), fair_use_link.fetch(:href), class: fair_use_link[:class].presence || "font-semibold text-primary hover:text-primary" %>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+@layer components {
+  .dialog {
+    background-color: var(--color-surface-high);
+    color: var(--color-on-surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-outline-variant);
+    padding: var(--space-6);
+    padding-right: var(--space-4);
+    transition: transform var(--motion-duration-short4) var(--motion-easing-standard);
+    max-height: min(90vh, 720px);
+    width: min(640px, calc(100vw - 2rem));
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-on-surface) 40%, transparent) transparent;
+  }
+
+  .dialog--overflow-visible {
+    overflow: visible;
+  }
+
+  .dialog::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .dialog::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dialog::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--color-on-surface) 35%, transparent);
+    border-radius: 999px;
+    border: 2px solid transparent;
+  }
+
+
+  [data-modal] {
+    background-color: color-mix(in srgb, var(--color-scrim, rgba(0, 0, 0, 1)) 32%, transparent);
+    backdrop-filter: blur(4px);
+    --modal-fade-in-duration: var(--motion-duration-short4);
+    --modal-fade-out-duration: var(--motion-duration-short4);
+    --modal-fade-easing: var(--motion-easing-linear);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--modal-fade-out-duration) var(--modal-fade-easing);
+  }
+
+  [data-modal].is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transition-duration: var(--modal-fade-in-duration);
+  }
+
+  [data-modal].is-hiding {
+    transition-duration: var(--modal-fade-out-duration);
+  }
+
+  [data-modal] .dialog {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    transition:
+      opacity var(--modal-fade-in-duration) var(--modal-fade-easing),
+      transform var(--modal-fade-in-duration) var(--modal-fade-easing);
+  }
+
+  [data-modal].is-visible .dialog.motion-fade-scale {
+    animation: fade-scale var(--motion-duration-medium1) var(--motion-easing-emphasized-decelerate) both;
+  }
+
+  [data-modal].is-visible .dialog {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  [data-modal].is-hiding .dialog {
+    transition-duration: var(--modal-fade-out-duration);
+  }
+
+  [data-modal].is-hiding .dialog.motion-fade-scale {
+    animation: layer-exit var(--motion-duration-short4) var(--motion-easing-emphasized-accelerate) both;
+  }
+}

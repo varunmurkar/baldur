@@ -1,0 +1,54 @@
+<% title = local_assigns.fetch(:title, "") unless defined?(title) %>
+<% description = local_assigns.fetch(:description, nil) unless defined?(description) %>
+<% close_label = local_assigns.fetch(:close_label, "Cancel") unless defined?(close_label) %>
+<% submit_label = local_assigns.fetch(:submit_label, "Continue") unless defined?(submit_label) %>
+<% body = local_assigns.fetch(:body, nil) %>
+<% tertiary_button_options = local_assigns[:tertiary_button_options] unless defined?(tertiary_button_options) %>
+<% show_footer = local_assigns.key?(:show_footer) ? local_assigns[:show_footer] : true %>
+<% dialog_class = local_assigns[:dialog_class] %>
+<% dialog_classes = ["dialog", "motion-fade-scale", *dialog_class.to_s.split].uniq.join(" ") %>
+<div id="<%= id %>" class="<%= dialog_classes %>">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <h3 class="text-xl font-semibold text-[color:var(--color-on-surface)]"><%= title %></h3>
+      <% if description.present? %>
+        <p class="text-sm text-[color:color-mix(in srgb,var(--color-on-surface) 75%,transparent)]"><%= description %></p>
+      <% end %>
+    </div>
+    <% if local_assigns[:close_button] != false %>
+      <button type="button" class="icon-button" aria-label="Close modal" data-modal-close="true">
+        <%= ui_icon("x", class_name: "h-5 w-5") %>
+      </button>
+    <% end %>
+  </div>
+  <% if body.present? %>
+    <div class="mt-4 space-y-3 text-sm text-[color:var(--color-on-surface)]">
+      <%= body %>
+    </div>
+  <% end %>
+  <% if show_footer %>
+    <% close_button_options ||= {} %>
+    <% submit_button_options ||= {} %>
+    <% tertiary_button_options ||= nil %>
+    <% close_render_options = { label: close_label, variant: :ghost }.merge(close_button_options.except(:data) || {}) %>
+    <% close_render_options[:data] = { modal_close: true }.merge(close_button_options[:data] || {}) %>
+    <% submit_render_options = { label: submit_label, variant: :primary, type: :submit }.merge(submit_button_options.except(:data) || {}) %>
+    <% submit_render_options[:data] = submit_button_options[:data] if submit_button_options[:data].present? %>
+    <% tertiary_render_options = nil %>
+    <% if tertiary_button_options.present? %>
+      <% tertiary_render_options = { variant: :text }.merge(tertiary_button_options.except(:data) || {}) %>
+      <% tertiary_render_options[:data] = tertiary_button_options[:data] if tertiary_button_options[:data].present? %>
+    <% end %>
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <% if tertiary_render_options.present? %>
+        <div class="flex flex-wrap gap-3">
+          <%= render "baldur/components/button", **tertiary_render_options %>
+        </div>
+      <% end %>
+      <div class="ml-auto flex flex-wrap gap-3 justify-end">
+        <%= render "baldur/components/button", **close_render_options %>
+        <%= render "baldur/components/button", **submit_render_options %>
+      </div>
+    </div>
+  <% end %>
+</div>

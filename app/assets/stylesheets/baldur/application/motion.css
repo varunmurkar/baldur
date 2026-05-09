@@ -1,0 +1,125 @@
+@layer base {
+  :root {
+    /* M3 standard motion tokens — values from material-components/material-web v0_192 */
+    --motion-duration-short1: 50ms;
+    --motion-duration-short2: 100ms;
+    --motion-duration-short3: 150ms;
+    --motion-duration-short4: 200ms;
+    --motion-duration-medium1: 250ms;
+    --motion-duration-medium2: 300ms;
+    --motion-duration-medium3: 350ms;
+    --motion-duration-medium4: 400ms;
+    --motion-duration-long1: 450ms;
+    --motion-duration-long2: 500ms;
+    --motion-duration-long3: 550ms;
+    --motion-duration-long4: 600ms;
+    --motion-duration-extra-long1: 700ms;
+    --motion-duration-extra-long2: 800ms;
+    --motion-duration-extra-long3: 900ms;
+    --motion-duration-extra-long4: 1000ms;
+    --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --motion-easing-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
+    --motion-easing-standard-decelerate: cubic-bezier(0, 0, 0, 1);
+    --motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+    --motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --motion-easing-linear: cubic-bezier(0, 0, 1, 1);
+  }
+
+  :root.theme-transition body,
+  :root.theme-transition body * {
+    transition-property: background-color, color, border-color, fill, stroke;
+    transition-duration: var(--motion-duration-extra-long1);
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  @keyframes layer-enter {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes layer-exit {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+  }
+
+  @keyframes fade-scale {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer components {
+  .motion-layer-enter {
+    animation: layer-enter var(--motion-duration-medium2) var(--motion-easing-emphasized-decelerate) both;
+  }
+
+  .motion-layer-exit {
+    animation: layer-exit var(--motion-duration-short4) var(--motion-easing-emphasized-accelerate) both;
+  }
+
+  .motion-fade-scale {
+    animation: fade-scale var(--motion-duration-medium1) var(--motion-easing-emphasized-decelerate) both;
+  }
+
+  .motion-slide-up {
+    animation: slide-up var(--motion-duration-medium1) var(--motion-easing-standard-decelerate) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-short1: 0ms;
+    --motion-duration-short2: 0ms;
+    --motion-duration-short3: 0ms;
+    --motion-duration-short4: 0ms;
+    --motion-duration-medium1: 0ms;
+    --motion-duration-medium2: 0ms;
+    --motion-duration-medium3: 0ms;
+    --motion-duration-medium4: 0ms;
+    --motion-duration-long1: 0ms;
+    --motion-duration-long2: 0ms;
+    --motion-duration-long3: 0ms;
+    --motion-duration-long4: 0ms;
+    --motion-duration-extra-long1: 0ms;
+    --motion-duration-extra-long2: 0ms;
+    --motion-duration-extra-long3: 0ms;
+    --motion-duration-extra-long4: 0ms;
+  }
+
+  .motion-layer-enter,
+  .motion-layer-exit,
+  .motion-fade-scale,
+  .motion-slide-up {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,90 @@
+.dark {
+  /* Pastel-forward dark mode: lighten chroma via neutral-50, not pure white. */
+  --color-neutral-500: color-mix(in oklch, var(--_neutral-base) 8%, var(--_scale-dark));
+
+  --color-primary-500: color-mix(in oklch, var(--_primary-base) 80%, var(--color-neutral-50));
+  --color-secondary-500: color-mix(in oklch, var(--_secondary-base) 45%, var(--color-neutral-50));
+  --color-accent-500: color-mix(in oklch, var(--_accent-base) 55%, var(--color-neutral-50));
+  --color-success: color-mix(in oklch, var(--_success-base) 95%, var(--color-neutral-50));
+  --color-warning: color-mix(in oklch, var(--_warning-base) 90%, var(--color-neutral-50));
+  --color-info: color-mix(in oklch, var(--_info-base) 90%, var(--color-neutral-50));
+  --color-error: color-mix(in oklch, var(--_error-base) 90%, var(--color-neutral-50));
+
+  /* Subtle pastel wash on the canvas. */
+  --_surface-tint: color-mix(in oklch, var(--color-primary-950) 85%, var(--color-accent-950));
+  --color-surface-lowest: color-mix(in oklch, var(--_scale-dark) 98%, var(--_surface-tint));
+
+  /* Elevation ladder: higher surfaces get noticeably lighter. */
+  --color-surface-low: color-mix(in oklch, var(--color-surface-lowest) 92%, var(--color-neutral-400));
+  --color-surface-medium: color-mix(in oklch, var(--color-surface-lowest) 86%, var(--color-neutral-300));
+  --color-surface-high: color-mix(in oklch, var(--color-surface-lowest) 80%, var(--color-neutral-200));
+  --color-surface-highest: color-mix(in oklch, var(--color-surface-lowest) 72%, var(--color-neutral-100));
+
+  --color-background: var(--color-surface-lowest);
+  --color-surface: var(--color-surface-low);
+
+  --color-on-background: var(--color-neutral-100);
+  --color-on-surface: var(--color-neutral-100);
+
+  --color-surface-variant: color-mix(in oklch, var(--color-surface-high) 92%, var(--color-primary-800));
+  --color-on-surface-variant: var(--color-neutral-200);
+
+  --color-primary: var(--color-primary-500);
+  --color-secondary: var(--color-secondary-700);
+  --color-tertiary: var(--color-accent-500);
+  --color-accent: var(--color-accent-500);
+
+  --color-primary-container: color-mix(in oklch, var(--color-surface-high) 86%, var(--color-primary-500));
+  --color-secondary-container: color-mix(in oklch, var(--color-surface-high) 88%, var(--color-secondary-500));
+  --color-tertiary-container: color-mix(in oklch, var(--color-surface-high) 88%, var(--color-accent-500));
+  --color-accent-container: color-mix(in oklch, var(--color-surface-high) 88%, var(--color-accent-500));
+
+  --color-success-container: color-mix(in oklch, var(--color-success) 40%, black 60%);
+  --color-warning-container: color-mix(in oklch, var(--color-warning) 40%, black 60%);
+  --color-info-container: color-mix(in oklch, var(--color-info) 40%, black 60%);
+  --color-error-container: color-mix(in oklch, var(--color-error) 40%, black 60%);
+
+  --color-on-primary: var(--color-neutral-950);
+  --color-on-secondary: var(--color-neutral-950);
+  --color-on-tertiary: var(--color-neutral-950);
+  --color-on-accent: var(--color-neutral-950);
+  --color-on-error: var(--color-neutral-950);
+  --color-on-success: var(--color-neutral-950);
+  --color-on-warning: var(--color-neutral-950);
+  --color-on-info: var(--color-neutral-950);
+
+  --color-on-primary-container: var(--color-neutral-50);
+  --color-on-secondary-container: var(--color-neutral-50);
+  --color-on-tertiary-container: var(--color-neutral-50);
+  --color-on-accent-container: var(--color-neutral-50);
+  --color-on-success-container: oklch(from var(--color-success) 0.8 c h);
+  --color-on-warning-container: oklch(from var(--color-warning) 0.84 c h);
+  --color-on-info-container: oklch(from var(--color-info) 0.82 c h);
+  --color-on-error-container: oklch(from var(--color-error) 0.84 c h);
+
+  --color-text: var(--color-neutral-200);
+  --color-text-soft: color-mix(in oklch, var(--color-neutral-200) 55%, var(--color-neutral-300));
+  --color-text-muted: var(--color-neutral-300);
+  --color-icon: var(--color-neutral-200);
+
+  --color-outline: color-mix(in oklch, var(--color-surface-highest) 97%, var(--color-neutral-50));
+  --color-outline-variant: color-mix(in oklch, var(--color-surface-high) 98%, var(--color-neutral-50));
+  --color-border-subtle: color-mix(in oklch, var(--color-surface-low) 90%, var(--color-neutral-300));
+  --color-border-strong: var(--color-outline);
+  --color-ring-focus: var(--color-primary-300);
+
+  --color-success-outline: oklch(from var(--color-success) calc(l + 0.08) calc(c * 1.2) h);
+  --color-warning-outline: color-mix(in oklch, var(--color-warning) 72%, var(--color-outline-variant));
+  --color-info-outline: color-mix(in oklch, var(--color-info) 72%, var(--color-outline-variant));
+  --color-error-outline: color-mix(in oklch, var(--color-error) 72%, var(--color-outline-variant));
+
+  --color-inverse-surface: var(--color-neutral-50);
+  --color-inverse-on-surface: var(--color-neutral-900);
+  --color-inverse-primary: var(--color-primary-700);
+
+  --color-shadow: oklch(from var(--_neutral-base) 0 c h);
+  --color-scrim: oklch(from var(--_neutral-base) 0 c h);
+
+  --segmented-selected-bg: var(--color-primary-container);
+  --segmented-selected-fg: var(--color-on-primary-container);
+}

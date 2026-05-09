@@ -1,0 +1,37 @@
+<section id="<%= id %>" class="<%= ["marketing-faq-section bg-surface px-6 py-16 sm:px-12", local_assigns[:classes]].compact.join(" ") %>">
+  <div class="<%= ["mx-auto", (local_assigns[:container_class].presence || "max-w-4xl")].join(" ") %>">
+    <h2><%= title %></h2>
+    <% if description.present? %>
+      <p class="mt-3 text-soft"><%= description %></p>
+    <% end %>
+    <div class="mt-8 rounded-3xl border border-outline bg-surface-high px-6" data-controller="accordion">
+      <% Array(items).each_with_index do |item, index| %>
+        <% button_action = ui_marketing_action_string("click->accordion#toggle", item[:button_action], item[:button_actions]) %>
+        <div data-accordion-target="item" data-open="<%= item.key?(:open) ? !!item[:open] : index.zero? %>" class="<%= index.zero? ? "" : "border-t border-outline" %>">
+          <button
+            type="button"
+            class="flex w-full items-center gap-2 py-6 text-left text-lg font-semibold text-on-surface"
+            data-action="<%= button_action %>"
+            <% (item[:button_data] || {}).each do |key, value| %>
+              data-<%= key.to_s.dasherize %>="<%= value %>"
+            <% end %>
+            aria-expanded="<%= (item.key?(:open) ? !!item[:open] : index.zero?) ? "true" : "false" %>"
+            aria-controls="<%= item[:id].presence || "#{id}-item-#{index}" %>"
+          >
+            <span aria-hidden="true" data-accordion-target="icon"><%= ui_icon("chevron-right", class_name: "h-[18px] w-[18px]") %></span>
+            <span><%= item[:question] %></span>
+          </button>
+          <div
+            id="<%= item[:id].presence || "#{id}-item-#{index}" %>"
+            data-accordion-target="content"
+            aria-hidden="<%= (item.key?(:open) ? !!item[:open] : index.zero?) ? "false" : "true" %>"
+          >
+            <div class="pb-6 pl-7 pr-1">
+              <p class="text-soft"><%= item[:answer] %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

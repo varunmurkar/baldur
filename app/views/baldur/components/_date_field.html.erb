@@ -1,0 +1,43 @@
+<div class="<%= wrapper_classes %>" data-controller="date-field" data-date-field="true">
+  <% if label.present? %>
+    <label class="field__label" for="<%= display_input_options[:id] %>"><%= label %></label>
+  <% end %>
+  <div class="date-field__input">
+    <%= tag.input(**display_input_options) %>
+    <%= tag.input(**native_input_options) %>
+    <button type="button"
+            class="date-field__toggle"
+            data-date-field-toggle="true"
+            data-date-field-target="toggle"
+            aria-label="<%= toggle_label %>"
+            title="<%= toggle_label %>"
+            <%= "disabled" if native_input_options[:disabled] %>>
+      <%= ui_icon(icon_name, class_name: "h-[18px] w-[18px]") %>
+    </button>
+  </div>
+  <%
+    support_fragments = []
+    support_fragments << supporting_text if supporting_text.present?
+    support_output = safe_join(support_fragments, " ")
+    support_hidden = support_output.blank?
+  %>
+  <% default_support = supporting_text.to_s %>
+  <% if supporting_text.present? %>
+    <p class="field__supporting"
+       id="<%= support_id %>"
+       data-field-support="true"
+       data-date-field-support="true"
+       data-default-support="<%= default_support %>"
+       aria-live="polite">
+      <%= support_output %>
+    </p>
+  <% else %>
+    <p class="field__supporting"
+       id="<%= support_id %>"
+       data-field-support="true"
+       data-date-field-support="true"
+       data-default-support="<%= default_support %>"
+       aria-live="polite"
+       hidden></p>
+  <% end %>
+</div>

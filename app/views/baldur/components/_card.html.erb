@@ -1,0 +1,40 @@
+<%
+  variant_name = (variant || :default).to_sym
+  base_classes = "card"
+  variant_classes = {
+    default: nil,
+    accent: "card--primary",
+    surface: "card--surface",
+    danger: "card--attention"
+  }
+  card_classes = [base_classes, variant_classes[variant_name] || variant_classes[:default], local_assigns[:class]].compact.join(" ")
+  actions_content = if actions.respond_to?(:call)
+                      capture(&actions)
+                    else
+                      actions
+                    end
+  body_classes = ["mt-4", body_class].compact.join(" ")
+%>
+<article class="<%= card_classes %>">
+  <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <div>
+        <% if badge.present? %>
+          <p class="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-primary)]"><%= badge %></p>
+        <% end %>
+        <% if title.present? %>
+          <h2 class="text-lg font-semibold text-[color:var(--color-on-surface)]"><%= title %></h2>
+        <% end %>
+        <% if description.present? %>
+          <p class="text-sm text-[color:color-mix(in srgb,var(--color-on-surface) 75%,transparent)]"><%= description %></p>
+        <% end %>
+      </div>
+      <% if actions_content.present? %>
+        <div class="flex flex-wrap gap-2"><%= actions_content %></div>
+      <% end %>
+    </div>
+    <% if body.present? %>
+      <div class="<%= body_classes %>"><%= body %></div>
+    <% end %>
+  </div>
+</article>

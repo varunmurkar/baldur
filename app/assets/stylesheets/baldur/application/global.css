@@ -1,0 +1,125 @@
+@layer base {
+  :root {
+    --font-body: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-heading: var(--font-body);
+    --font-ui: var(--font-body);
+    --font-family: var(--font-body);
+    --font-sans: var(--font-body);
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 28px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-14: 56px;
+    --space-16: 64px;
+    --space-20: 80px;
+    --space-24: 96px;
+    --space-32: 128px;
+    --elev-0: none;
+    --elev-1: 0 1px 2px 0 color-mix(in srgb, var(--color-shadow) 5%, transparent), 0 6px 14px -6px color-mix(in srgb, var(--color-shadow) 9%, transparent);
+    --elev-2: 0 2px 4px 0 color-mix(in srgb, var(--color-shadow) 6%, transparent), 0 10px 22px -8px color-mix(in srgb, var(--color-shadow) 10%, transparent);
+    --elev-3: 0 3px 6px 0 color-mix(in srgb, var(--color-shadow) 7%, transparent), 0 16px 32px -10px color-mix(in srgb, var(--color-shadow) 12%, transparent);
+    --elev-4: 0 4px 8px 0 color-mix(in srgb, var(--color-shadow) 8%, transparent), 0 22px 40px -12px color-mix(in srgb, var(--color-shadow) 14%, transparent);
+    --elev-5: 0 6px 12px 0 color-mix(in srgb, var(--color-shadow) 10%, transparent), 0 28px 52px -14px color-mix(in srgb, var(--color-shadow) 16%, transparent);
+    --surface-tonal-0: var(--color-surface);
+    --surface-tonal-1: color-mix(in srgb, var(--color-surface) 95%, var(--color-primary) 5%);
+    --surface-tonal-2: color-mix(in srgb, var(--color-surface) 92%, var(--color-primary) 8%);
+    --surface-tonal-3: color-mix(in srgb, var(--color-surface) 89%, var(--color-primary) 11%);
+    --surface-tonal-4: color-mix(in srgb, var(--color-surface) 86%, var(--color-primary) 14%);
+    --surface-tonal-5: color-mix(in srgb, var(--color-surface) 82%, var(--color-primary) 18%);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  #hero h1 {
+    letter-spacing: -0.125rem;
+    font-weight: 600;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    font-weight: 500;
+    line-height: 3rem;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-surface-lowest, var(--color-background));
+    color: var(--color-on-background);
+  }
+
+  button,
+  input,
+  select,
+  optgroup,
+  textarea {
+    font-family: var(--font-ui);
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+  }
+
+  a {
+    color: var(--color-primary);
+  }
+
+  a:hover {
+    color: color-mix(in srgb, var(--color-primary) 90%, var(--color-on-background));
+  }
+
+  :is(
+    a[href],
+    button:not(:disabled),
+    input[type="button"]:not(:disabled),
+    input[type="submit"]:not(:disabled),
+    input[type="reset"]:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]),
+    [onclick],
+    [data-action*="click->"]
+  ) {
+    cursor: pointer;
+  }
+
+  :is(
+    button:disabled,
+    input[type="button"]:disabled,
+    input[type="submit"]:disabled,
+    input[type="reset"]:disabled,
+    [role="button"][aria-disabled="true"]
+  ) {
+    cursor: not-allowed;
+  }
+
+}

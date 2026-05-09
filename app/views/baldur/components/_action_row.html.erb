@@ -1,0 +1,6 @@
+<%
+  row_classes = ["flex flex-col gap-2 sm:flex-row sm:justify-end", local_assigns[:class]].compact.join(" ")
+%>
+<div class="<%= row_classes %>">
+  <%= safe_join(Array(buttons).map { |button_options| ui_button(**button_options.symbolize_keys) }) %>
+</div>

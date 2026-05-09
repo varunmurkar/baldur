@@ -1,0 +1,33 @@
+<div class="<%= wrapper_classes %>">
+  <% if label.present? %>
+    <label class="field__label" for="<%= input_options[:id] %>"><%= label %></label>
+  <% end %>
+  <div class="text-field__input">
+    <% if prefix.present? %>
+      <span class="text-field__prefix"><%= prefix %></span>
+    <% end %>
+    <% if multiline %>
+      <%= tag.textarea(input_value.to_s, **input_options.except(:type, :value)) %>
+    <% else %>
+      <%= tag.input(**input_options) %>
+    <% end %>
+    <% if suffix.present? %>
+      <span class="text-field__suffix"><%= suffix %></span>
+    <% end %>
+  </div>
+  <%
+    support_fragments = []
+    support_fragments << supporting_text if supporting_text.present?
+    support_fragments << supporting_slot if supporting_slot.present?
+    support_output = safe_join(support_fragments, " ")
+    support_hidden = support_output.blank?
+  %>
+  <p class="field__supporting"
+     id="<%= support_id %>"
+     data-field-support="true"
+     data-default-support="<%= supporting_text.to_s %>"
+     aria-live="polite"
+     <%= "hidden" if support_hidden %>>
+    <%= support_output %>
+  </p>
+</div>

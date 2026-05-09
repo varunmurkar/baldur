@@ -1,0 +1,45 @@
+<%
+  variant_classes = {
+    default: "card",
+    accent: "card card--primary"
+  }
+  card_classes = variant_classes[variant || :default]
+  trend_classes = if trend.to_s.start_with?("-")
+                    "text-[color:var(--color-error)]"
+                  else
+                    "text-[color:var(--color-tertiary)]"
+                  end
+  caption_icon_tone = caption_icon&.fetch(:tone, :info)&.to_sym
+  caption_icon_classes = {
+    warn: "text-[color:var(--color-error)]",
+    success: "text-[color:var(--color-secondary)]",
+    info: "text-[color:var(--color-outline)]"
+  }
+  caption_icon_class = caption_icon_classes[caption_icon_tone] || caption_icon_classes[:info]
+  caption_icon_name = caption_icon&.fetch(:name, nil)
+  action_options = action.present? ? { variant: :text }.merge(action) : nil
+%>
+<article class="<%= card_classes %>">
+  <p class="text-sm font-semibold text-[color:var(--color-on-surface-variant)]"><%= label %></p>
+  <% if value.present? %>
+    <div class="mt-3 flex items-baseline gap-2">
+      <p class="text-3xl font-semibold text-[color:var(--color-on-surface)]"><%= value %></p>
+      <% if trend.present? %>
+        <span class="text-xs font-semibold <%= trend_classes %>"><%= trend %></span>
+      <% end %>
+    </div>
+  <% end %>
+  <% if caption.present? %>
+    <p class="mt-2 flex items-center gap-1 text-xs text-[color:color-mix(in srgb,var(--color-on-surface) 70%,transparent)]">
+      <% if caption_icon_name.present? %>
+        <%= ui_icon(caption_icon_name, class_name: "h-4 w-4 #{caption_icon_class}") %>
+      <% end %>
+      <span><%= caption %></span>
+    </p>
+  <% end %>
+  <% if action_options.present? %>
+    <div class="mt-3">
+      <%= ui_button(**action_options) %>
+    </div>
+  <% end %>
+</article>

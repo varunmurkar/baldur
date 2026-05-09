@@ -1,0 +1,51 @@
+<%
+  segments = Array(items)
+  return if segments.empty?
+%>
+<div class="segmented <%= classes %>" role="tablist" aria-label="<%= aria_label %>">
+  <% segments.each do |segment| %>
+    <% label = segment[:label].to_s %>
+    <% badge_label = segment[:badge_label].to_s.presence %>
+    <% icon = segment[:icon].presence %>
+    <% selected = !!segment[:selected] %>
+    <% disabled = !!segment[:disabled] %>
+    <% value = segment[:value].presence || label.parameterize %>
+    <% icon_only = icon.present? && label.blank? %>
+    <% data_attributes = (segment[:data] || {}).merge(value: value) %>
+    <% button_classes = [
+      "segmented__button",
+      ("is-selected" if selected),
+      ("is-disabled" if disabled),
+      ("is-icon-only" if icon_only),
+      (segment[:class] if segment[:class].present?)
+    ].compact.join(" ") %>
+    <% button_options = {
+      type: "button",
+      class: button_classes,
+      role: "tab",
+      aria: {
+        selected: selected,
+        disabled: disabled
+      },
+      tabindex: selected ? 0 : -1,
+      data: data_attributes
+    } %>
+    <%= tag.button(**button_options) do %>
+      <% if icon.present? %>
+        <%= ui_icon(icon, class_name: "segmented__icon") %>
+      <% end %>
+      <% if label.present? || badge_label.present? %>
+        <span class="segmented__content">
+          <% if label.present? %>
+            <span class="segmented__label"><%= label %></span>
+          <% end %>
+          <% if badge_label.present? %>
+            <span class="segmented__badge"><%= badge_label %></span>
+          <% end %>
+        </span>
+      <% else %>
+        <span class="sr-only"><%= segment[:sr_label].presence || value.to_s.humanize %></span>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

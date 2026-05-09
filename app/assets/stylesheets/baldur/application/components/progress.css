@@ -1,0 +1,84 @@
+@layer components {
+  .progress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 96%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+    color: var(--color-on-surface);
+  }
+
+  .progress__meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--color-text-soft);
+  }
+
+  .progress__track {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-surface-variant) 50%, transparent);
+    overflow: hidden;
+  }
+
+  .progress__indicator {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-primary);
+    transition: width var(--motion-duration-medium2) var(--motion-easing-standard);
+  }
+
+  .progress__indicator--indeterminate {
+    width: 35% !important;
+    animation: progress-indeterminate 1.3s ease-in-out infinite;
+  }
+
+  .progress__title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: var(--space-1) 0 0;
+  }
+
+  .progress__description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+  }
+
+  .progress--onboarding {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .progress--onboarding .progress__title,
+  .progress--onboarding .progress__description {
+    display: none;
+  }
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress__indicator {
+    transition: none;
+  }
+
+  .progress__indicator--indeterminate {
+    animation: none;
+  }
+}

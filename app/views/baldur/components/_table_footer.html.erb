@@ -1,0 +1,68 @@
+<% require "uri" %>
+<%
+  rows_param = rows_per_page_param.to_s.presence
+  rows_options = Array(rows_per_page_options).map(&:to_i).select(&:positive?).uniq
+  rows_selected = rows_per_page_selected.to_i
+  rows_selected = per_page.to_i if rows_selected <= 0
+  rows_enabled = rows_param.present? && rows_options.present?
+  pagination_enabled = total_pages.to_i > 1
+  return unless rows_enabled || pagination_enabled
+  rows_selected = rows_options.first if rows_enabled && !rows_options.include?(rows_selected)
+  base_path = begin
+    path_builder.call(current_page)
+  rescue
+    nil
+  end
+  pagination_page_param = base_path.present? ? Rack::Utils.parse_query(URI.parse(base_path).query.to_s).keys.find { |key| key.to_s.include?("page") } : nil
+  pagination_page_param ||= "page"
+  rows_form_action = base_path.present? ? URI.parse(base_path).path.presence || request.path : request.path
+  rows_form_hidden_params = request.query_parameters.except(rows_param, pagination_page_param)
+  showing_from = if total_count.to_i.positive? && per_page.to_i.positive?
+    ((current_page - 1) * per_page) + 1
+  else
+    nil
+  end
+  showing_to = if total_count.to_i.positive? && per_page.to_i.positive?
+    [ current_page * per_page, total_count ].min
+  else
+    nil
+  end
+%>
+
+<div class="flex flex-wrap items-start justify-between gap-3">
+  <div class="flex min-w-0 flex-col gap-2">
+    <% if rows_enabled %>
+      <%= form_with url: rows_form_action, method: :get, local: true, class: "flex flex-wrap items-center gap-2 text-xs text-muted", data: { controller: "form-submit" }, html: { aria: { label: "Items per page" } } do %>
+        <% rows_form_hidden_params.each do |key, value| %>
+          <% Array(value).each do |entry| %>
+            <%= hidden_field_tag key, entry %>
+          <% end %>
+        <% end %>
+        <%= hidden_field_tag pagination_page_param, 1 %>
+        <span>Show</span>
+        <%= ui_menu_select_tag rows_param,
+              options: rows_options.map { |option| { value: option.to_s, label: option.to_s } },
+              selected: rows_selected.to_s,
+              wrapper_class: "w-24",
+              input_data: { action: "change->form-submit#submit" } %>
+        <span>items per page</span>
+      <% end %>
+    <% end %>
+
+    <div class="text-xs text-muted">
+      <% if showing_from && showing_to %>
+        Showing <%= showing_from %>-<%= showing_to %> of <%= total_count %>
+      <% else %>
+        Page <%= current_page %> of <%= total_pages %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if pagination_enabled %>
+    <%= ui_pagination(
+      current_page: current_page,
+      total_pages: total_pages,
+      path_builder: path_builder
+    ) %>
+  <% end %>
+</div>

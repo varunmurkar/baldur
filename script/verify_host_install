@@ -1,0 +1,111 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+ENV["RAILS_ENV"] ||= "development"
+
+require File.expand_path("../../../config/environment", __dir__)
+
+def assert!(message)
+  raise message unless yield
+end
+
+def tailwind_entrypoint
+  Rails.root.join("app/assets/tailwind/application.css")
+end
+
+puts "Baldur host install smoke check"
+puts "Rails root: #{Rails.root}"
+puts "Baldur root: #{Baldur::Engine.root}"
+
+assert!("Expected Baldur importmap path to be registered") do
+  Rails.application.config.importmap.paths.any? { |path| path.to_s.end_with?("/config/importmap.rb") && path.to_s.include?("/baldur/") }
+end
+
+%w[
+  app/javascript/controllers/sidebar_controller.js
+  app/javascript/controllers/mobile_sidebar_controller.js
+  app/javascript/controllers/theme_controller.js
+  app/javascript/controllers/modal_controller.js
+  app/javascript/controllers/marketing_tabs_controller.js
+  app/javascript/controllers/marketing_pricing_controller.js
+].each do |relative_path|
+  path = Rails.root.join(relative_path)
+  assert!("Missing generated shim: #{relative_path}") { path.exist? }
+end
+
+assert!("Expected ui_button helper to be available") do
+  ApplicationController.helpers.respond_to?(:ui_button)
+end
+
+button_html = ApplicationController.helpers.ui_button(label: "Verify", href: "/")
+assert!("ui_button did not render expected markup") do
+  button_html.include?("button") || button_html.include?("<a")
+end
+
+modal_html = ApplicationController.helpers.ui_modal(id: "verify-modal", title: "Verify") { "Body".html_safe }
+assert!("ui_modal did not render expected markup") do
+  modal_html.include?("dialog") || modal_html.include?("modal")
+end
+assert!("ui_modal did not render body content") do
+  modal_html.include?("Body")
+end
+
+card_html = ApplicationController.helpers.ui_card(title: "Verify", body: "Card body")
+assert!("ui_card did not render body content") do
+  card_html.include?("Card body")
+end
+
+top_nav_html = ApplicationController.helpers.ui_marketing_top_nav(
+  links: [ { label: "Pricing", href: "/pricing", class: "nav-link" } ],
+  primary_action: { label: "Verify", href: "/", variant: :primary }
+)
+assert!("ui_marketing_top_nav did not render expected markup") do
+  top_nav_html.include?("marketing-top-nav") && top_nav_html.include?("Pricing")
+end
+
+assert!("Expected Tailwind entrypoint at #{tailwind_entrypoint}") do
+  tailwind_entrypoint.exist?
+end
+
+tailwind_source = tailwind_entrypoint.read
+
+[
+  '@import "../stylesheets/fonts.css";',
+  '@import "../builds/tailwind/baldur.css";',
+  '@import "../stylesheets/theme.css";'
+].each do |line|
+  assert!("Missing Tailwind integration line: #{line}") { tailwind_source.include?(line) }
+end
+
+host_fonts = Rails.root.join("app/assets/stylesheets/fonts.css")
+assert!("Expected host font override scaffold at #{host_fonts}") do
+  host_fonts.exist?
+end
+
+host_theme = Rails.root.join("app/assets/stylesheets/theme.css")
+assert!("Expected host theme override scaffold at #{host_theme}") do
+  host_theme.exist?
+end
+
+assert!("Expected host fonts import before Tailwind in the entrypoint") do
+  tailwind_source.index('@import "../stylesheets/fonts.css";') <
+    tailwind_source.index('@import "tailwindcss";')
+end
+
+assert!("Expected host theme override import after the Baldur import") do
+  tailwind_source.index('@import "../builds/tailwind/baldur.css";') <
+    tailwind_source.index('@import "../stylesheets/theme.css";')
+end
+
+assert!("Expected Tailwind entrypoint to stop hard-coding Geist font imports") do
+  !tailwind_source.include?('family=Geist:wght@100..900')
+end
+
+if ApplicationController.helpers.respond_to?(:ui_panel_secondary)
+  panel_html = ApplicationController.helpers.ui_panel_secondary(id: "verify-panel", title: "Panel", trigger_label: "Open") { "Body".html_safe }
+  assert!("ui_panel_secondary did not render expected markup") do
+    panel_html.include?("panel-secondary")
+  end
+end
+
+puts "Smoke check passed"

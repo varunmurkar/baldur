@@ -1,0 +1,329 @@
+:root {
+  /* Brand inputs (edit these for new themes). */
+  --_primary-base: oklch(0.682 0.157 27.1);
+  --_secondary-base: oklch(0.2968 0.0383 195.29);
+  --_accent-base: oklch(0.482 0.067 91.7);
+  --_neutral-base: oklch(0.8672 0 0);
+
+  --_scale-light: oklch(from var(--_neutral-base) 1 c h);
+  --_scale-dark: oklch(from var(--_neutral-base) 0.08 c h);
+
+  --_success-base: oklch(0.56 0.17 142.89);
+  --_warning-base: oklch(0.82 0.15 85);
+  --_info-base: oklch(0.75 0.12 230);
+  --_error-base: oklch(0.72 0.18 25);
+
+  --_tone-50: 10%;
+  --_tone-100: 18%;
+  --_neutral-tone-50: 1.5%;
+  --_tone-200: 28%;
+  --_tone-300: 42%;
+  --_tone-400: 60%;
+  --_tone-600: 82%;
+  --_tone-700: 68%;
+  --_tone-800: 54%;
+  --_tone-900: 40%;
+  --_tone-950: 28%;
+}
+
+@theme {
+  /* Palette scales. */
+  --color-primary-500: var(--_primary-base);
+  --color-primary-50: color-mix(in oklch, var(--color-primary-500) var(--_tone-50), var(--_scale-light));
+  --color-primary-100: color-mix(in oklch, var(--color-primary-500) var(--_tone-100), var(--_scale-light));
+  --color-primary-200: color-mix(in oklch, var(--color-primary-500) var(--_tone-200), var(--_scale-light));
+  --color-primary-300: color-mix(in oklch, var(--color-primary-500) var(--_tone-300), var(--_scale-light));
+  --color-primary-400: color-mix(in oklch, var(--color-primary-500) var(--_tone-400), var(--_scale-light));
+  --color-primary-600: color-mix(in oklch, var(--color-primary-500) var(--_tone-600), var(--_scale-dark));
+  --color-primary-700: color-mix(in oklch, var(--color-primary-500) var(--_tone-700), var(--_scale-dark));
+  --color-primary-800: color-mix(in oklch, var(--color-primary-500) var(--_tone-800), var(--_scale-dark));
+  --color-primary-900: color-mix(in oklch, var(--color-primary-500) var(--_tone-900), var(--_scale-dark));
+  --color-primary-950: color-mix(in oklch, var(--color-primary-500) var(--_tone-950), var(--_scale-dark));
+
+  --color-secondary-500: var(--_secondary-base);
+  --color-secondary-50: color-mix(in oklch, var(--color-secondary-500) var(--_tone-50), var(--_scale-light));
+  --color-secondary-100: color-mix(in oklch, var(--color-secondary-500) var(--_tone-100), var(--_scale-light));
+  --color-secondary-200: color-mix(in oklch, var(--color-secondary-500) var(--_tone-200), var(--_scale-light));
+  --color-secondary-300: color-mix(in oklch, var(--color-secondary-500) var(--_tone-300), var(--_scale-light));
+  --color-secondary-400: color-mix(in oklch, var(--color-secondary-500) var(--_tone-400), var(--_scale-light));
+  --color-secondary-600: color-mix(in oklch, var(--color-secondary-500) var(--_tone-600), var(--_scale-dark));
+  --color-secondary-700: color-mix(in oklch, var(--color-secondary-500) var(--_tone-700), var(--_scale-dark));
+  --color-secondary-800: color-mix(in oklch, var(--color-secondary-500) var(--_tone-800), var(--_scale-dark));
+  --color-secondary-900: color-mix(in oklch, var(--color-secondary-500) var(--_tone-900), var(--_scale-dark));
+  --color-secondary-950: color-mix(in oklch, var(--color-secondary-500) var(--_tone-950), var(--_scale-dark));
+
+  --color-accent-500: var(--_accent-base);
+  --color-accent-50: color-mix(in oklch, var(--color-accent-500) var(--_tone-50), var(--_scale-light));
+  --color-accent-100: color-mix(in oklch, var(--color-accent-500) var(--_tone-100), var(--_scale-light));
+  --color-accent-200: color-mix(in oklch, var(--color-accent-500) var(--_tone-200), var(--_scale-light));
+  --color-accent-300: color-mix(in oklch, var(--color-accent-500) var(--_tone-300), var(--_scale-light));
+  --color-accent-400: color-mix(in oklch, var(--color-accent-500) var(--_tone-400), var(--_scale-light));
+  --color-accent-600: color-mix(in oklch, var(--color-accent-500) var(--_tone-600), var(--_scale-dark));
+  --color-accent-700: color-mix(in oklch, var(--color-accent-500) var(--_tone-700), var(--_scale-dark));
+  --color-accent-800: color-mix(in oklch, var(--color-accent-500) var(--_tone-800), var(--_scale-dark));
+  --color-accent-900: color-mix(in oklch, var(--color-accent-500) var(--_tone-900), var(--_scale-dark));
+  --color-accent-950: color-mix(in oklch, var(--color-accent-500) var(--_tone-950), var(--_scale-dark));
+
+  --color-neutral-500: var(--_neutral-base);
+  --color-neutral-50: color-mix(in oklch, var(--color-neutral-500) var(--_neutral-tone-50), var(--_scale-light));
+  --color-neutral-100: color-mix(in oklch, var(--color-neutral-500) var(--_tone-100), var(--_scale-light));
+  --color-neutral-200: color-mix(in oklch, var(--color-neutral-500) var(--_tone-200), var(--_scale-light));
+  --color-neutral-300: color-mix(in oklch, var(--color-neutral-500) var(--_tone-300), var(--_scale-light));
+  --color-neutral-400: color-mix(in oklch, var(--color-neutral-500) var(--_tone-400), var(--_scale-light));
+  --color-neutral-600: color-mix(in oklch, var(--color-neutral-500) var(--_tone-600), var(--_scale-dark));
+  --color-neutral-700: color-mix(in oklch, var(--color-neutral-500) var(--_tone-700), var(--_scale-dark));
+  --color-neutral-800: color-mix(in oklch, var(--color-neutral-500) var(--_tone-800), var(--_scale-dark));
+  --color-neutral-900: color-mix(in oklch, var(--color-neutral-500) var(--_tone-900), var(--_scale-dark));
+  --color-neutral-950: color-mix(in oklch, var(--color-neutral-500) var(--_tone-950), var(--_scale-dark));
+  --color-neutral: var(--color-neutral-500);
+
+  /* Semantic roles (set in theme files). */
+  --color-primary: initial;
+  --color-secondary: initial;
+  --color-tertiary: initial;
+  --color-accent: initial;
+
+  --color-on-primary: initial;
+  --color-on-secondary: initial;
+  --color-on-tertiary: initial;
+  --color-on-accent: initial;
+
+  --color-primary-container: initial;
+  --color-on-primary-container: initial;
+  --color-secondary-container: initial;
+  --color-on-secondary-container: initial;
+  --color-tertiary-container: initial;
+  --color-on-tertiary-container: initial;
+  --color-accent-container: initial;
+  --color-on-accent-container: initial;
+
+  --color-success: initial;
+  --color-success-container: initial;
+  --color-on-success: initial;
+  --color-on-success-container: initial;
+  --color-success-outline: initial;
+
+  --color-warning: initial;
+  --color-warning-container: initial;
+  --color-on-warning: initial;
+  --color-on-warning-container: initial;
+  --color-warning-outline: initial;
+
+  --color-info: initial;
+  --color-info-container: initial;
+  --color-on-info: initial;
+  --color-on-info-container: initial;
+  --color-info-outline: initial;
+
+  --color-error: initial;
+  --color-on-error: initial;
+  --color-error-container: initial;
+  --color-on-error-container: initial;
+  --color-error-outline: initial;
+
+  --color-background: initial;
+  --color-on-background: initial;
+  --color-surface: initial;
+  --color-on-surface: initial;
+  --color-surface-variant: initial;
+  --color-on-surface-variant: initial;
+
+  --color-surface-lowest: initial;
+  --color-surface-low: initial;
+  --color-surface-medium: initial;
+  --color-surface-high: initial;
+  --color-surface-highest: initial;
+
+  --color-outline: initial;
+  --color-outline-variant: initial;
+  --color-shadow: initial;
+  --color-scrim: initial;
+  --color-inverse-surface: initial;
+  --color-inverse-on-surface: initial;
+  --color-inverse-primary: initial;
+
+  --color-text: initial;
+  --color-text-soft: initial;
+  --color-text-muted: initial;
+  --color-icon: initial;
+
+  --color-border-subtle: initial;
+  --color-border-strong: initial;
+  --color-ring-focus: initial;
+}
+
+@layer components {
+  .surface {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+  }
+
+  .surface-1 {
+    background-color: var(--color-surface-medium);
+    color: var(--color-on-surface);
+  }
+
+  .surface-2 {
+    background-color: var(--color-surface-high);
+    color: var(--color-on-surface);
+  }
+
+  .outline {
+    border: 1px solid var(--color-outline-variant);
+  }
+
+  .bg-base-100 {
+    background-color: var(--color-surface);
+  }
+
+  .bg-base-100\/70 {
+    background-color: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  }
+
+  .bg-base-100\/90 {
+    background-color: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  }
+
+  .bg-base-200 {
+    background-color: var(--color-surface-low);
+  }
+
+  .bg-base-300 {
+    background-color: var(--color-surface-medium);
+  }
+
+  .text-base-content {
+    color: var(--color-on-surface);
+  }
+
+  .text-base-content\/80 {
+    color: color-mix(in srgb, var(--color-on-surface) 80%, transparent);
+  }
+
+  .text-base-content\/70 {
+    color: color-mix(in srgb, var(--color-on-surface) 70%, transparent);
+  }
+
+  .text-base-content\/60 {
+    color: color-mix(in srgb, var(--color-on-surface) 60%, transparent);
+  }
+
+  .border-base-200 {
+    border-color: var(--color-outline-variant);
+  }
+
+  .border-base-300 {
+    border-color: color-mix(in srgb, var(--color-outline-variant) 70%, var(--color-outline));
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .bg-primary\/5 {
+    background-color: color-mix(in srgb, var(--color-primary) 5%, transparent);
+  }
+
+  .bg-primary\/10 {
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+
+  .bg-primary\/20 {
+    background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  }
+
+  .from-primary\/10 {
+    --tw-gradient-from: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    --tw-gradient-to: transparent;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent);
+  }
+
+  .to-secondary\/10 {
+    --tw-gradient-to: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  }
+
+  .bg-secondary\/10 {
+    background-color: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  }
+
+  .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+  }
+
+  .bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  }
+
+  .via-base-200 {
+    --tw-gradient-stops: var(--tw-gradient-from), color-mix(in srgb, var(--color-surface-low) 100%, transparent), var(--tw-gradient-to, transparent);
+  }
+
+  .ring,
+  .ring-primary {
+    box-shadow: 0 0 0 2px var(--color-primary);
+  }
+
+  .ring-2 {
+    box-shadow: 0 0 0 2px var(--color-outline);
+  }
+
+  .ring-primary\/50 {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 50%, transparent);
+  }
+
+  .focus\:ring-primary\/30:focus {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 30%, transparent);
+  }
+
+  .focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px var(--color-outline);
+  }
+
+  .focus\:border-primary:focus {
+    border-color: var(--color-primary);
+  }
+
+  .hover\:border-primary\/40:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  }
+
+  .border-primary\/40 {
+    border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  }
+
+  .text-primary-content {
+    color: var(--color-on-primary);
+  }
+
+  .placeholder\:text-base-content\/60::placeholder {
+    color: color-mix(in srgb, var(--color-on-surface) 60%, transparent);
+  }
+
+  .divide-base-200> :not([hidden])~ :not([hidden]) {
+    border-top: 1px solid var(--color-outline-variant);
+  }
+
+  .elevation-0 {
+    box-shadow: var(--elev-0);
+  }
+
+  .elevation-1 {
+    box-shadow: var(--elev-1);
+  }
+
+  .elevation-2 {
+    box-shadow: var(--elev-2);
+  }
+
+  .elevation-3 {
+    box-shadow: var(--elev-3);
+  }
+
+  .elevation-4 {
+    box-shadow: var(--elev-4);
+  }
+
+  .elevation-5 {
+    box-shadow: var(--elev-5);
+  }
+}

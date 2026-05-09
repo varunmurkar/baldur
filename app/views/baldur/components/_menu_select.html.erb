@@ -1,0 +1,78 @@
+<%= content_tag :div, class: wrapper_classes, data: wrapper_data do %>
+  <% if label.present? %>
+    <label class="field__label" for="<%= field_id %>"><%= label %></label>
+  <% end %>
+
+  <div class="menu-select"
+       data-controller="menu-select"
+       data-menu-select="true"
+       data-menu-placement="bottom"
+       <%= %(data-menu-select-disabled="true") if disabled %>>
+    <% hidden_input_data = input_data.present? ? input_data.dup : {} %>
+    <% hidden_input_data[:"menu-select-input"] = true %>
+    <% hidden_input_data[:menu_select_target] ||= "input" %>
+    <%= hidden_field_tag name, selected_value, data: hidden_input_data %>
+
+    <button type="button"
+            class="menu-select__trigger<%= disabled ? " is-disabled" : "" %>"
+            id="<%= field_id %>"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            aria-disabled="<%= disabled ? "true" : "false" %>"
+            <%= "disabled" if disabled %>
+            data-menu-select-trigger
+            data-menu-select-target="trigger">
+      <span class="menu-select__label"
+            data-menu-select-label
+            data-menu-select-target="label"><%= button_label %></span>
+      <%= ui_icon("chevron-down", class_name: "menu-select__icon") %>
+    </button>
+
+    <div class="menu menu--select"
+         role="menu"
+         aria-labelledby="<%= field_id %>"
+         data-menu-select-list
+         data-menu-select-target="list">
+      <% options.each do |option| %>
+        <% option_classes = ["menu__option"]
+           option_classes << "is-selected" if option[:value] == selected_value
+           option_classes << "is-disabled" if option[:disabled]
+        %>
+        <% is_selected = option[:value] == selected_value %>
+        <button type="button"
+                class="<%= option_classes.join(' ') %>"
+                role="menuitemradio"
+                aria-checked="<%= is_selected ? 'true' : 'false' %>"
+                aria-disabled="<%= option[:disabled] ? 'true' : 'false' %>"
+                data-menu-select-option="true"
+                data-value="<%= option[:value] %>"
+                data-label="<%= option[:label] %>"
+                data-disabled="<%= option[:disabled] ? 'true' : 'false' %>">
+          <span class="menu__option-content">
+            <span class="menu__option-head">
+              <span class="menu__option-label" data-menu-select-option-label><%= option[:label] %></span>
+              <% if option[:badge].present? %>
+                <span class="menu__option-badge">
+                  <%= ui_badge(
+                        text: option[:badge],
+                        variant: option[:badge_variant] || :disabled,
+                        size: option[:badge_size] || :xs
+                      ) %>
+                </span>
+              <% end %>
+            </span>
+            <% support_text = option[:support].presence || option[:description] %>
+            <% if support_text.present? %>
+              <span class="menu__option-support"><%= support_text %></span>
+            <% end %>
+          </span>
+          <%= ui_icon("check", class_name: "menu__option-icon") %>
+        </button>
+      <% end %>
+    </div>
+  </div>
+
+  <% if supporting_text.present? %>
+    <p class="field__supporting"><%= supporting_text %></p>
+  <% end %>
+<% end %>

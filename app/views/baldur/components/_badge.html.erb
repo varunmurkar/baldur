@@ -1,0 +1,25 @@
+<%
+  sizes = {
+    xs: "chip--xs",
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base"
+  }
+  variants = {
+    default: nil,
+    success: "chip--success",
+    warn: "chip--warn",
+    danger: "chip--danger",
+    disabled: "chip--disabled",
+    outline: nil,
+    accent: "chip--primary"
+  }
+  badge_classes = [
+    "chip",
+    sizes[size || :sm],
+    variants[variant || :default]
+  ].compact.join(" ")
+  html_options = local_assigns[:html_options] ? local_assigns[:html_options].dup : {}
+  html_options[:class] = [ badge_classes, html_options[:class] ].compact.join(" ")
+%>
+<%= content_tag(:span, text, html_options) %>

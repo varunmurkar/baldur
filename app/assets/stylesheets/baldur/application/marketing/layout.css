@@ -1,0 +1,36 @@
+@layer components {
+  .marketing-hero {
+    color: var(--color-on-surface);
+  }
+
+  .marketing-hero a:not(.button) {
+    color: inherit;
+  }
+
+  .marketing-hero .button--outlined {
+    --btn-bg: var(--color-surface);
+    --btn-fg: var(--color-on-surface);
+    --btn-state: var(--color-on-surface);
+    --btn-border: var(--color-outline);
+  }
+
+  .marketing-cta-banner .button--outlined {
+    --btn-fg: var(--color-on-secondary);
+    --btn-state: var(--color-on-secondary);
+    --btn-border: color-mix(in srgb, var(--color-on-secondary) 65%, transparent);
+  }
+
+  .marketing-cta-banner {
+    background-color: #08192b;
+    background-image: linear-gradient(135deg, #08192b 0%, #041220 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .marketing-cta-banner .button--filled {
+    --btn-bg: var(--color-surface-highest);
+    --btn-fg: var(--color-on-surface);
+    --btn-state: var(--color-on-surface);
+    --btn-border: transparent;
+  }
+}

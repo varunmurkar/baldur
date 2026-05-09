@@ -1,0 +1,105 @@
+@layer components {
+  .switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: var(--space-2);
+  }
+
+  .switch input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .switch__track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 56px;
+    height: 32px;
+    padding: 0 var(--space-2);
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-on-surface) 15%, transparent);
+    transition:
+      background-color var(--motion-duration-short4) var(--motion-easing-emphasized);
+  }
+
+  .switch__thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 9999px;
+    background: var(--color-surface-high);
+    border: 1px solid color-mix(in srgb, var(--color-outline) 70%, transparent);
+    transition: transform var(--motion-duration-short4) var(--motion-easing-emphasized),
+      background-color var(--motion-duration-short4) var(--motion-easing-emphasized),
+      border-color var(--motion-duration-short4) var(--motion-easing-emphasized);
+  }
+
+  .switch__icon {
+    width: 16px;
+    height: 16px;
+    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--motion-duration-short4) var(--motion-easing-emphasized);
+  }
+
+  .theme-toggle__compact {
+    display: none;
+  }
+
+  .theme-toggle__compact-icon {
+    display: none;
+    width: 20px;
+    height: 20px;
+    color: currentColor;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .switch__icon svg,
+  .theme-toggle__compact-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .theme-toggle__compact-icon--sun {
+    display: inline-flex;
+  }
+
+  .theme-toggle__compact-icon--moon {
+    display: none;
+  }
+
+  .switch input:checked + .switch__track {
+    background: color-mix(in srgb, var(--color-primary) 80%, transparent);
+  }
+
+  .switch input:checked + .switch__track .switch__thumb {
+    transform: translateX(24px);
+    background: var(--color-on-primary);
+    border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  }
+
+  .switch input:checked + .switch__track .switch__icon--moon {
+    color: var(--color-on-primary);
+  }
+
+  .switch input:checked + .switch__track .switch__icon--sun {
+    color: color-mix(in srgb, var(--color-on-primary) 80%, transparent);
+  }
+
+  .switch input:not(:checked) + .switch__track .switch__icon--sun {
+    color: var(--color-text);
+  }
+}

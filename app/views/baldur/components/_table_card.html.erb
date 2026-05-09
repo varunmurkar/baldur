@@ -1,0 +1,86 @@
+<%
+  actions_content = if actions.respond_to?(:call)
+                      capture(&actions)
+                    else
+                      actions
+                    end
+  title_meta_content = if title_meta.respond_to?(:call)
+                         capture(&title_meta)
+                       else
+                         title_meta
+                       end
+  controls_content = if controls.respond_to?(:call)
+                       capture(&controls)
+                     else
+                       controls
+                     end
+  footer_content = if footer.respond_to?(:call)
+                     capture(&footer)
+                   else
+                     footer
+                   end
+  controls_position = local_assigns[:controls_position].to_s == "header" ? "header" : "row"
+  header_controls_content = controls_position == "header" ? controls_content : nil
+  row_controls_content = controls_position == "row" ? controls_content : nil
+  header_present = title.present? || title_meta_content.present? || description.present? || actions_content.present? || header_controls_content.present?
+  controls_present = row_controls_content.present?
+  footer_present = footer_content.present?
+  card_classes = ["table-card", local_assigns[:class]].compact.join(" ")
+%>
+<div class="<%= card_classes %>">
+  <% if header_present %>
+    <div class="table-card__header table-card__section--top">
+      <div class="table-card__header-main">
+        <% if title.present? || title_meta_content.present? %>
+          <div class="table-card__header-title-row">
+            <% if title.present? %>
+              <h3 class="text-lg font-semibold text-[color:var(--color-on-surface)]"><%= title %></h3>
+            <% end %>
+            <% if title_meta_content.present? %>
+              <div class="table-card__title-meta"><%= title_meta_content %></div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if description.present? %>
+          <p class="text-sm text-muted"><%= description %></p>
+        <% end %>
+      </div>
+      <% if actions_content.present? || header_controls_content.present? %>
+        <div class="table-card__header-side">
+          <% if actions_content.present? %>
+            <div class="table-card__header-actions">
+              <%= actions_content %>
+            </div>
+          <% end %>
+          <% if header_controls_content.present? %>
+            <div class="table-card__header-controls">
+              <%= header_controls_content %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if controls_present %>
+    <% controls_classes = ["table-card__controls"] %>
+    <% controls_classes << "table-card__section--top" unless header_present %>
+    <% controls_classes << "table-card__section--bottom" unless footer_present %>
+    <div class="<%= controls_classes.join(" ") %>">
+      <%= row_controls_content %>
+    </div>
+  <% end %>
+
+  <% body_classes = ["table-card__body"] %>
+  <% body_classes << "table-card__section--top" unless header_present || controls_present %>
+  <% body_classes << "table-card__section--bottom" unless footer_present %>
+  <div class="<%= body_classes.join(" ") %>">
+    <%= body %>
+  </div>
+
+  <% if footer_present %>
+    <div class="table-card__footer table-card__section--bottom">
+      <%= footer_content %>
+    </div>
+  <% end %>
+</div>

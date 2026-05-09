@@ -1,0 +1,82 @@
+:root,
+.light {
+  --color-background: var(--color-neutral-50);
+  --color-on-background: var(--color-secondary-900);
+  --color-surface: var(--color-neutral-100);
+  --color-on-surface: var(--color-secondary-900);
+  --color-surface-variant: var(--color-neutral-200);
+  --color-on-surface-variant: var(--color-secondary-700);
+
+  --color-surface-lowest: var(--color-neutral-400);
+  --color-surface-low: var(--color-neutral-300);
+  --color-surface-medium: var(--color-neutral-200);
+  --color-surface-high: var(--color-neutral-100);
+  --color-surface-highest: var(--color-neutral-50);
+
+  --color-primary: var(--color-primary-500);
+  --color-secondary: var(--color-secondary-700);
+  --color-tertiary: var(--color-accent-500);
+  --color-accent: var(--color-accent-500);
+
+  --color-on-primary: var(--color-neutral-50);
+  --color-primary-container: var(--color-primary-100);
+  --color-on-primary-container: var(--color-secondary-900);
+
+  --color-on-secondary: var(--color-neutral-50);
+  --color-secondary-container: var(--color-secondary-100);
+  --color-on-secondary-container: var(--color-secondary-900);
+
+  --color-on-tertiary: var(--color-neutral-50);
+  --color-tertiary-container: var(--color-accent-100);
+  --color-on-tertiary-container: var(--color-secondary-900);
+
+  --color-on-accent: var(--color-neutral-50);
+  --color-accent-container: var(--color-accent-100);
+  --color-on-accent-container: var(--color-secondary-900);
+
+  --color-success: var(--_success-base);
+  --color-warning: var(--_warning-base);
+  --color-info: var(--_info-base);
+  --color-error: var(--_error-base);
+
+  --color-success-container: color-mix(in oklch, var(--color-success) 8%, white 92%);
+  --color-warning-container: oklch(from var(--color-warning) 0.97 calc(c * 0.2) h);
+  --color-info-container: oklch(from var(--color-info) 0.97 calc(c * 0.16) h);
+  --color-error-container: color-mix(in oklch, var(--color-error) 10%, var(--color-surface) 90%);
+
+  --color-on-success: var(--color-neutral-950);
+  --color-on-warning: var(--color-neutral-950);
+  --color-on-info: var(--color-neutral-950);
+  --color-on-error: var(--color-neutral-50);
+
+  --color-on-success-container: oklch(from var(--color-success) 0.36 c h);
+  --color-on-warning-container: oklch(from var(--color-warning) 0.32 c h);
+  --color-on-info-container: oklch(from var(--color-info) 0.32 c h);
+  --color-on-error-container: oklch(from var(--color-error) 0.32 c h);
+
+  --color-success-outline: oklch(from var(--color-success) calc(l - 0.08) calc(c * 1.4) h);
+  --color-warning-outline: color-mix(in oklch, var(--color-warning) 90%, var(--color-outline-variant));
+  --color-info-outline: color-mix(in oklch, var(--color-info) 90%, var(--color-outline-variant));
+  --color-error-outline: color-mix(in oklch, var(--color-error) 90%, var(--color-outline-variant));
+
+  --color-text: var(--color-secondary-700);
+  --color-text-soft: var(--color-secondary-600);
+  --color-text-muted: var(--color-secondary-400);
+  --color-icon: var(--color-secondary-700);
+
+  --color-outline: var(--color-neutral-400);
+  --color-outline-variant: var(--color-neutral-300);
+  --color-border-subtle: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-400);
+  --color-ring-focus: var(--color-primary-400);
+
+  --color-inverse-surface: var(--color-neutral-900);
+  --color-inverse-on-surface: var(--color-neutral-50);
+  --color-inverse-primary: var(--color-primary-300);
+
+  --color-shadow: oklch(0 0 0);
+  --color-scrim: oklch(0 0 0);
+
+  --segmented-selected-bg: var(--color-primary-container);
+  --segmented-selected-fg: var(--color-on-primary-container);
+}

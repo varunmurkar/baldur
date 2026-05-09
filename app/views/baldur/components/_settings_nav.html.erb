@@ -1,0 +1,41 @@
+<%
+  items = Array(local_assigns[:items]).compact
+  nav_class = [ "settings-nav", local_assigns[:class] ].compact.join(" ")
+%>
+
+<nav class="<%= nav_class %>"
+     aria-label="<%= local_assigns[:aria_label].presence || "Settings navigation" %>"
+     data-controller="accordion"
+     data-accordion-allow-multiple-value="true">
+  <% items.each do |item| %>
+    <% children = Array(item[:children]).compact %>
+    <% if children.any? %>
+      <% accordion_id = "settings-nav-#{SecureRandom.hex(4)}" %>
+      <div class="settings-nav__group settings-nav__disclosure" data-accordion-target="item" data-open="<%= item[:expanded] %>">
+        <button type="button"
+                class="settings-nav__summary"
+                data-action="click->accordion#toggle"
+                aria-expanded="<%= item[:expanded] ? "true" : "false" %>"
+                aria-controls="<%= accordion_id %>">
+          <span class="settings-nav__summary-label"><%= item[:label] %></span>
+          <span aria-hidden="true" data-accordion-target="icon"><%= ui_icon("chevron-right", class_name: "settings-nav__summary-icon") %></span>
+        </button>
+        <div id="<%= accordion_id %>" class="settings-nav__children-shell" data-accordion-target="content" aria-hidden="<%= item[:expanded] ? "false" : "true" %>">
+          <div class="settings-nav__children">
+            <% children.each do |child| %>
+              <%= link_to child[:label],
+                          child[:href],
+                          class: "settings-nav__link",
+                          aria: { current: child[:active] ? "page" : nil } %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <%= link_to item[:label],
+                  item[:href],
+                  class: "settings-nav__item settings-nav__link",
+                  aria: { current: item[:active] ? "page" : nil } %>
+    <% end %>
+  <% end %>
+</nav>

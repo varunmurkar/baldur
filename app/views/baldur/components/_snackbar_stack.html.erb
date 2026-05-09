@@ -1,0 +1,13 @@
+<div class="snackbar-stack"
+     data-baldur-snackbar-stack
+     role="status"
+     aria-live="polite"
+     aria-atomic="true">
+  <% Array(snackbars).each do |snackbar| %>
+    <%= render "baldur/components/snackbar", **snackbar %>
+  <% end %>
+
+  <template data-baldur-snackbar-template>
+    <%= render "baldur/components/snackbar", template: true %>
+  </template>
+</div>

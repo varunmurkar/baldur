@@ -1,0 +1,73 @@
+<% tooltip_id = "tooltip-#{SecureRandom.hex(4)}" %>
+<% inline = !!local_assigns[:inline] %>
+<% wrapper_tag = inline ? :span : :div %>
+<% bubble_tag = inline ? :span : :div %>
+<% wrapper_classes = ["relative inline-flex items-center group", ("align-middle shrink-0" if inline), wrapper_class].compact.join(" ") %>
+<% icon_variant = variant.to_s == "icon" %>
+<% trigger_classes = if icon_variant
+  [
+    "inline-flex items-center justify-center rounded-full p-1 text-muted hover:text-base-content",
+    ("align-middle leading-none shrink-0" if inline),
+    "focus:outline-none focus:ring-2 focus:ring-primary/30",
+    trigger_class
+  ].compact.join(" ")
+else
+  [
+    "inline-flex items-center gap-1 text-sm text-on-surface/70 cursor-pointer",
+    "border-b border-dashed border-current pb-0.5",
+    "transition-colors hover:text-on-surface",
+    trigger_class
+  ].compact.join(" ")
+end %>
+<% bubble_classes = [
+  "absolute left-0 top-full z-30 mt-2 hidden w-max max-w-[90vw] sm:max-w-[32rem] rounded-lg",
+  "border border-[color:var(--color-outline)]",
+  "bg-[color:var(--color-inverse-surface)]",
+  "text-[color:var(--color-inverse-on-surface)]",
+  "text-left whitespace-normal break-words",
+  "dark:bg-[color:var(--color-surface-lowest)]",
+  "dark:text-[color:var(--color-on-surface)]",
+  "p-3 text-sm font-normal",
+  "shadow-[var(--elev-1)]",
+  (inline ? "data-[state=open]:inline-block" : "data-[state=open]:block"),
+  bubble_class
+].compact.join(" ") %>
+
+<%= content_tag wrapper_tag,
+                class: wrapper_classes,
+                data: {
+                  controller: "tooltip",
+                  action: "mouseenter->tooltip#open mouseleave->tooltip#close focusin->tooltip#open focusout->tooltip#close"
+                } do %>
+  <button
+    type="button"
+    class="<%= trigger_classes %>"
+    data-tooltip-target="trigger"
+    data-action="click->tooltip#toggle"
+    aria-describedby="<%= tooltip_id %>"
+    aria-expanded="false"
+  >
+    <% if icon_variant %>
+      <span class="sr-only"><%= text %></span>
+      <%= ui_icon(icon, class_name: "h-4 w-4") %>
+    <% else %>
+      <span><%= text %></span>
+    <% end %>
+    <% if show_icon && !icon_variant %>
+      <%= ui_icon(icon, class_name: "h-4 w-4") %>
+    <% end %>
+  </button>
+  <%= content_tag bubble_tag,
+                  content,
+                  id: tooltip_id,
+                  role: "tooltip",
+                  class: bubble_classes,
+                  style: "text-align: left;",
+                  data: {
+                    tooltip_target: "bubble",
+                    state: "closed"
+                  },
+                  aria: {
+                    hidden: "true"
+                  } %>
+<% end %>

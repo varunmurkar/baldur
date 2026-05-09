@@ -1,0 +1,34 @@
+<%
+  shell_data = (local_assigns[:shell_data] || {}).deep_dup
+  panel_data = (local_assigns[:panel_data] || {}).deep_dup
+  trigger_data = (local_assigns[:trigger_data] || {}).deep_dup
+  shell_data[:controller] = [shell_data[:controller], "panel-secondary"].compact.join(" ")
+  trigger_data[:action] = [trigger_data[:action], "panel-secondary#toggle"].compact.join(" ")
+  trigger_data[:panel_secondary_target] = "trigger"
+  panel_data[:panel_secondary_target] = "panel"
+%>
+<%= content_tag :div, class: ["panel-secondary-shell", shell_class].compact.join(" "), data: shell_data do %>
+  <%= button_tag type: "button",
+                 class: ["button button--filled button--lg panel-secondary__trigger", trigger_class].compact.join(" "),
+                 data: trigger_data,
+                 aria: { controls: id, expanded: false } do %>
+    <%= ui_icon(trigger_icon, class_name: "h-5 w-5") %>
+    <span><%= trigger_label %></span>
+  <% end %>
+
+  <%= content_tag :aside,
+                  id: id,
+                  class: ["panel-secondary", panel_class].compact.join(" "),
+                  data: panel_data,
+                  aria: { hidden: true } do %>
+    <header class="panel-secondary__header">
+      <h3 class="text-lg font-semibold text-on-surface"><%= title %></h3>
+      <button type="button" class="icon-button" data-action="panel-secondary#close" aria-label="Close panel">
+        <%= ui_icon("x", class_name: "h-5 w-5") %>
+      </button>
+    </header>
+    <div class="panel-secondary__body">
+      <%= body %>
+    </div>
+  <% end %>
+<% end %>

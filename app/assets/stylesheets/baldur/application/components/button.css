@@ -1,0 +1,173 @@
+@layer components {
+
+  /* Default buttons align to a 40px tap target. */
+  .button {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    height: 2.5rem;
+    padding: calc(var(--space-2) + 2px) var(--space-4);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition:
+      background-color var(--motion-duration-short4) var(--motion-easing-standard),
+      color var(--motion-duration-short4) var(--motion-easing-standard),
+      border-color var(--motion-duration-short4) var(--motion-easing-standard),
+      transform var(--motion-duration-short4) var(--motion-easing-standard);
+    overflow: hidden;
+    border: 1px solid var(--btn-border, transparent);
+    color: var(--btn-fg, var(--color-on-primary));
+    background-color: var(--btn-bg, var(--color-primary));
+    cursor: pointer;
+  }
+
+  .button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--btn-state, var(--color-on-primary));
+    opacity: 0;
+    transition: opacity var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .button:hover::after {
+    opacity: 0.08;
+  }
+
+  .button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .button:disabled {
+    cursor: not-allowed;
+    opacity: 0.38;
+  }
+
+  .button--filled {
+    --btn-bg: var(--color-primary);
+    --btn-fg: var(--color-on-primary);
+    --btn-state: var(--color-on-primary);
+    --btn-border: transparent;
+  }
+
+  .button--tonal {
+    --btn-bg: var(--color-secondary-container);
+    --btn-fg: var(--color-on-secondary-container);
+    --btn-state: var(--color-on-secondary-container);
+    --btn-border: transparent;
+  }
+
+  :root.dark .button--tonal,
+  .dark .button--tonal {
+    /* Dark mode: add subtle elevation/outline so tonal buttons don't blend into cards. */
+    --btn-bg: color-mix(in oklch, var(--color-secondary-container) 90%, var(--_scale-light) 10%);
+    --btn-border: color-mix(in oklch, var(--color-outline-variant) 35%, transparent);
+  }
+
+  .button--tonal-error {
+    --btn-bg: var(--color-error-container);
+    --btn-fg: var(--color-on-error-container);
+    --btn-state: var(--color-on-error-container);
+    --btn-border: transparent;
+  }
+
+  .button--tertiary {
+    --btn-bg: var(--color-tertiary-container);
+    --btn-fg: var(--color-on-tertiary-container);
+    --btn-state: var(--color-on-tertiary-container);
+    --btn-border: transparent;
+  }
+
+  .button--outlined {
+    --btn-bg: transparent;
+    --btn-fg: var(--color-on-surface);
+    --btn-state: var(--color-on-surface);
+    --btn-border: var(--color-outline);
+  }
+
+  .button--text {
+    --btn-bg: transparent;
+    --btn-fg: var(--color-primary);
+    --btn-state: var(--color-primary);
+    --btn-border: transparent;
+  }
+
+  .button--elevated {
+    --btn-bg: var(--color-surface-highest);
+    --btn-fg: var(--color-primary);
+    --btn-state: var(--color-primary);
+    --btn-border: color-mix(in srgb, var(--color-primary) 22%, var(--color-outline-variant));
+  }
+
+  .button--error {
+    --btn-bg: var(--color-error);
+    --btn-fg: var(--color-on-error);
+    --btn-state: var(--color-on-error);
+    --btn-border: transparent;
+  }
+
+  .button--sm {
+    height: 2.25rem;
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .button--lg {
+    height: 2.75rem;
+    padding: var(--space-3) var(--space-5);
+    font-size: 1rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .button--swap {
+    display: inline-grid;
+    place-items: center;
+    white-space: nowrap;
+  }
+
+  .button--swap .button__label {
+    grid-area: 1 / 1;
+    line-height: 1;
+    display: block;
+    transition: opacity var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .button--swap .button__label-hover {
+    opacity: 0;
+  }
+
+  .button--swap:hover .button__label-default {
+    opacity: 0;
+  }
+
+  .button--swap:hover .button__label-hover {
+    opacity: 1;
+  }
+
+  .button--block {
+    width: 100%;
+  }
+
+  .icon-button {
+    inline-size: 40px;
+    block-size: 40px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: var(--color-on-surface);
+    transition: background-color var(--motion-duration-short4) var(--motion-easing-standard), color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .icon-button:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  }
+}

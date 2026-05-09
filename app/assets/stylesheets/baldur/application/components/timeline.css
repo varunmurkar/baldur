@@ -1,0 +1,184 @@
+/* Timeline Component Styles - Reference Design */
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Month/Year Header */
+.timeline-month-header {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.timeline-month-header:first-child {
+    margin-top: 0;
+}
+
+/* Timeline Item Layout */
+.timeline-item {
+    display: grid;
+    grid-template-columns: 60px auto 1fr;
+    gap: 1rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+/* Date Label (left column) */
+.timeline-date-label {
+    font-size: 0.875rem;
+    color: var(--color-on-surface);
+    text-align: right;
+    padding-top: 2px;
+}
+
+/* Timeline Indicator (middle column - dot + line) */
+.timeline-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24px;
+    position: relative;
+}
+
+.timeline-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--color-outline);
+    background-color: var(--color-surface);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.timeline-dot.completed {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.timeline-dot.scheduled,
+.timeline-dot.confirmed {
+    background-color: var(--color-tertiary);
+    border-color: var(--color-tertiary);
+}
+
+.timeline-dot.cancelled,
+.timeline-dot.no_show {
+    background-color: transparent;
+    border-color: var(--color-outline);
+}
+
+.timeline-line {
+    width: 2px;
+    flex: 1;
+    background-color: var(--color-outline-variant);
+    margin-top: 4px;
+    min-height: 20px;
+}
+
+/* Timeline Content (right column) */
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: color-mix(in srgb, var(--color-surface-variant) 20%, transparent);
+    border-radius: 8px;
+    border: 1px solid var(--color-outline-variant);
+}
+
+.timeline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.timeline-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-on-surface);
+    margin: 0;
+    flex: 1;
+}
+
+/* Timeline Metadata */
+.timeline-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.timeline-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.timeline-meta-item svg {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+/* Timeline Notes (SOAP) */
+.timeline-notes {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-outline-variant);
+}
+
+.soap-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.soap-section:last-child {
+    margin-bottom: 0;
+}
+
+.soap-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.soap-content {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-on-surface);
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timeline-item {
+        grid-template-columns: 50px auto 1fr;
+        gap: 0.75rem;
+    }
+
+    .timeline-date-label {
+        font-size: 0.75rem;
+    }
+
+    .timeline-content {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .timeline-title {
+        font-size: 0.875rem;
+    }
+}

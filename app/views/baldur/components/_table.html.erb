@@ -1,0 +1,117 @@
+<%
+  normalized_columns = Array(columns).map do |column|
+    if column.is_a?(Hash)
+      column.symbolize_keys
+    else
+      key = column.is_a?(Symbol) ? column : column.to_s.parameterize.underscore.to_sym
+      { label: column, key: key }
+    end
+  end
+  row_classes = local_assigns[:row_class] || nil
+  row_attributes_config = local_assigns[:row_attributes]
+  sort_config = local_assigns[:sort]
+  sort_config = sort_config.respond_to?(:symbolize_keys) ? sort_config.symbolize_keys : {}
+  sort_key = sort_config[:key].to_s
+  sort_direction = sort_config[:direction].to_s.downcase == "asc" ? "asc" : "desc"
+  sort_path_builder = local_assigns[:sort_path_builder]
+  header_classes = "px-6 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[color:var(--color-on-surface-variant)]"
+  cell_classes = "px-6 py-4 text-sm text-[color:var(--color-on-surface)]"
+  table_classes = ["table", local_assigns[:table_class], local_assigns[:class]].compact.join(" ")
+%>
+<div class="table-card__scroll">
+  <table class="<%= table_classes %>">
+    <thead>
+      <tr>
+        <% normalized_columns.each do |column| %>
+          <% column_header_class = [header_classes, column[:header_class]].compact.join(" ") %>
+          <% column_sort_key = (column[:sort_key] || column[:key]).to_s %>
+          <% sortable = !!column[:sortable] && sort_path_builder.respond_to?(:call) && column_sort_key.present? %>
+          <% sorted = sortable && sort_key == column_sort_key %>
+          <% next_direction = sorted && sort_direction == "asc" ? "desc" : "asc" %>
+          <% sort_path = sortable ? (sort_path_builder.call(column_sort_key, next_direction) rescue nil) : nil %>
+          <% sort_icon = if sorted
+               sort_direction == "asc" ? "arrow-up" : "arrow-down"
+             else
+               "chevrons-up-down"
+             end %>
+          <% aria_sort = if sorted
+               sort_direction == "asc" ? "ascending" : "descending"
+             else
+               "none"
+             end %>
+          <% tooltip_options = case column[:header_tooltip]
+             when String
+               { content: column[:header_tooltip] }
+             when Hash
+               column[:header_tooltip].symbolize_keys
+             end %>
+          <% th_attributes = { scope: "col", class: column_header_class } %>
+          <% th_attributes[:"aria-sort"] = aria_sort if sortable %>
+          <%= tag.th(**th_attributes) do %>
+            <% header_content_class = [ "inline-flex items-center gap-1", (column_header_class.include?("text-right") ? "justify-end" : "justify-start") ].join(" ") %>
+            <% tooltip_bubble_class = [ "w-80 text-left normal-case tracking-normal", tooltip_options&.dig(:bubble_class) ].compact.join(" ") %>
+            <div class="<%= header_content_class %>">
+              <% if sortable && sort_path.present? %>
+                <%= link_to sort_path, class: "inline-flex items-center gap-1 hover:text-[color:var(--color-on-surface)]" do %>
+                  <span><%= column[:label] %></span>
+                  <%= ui_icon(sort_icon, class_name: "h-4 w-4") %>
+                <% end %>
+              <% else %>
+                <span><%= column[:label] %></span>
+              <% end %>
+              <% if tooltip_options&.dig(:content).present? %>
+                <%= ui_tooltip(
+                  text: "#{column[:label]} definition",
+                  content: tooltip_options[:content],
+                  variant: tooltip_options.fetch(:variant, :icon),
+                  icon: tooltip_options.fetch(:icon, "circle-help"),
+                  trigger_class: tooltip_options[:trigger_class],
+                  bubble_class: tooltip_bubble_class
+                ) %>
+              <% end %>
+            </div>
+            <% if sortable && sort_path.blank? %>
+              <span class="sr-only">Sort unavailable</span>
+            <% end %>
+          <% end %>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% if rows.blank? %>
+        <tr>
+          <td colspan="<%= normalized_columns.length %>" class="px-6 py-6 text-center text-sm text-[color:color-mix(in srgb,var(--color-on-surface)_70%,transparent)]">
+            <%= empty_state %>
+          </td>
+        </tr>
+      <% else %>
+        <% rows.each do |row|
+             cells = if row.is_a?(Hash)
+                       normalized_columns.map { |column| row[column[:key]] }
+                     else
+                       Array(row)
+                     end
+             dynamic_attributes =
+               case row_attributes_config
+               when Proc
+                 row_attributes_config.call(row) || {}
+               when Hash
+                 row_attributes_config
+               else
+                 {}
+               end
+             attributes = dynamic_attributes.deep_dup
+             classes = [row_classes, attributes.delete(:class)].compact.join(" ").presence
+             attributes[:class] = classes if classes.present?
+        %>
+          <%= tag.tr(**attributes) do %>
+            <% cells.each_with_index do |cell, index| %>
+              <% column_cell_class = [cell_classes, normalized_columns[index]&.fetch(:cell_class, nil)].compact.join(" ") %>
+              <td class="<%= column_cell_class %>"><%= cell %></td>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

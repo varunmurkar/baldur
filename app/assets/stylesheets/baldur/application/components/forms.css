@@ -1,0 +1,624 @@
+@layer components {
+  .form-control {
+    display: block;
+    position: relative;
+    margin-bottom: var(--space-4);
+  }
+
+  .form-control .label-text {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--color-text-soft);
+    margin-bottom: var(--space-1);
+  }
+
+  .form-control:focus-within .label-text {
+    color: var(--color-primary);
+  }
+
+  :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea):not(.text-field__control) {
+    display: block;
+    width: 100%;
+    min-height: var(--field-height, 40px);
+    padding: var(--field-padding-y, calc(var(--space-2) + 2px)) var(--space-4);
+    box-sizing: border-box;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--field-border-color, color-mix(in srgb, var(--color-outline) 85%, transparent));
+    /* border: 1px solid color-mix(in srgb, var(--color-outline) 80%, transparent); */
+    background-color: var(--field-bg, var(--color-surface-medium));
+    color: var(--color-on-surface);
+    font-size: 1rem;
+    line-height: 1.4;
+    appearance: none;
+    transition:
+      border-color var(--motion-duration-short4) var(--motion-easing-standard),
+      background-color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  :is(input:not([type="checkbox"]):not([type="radio"]), select):not(.text-field__control) {
+    height: var(--field-height, 40px);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    --field-border-color: color-mix(in srgb, var(--color-outline) 85%, transparent);
+    --field-bg: color-mix(in srgb, var(--color-surface-low) 64%, transparent);
+    --field-border-color-focus: var(--color-primary);
+    --field-bg-focus: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+    --field-shadow-focus: 0 0 0 1px color-mix(in srgb, var(--color-primary) 25%, transparent);
+    --field-height: 40px;
+    --field-padding-y: calc(var(--space-2) + 2px);
+  }
+
+  html[data-theme="dark"] .field {
+    --field-bg: var(--color-surface-high);
+  }
+
+  html[data-theme="dark"] .dialog textarea,
+  .text-field__control {
+    --field-bg: var(--color-surface-low);
+  }
+
+  .field__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .field__supporting {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+  }
+
+  .text-field {
+    width: 100%;
+  }
+
+  .text-field__input {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--field-height, 40px);
+    padding: 0 var(--space-4);
+    box-sizing: border-box;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--field-border-color);
+    background: var(--field-bg);
+    transition:
+      border-color var(--motion-duration-short4) var(--motion-easing-standard),
+      background-color var(--motion-duration-short4) var(--motion-easing-standard),
+      box-shadow var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .date-field__input {
+    position: relative;
+  }
+
+  .text-field__prefix,
+  .text-field__suffix {
+    color: var(--color-text-soft);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+    pointer-events: none;
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .text-field__control {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    min-height: calc(var(--field-height, 40px) - 2px);
+    padding: var(--field-padding-y, calc(var(--space-2) + 2px)) 0;
+    box-sizing: border-box;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .text-field__control:not(textarea) {
+    height: calc(var(--field-height, 40px) - 2px);
+  }
+
+  .text-field__control[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .date-field__display {
+    padding-right: calc(var(--space-4) + 40px);
+  }
+
+  .date-field__toggle {
+    position: absolute;
+    top: 50%;
+    right: var(--space-2);
+    transform: translateY(-50%);
+    inline-size: 40px;
+    block-size: 40px;
+    min-inline-size: 40px;
+    min-block-size: 40px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-soft);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color var(--motion-duration-short4) var(--motion-easing-standard),
+      color var(--motion-duration-short4) var(--motion-easing-standard),
+      box-shadow var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .date-field__toggle:hover:not(:disabled),
+  .date-field__toggle:focus-visible:not(:disabled) {
+    background: color-mix(in srgb, var(--color-on-surface) 10%, transparent);
+    color: var(--color-on-surface);
+  }
+
+  .date-field__toggle:focus-visible:not(:disabled) {
+    outline: none;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary) 35%, transparent);
+  }
+
+  .date-field__toggle:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .date-field__toggle svg {
+    inline-size: 18px;
+    block-size: 18px;
+  }
+
+  .text-field__control[type="number"]::-webkit-outer-spin-button,
+  .text-field__control[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .text-field__input:focus-within {
+    border-color: var(--field-border-color-focus);
+    background: var(--field-bg-focus);
+    box-shadow: var(--field-shadow-focus);
+  }
+
+  .text-field__control:focus {
+    outline: none;
+  }
+
+  .file-picker {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--field-height, 40px);
+    padding: var(--space-2);
+    border: 1px solid var(--field-border-color);
+    border-radius: var(--radius-md);
+    background: var(--field-bg);
+    transition:
+      border-color var(--motion-duration-short4) var(--motion-easing-standard),
+      background-color var(--motion-duration-short4) var(--motion-easing-standard),
+      box-shadow var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .file-picker:focus-within {
+    border-color: var(--field-border-color-focus);
+    background: var(--field-bg-focus);
+    box-shadow: var(--field-shadow-focus);
+  }
+
+  .file-picker__button {
+    flex: none;
+  }
+
+  .file-picker__filename {
+    flex: 1;
+    min-width: 0;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .date-field {
+    position: relative;
+  }
+
+  .scroll-target {
+    scroll-margin-top: 96px;
+  }
+
+  .scroll-target:target {
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 0 2px var(--color-primary);
+    animation: target-pulse 1.2s ease-out 1;
+  }
+
+  @keyframes target-pulse {
+    0% {
+      box-shadow: 0 0 0 2px var(--color-primary);
+    }
+    100% {
+      box-shadow: 0 0 0 2px transparent;
+    }
+  }
+
+  .date-picker {
+    position: absolute;
+    inset-block-start: calc(70% + var(--space-2));
+    inset-inline-start: 0;
+    z-index: 20;
+    min-inline-size: 280px;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid color-mix(in srgb, var(--color-outline-variant) 80%, transparent);
+    box-shadow:
+      0px 8px 16px rgba(0, 0, 0, 0.12),
+      0px 2px 8px rgba(0, 0, 0, 0.08);
+    padding: var(--space-3);
+  }
+
+  .date-picker__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .date-picker__controls {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .date-picker__title-row {
+    margin-bottom: var(--space-2);
+  }
+
+  .date-picker__title {
+    font-weight: 700;
+    color: var(--color-on-surface);
+    letter-spacing: 0.01em;
+  }
+
+  .date-picker__month,
+  .date-picker__year {
+    border: 1px solid var(--field-border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-1-5) var(--space-2);
+    background: var(--color-surface);
+    color: var(--color-on-surface);
+    font-weight: 600;
+    min-height: 40px;
+  }
+
+  .date-picker__year {
+    width: 100%;
+  }
+
+  .date-picker__nav {
+    border: none;
+    background: transparent;
+    color: var(--color-on-surface);
+    inline-size: 36px;
+    block-size: 36px;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .date-picker__nav:hover,
+  .date-picker__nav:focus-visible {
+    background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    outline: none;
+  }
+
+  .date-picker__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-1);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+    margin-bottom: var(--space-2);
+  }
+
+  .date-picker__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-1);
+  }
+
+  .date-picker__day {
+    inline-size: 100%;
+    block-size: 40px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-on-surface);
+    cursor: pointer;
+    font-weight: 600;
+    transition:
+      background-color var(--motion-duration-short4) var(--motion-easing-standard),
+      color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .date-picker__day:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-primary) 40%, transparent);
+    outline-offset: 2px;
+  }
+
+  .date-picker__day:hover:not(.is-outside),
+  .date-picker__day:focus-visible:not(.is-outside) {
+    background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  }
+
+  .date-picker__day.is-outside {
+    cursor: default;
+    background: transparent;
+    color: var(--color-text-muted);
+  }
+
+  .date-picker__day.is-selected {
+    background: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+  }
+
+  .date-picker__day.is-today:not(.is-selected) {
+    border: 1px solid color-mix(in srgb, var(--color-primary) 70%, transparent);
+  }
+
+  .date-picker__day.is-disabled {
+    cursor: not-allowed;
+    color: var(--color-text-muted);
+    background: transparent;
+    opacity: 0.4;
+  }
+
+  .date-picker__day.is-disabled:hover {
+    background: transparent;
+  }
+
+  .text-field__control:disabled {
+    cursor: not-allowed;
+    background: var(--color-surface-lowest);
+    border-color: color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+    color: var(--color-text-muted);
+  }
+
+  .field.is-invalid .text-field__control,
+  .field.is-invalid .menu-select__trigger {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-error) 30%, transparent);
+  }
+
+  .field.is-invalid .field__label,
+  .field.is-invalid .field__supporting {
+    color: var(--color-error);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+  }
+
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--color-surface-low);
+  }
+
+  select {
+    padding-right: calc(var(--space-6));
+    background-image: linear-gradient(45deg, transparent 50%, var(--color-on-surface) 50%), linear-gradient(135deg, var(--color-on-surface) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 55%, calc(100% - 12px) 55%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  label {
+    color: var(--color-on-surface);
+  }
+
+  .checkbox,
+  .checkbox-panel {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    cursor: pointer;
+    color: var(--color-on-surface);
+  }
+
+  .checkbox.is-disabled,
+  .checkbox-panel.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .checkbox__control {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .checkbox__native {
+    position: absolute;
+    inset: 0;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .checkbox__box {
+    inline-size: 18px;
+    block-size: 18px;
+    border-radius: 6px;
+    border: 2px solid var(--color-outline);
+    background-color: var(--color-surface);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      border-color var(--motion-duration-short4) var(--motion-easing-standard),
+      background-color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .checkbox__check {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-on-primary);
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+      opacity var(--motion-duration-short4) var(--motion-easing-standard),
+      transform var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .checkbox__check svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .checkbox__native:checked+.checkbox__box {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .checkbox__native:checked+.checkbox__box .checkbox__check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .checkbox__native:focus-visible+.checkbox__box {
+    outline: 3px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+    outline-offset: 2px;
+  }
+
+  .checkbox__body {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .checkbox__label {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .checkbox__description {
+    font-size: 0.85rem;
+    color: var(--color-text-soft);
+  }
+
+  .checkbox__body:empty {
+    display: none;
+  }
+
+  .checkbox-panel {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-outline-variant);
+    background: color-mix(in srgb, var(--color-surface) 96%, transparent);
+    padding: var(--space-4);
+    transition: border-color var(--motion-duration-short4) var(--motion-easing-standard), background-color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .checkbox-panel.selected {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 35%, transparent);
+  }
+
+  .checkbox-panel__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .text-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    max-width: fit-content;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition:
+      background-color var(--motion-duration-short4) var(--motion-easing-standard),
+      color var(--motion-duration-short4) var(--motion-easing-standard);
+  }
+
+  .text-button:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-primary) 50%, transparent);
+    outline-offset: 2px;
+  }
+
+  .text-button:hover {
+    background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea,
+  button,
+  [type="submit"],
+  [type="button"],
+  a.btn,
+  .checkbox-panel,
+  .checkbox__box,
+  .checkbox__check,
+  .text-field__control,
+  .text-button {
+    transition: none;
+  }
+}

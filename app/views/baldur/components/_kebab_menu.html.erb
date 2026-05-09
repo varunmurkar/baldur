@@ -1,0 +1,36 @@
+<%
+  items = Array(local_assigns[:items])
+  menu_class = local_assigns[:menu_class].to_s.strip
+  summary_aria_label = local_assigns[:summary_aria_label].presence || "More actions"
+  empty_text = local_assigns[:empty_text].presence || "No quick actions yet"
+  menu_classes = [ "menu", menu_class.presence ].compact.join(" ")
+%>
+
+<details class="menu-wrapper inline-block" data-controller="details-menu" data-action="click@window->details-menu#closeIfClickOutside keydown@window->details-menu#closeIfEscape click->details-menu#closeIfLink">
+  <summary class="icon-button" aria-label="<%= summary_aria_label %>">
+    <%= ui_icon("ellipsis", class_name: "h-5 w-5") %>
+  </summary>
+  <div class="<%= menu_classes %>">
+    <% if items.present? %>
+      <% items.each do |item| %>
+        <%
+          label = item[:label] || item["label"]
+          href = item[:href] || item["href"] || "#"
+          open_modal = item[:open_modal] || item["open_modal"]
+          action = item[:action] || item["action"]
+          item_data = (item[:data] || item["data"] || {}).to_h
+          label_class = item[:label_class] || item["label_class"]
+          data_attributes = {}
+          data_attributes[:open_modal] = open_modal if open_modal.present?
+          data_attributes[:action] = action if action.present?
+          item_data.each { |key, value| data_attributes[key] = value }
+        %>
+        <%= link_to href, class: "menu__option", data: data_attributes do %>
+          <span class="<%= ["menu__option-label", label_class].compact.join(" ") %>"><%= label %></span>
+        <% end %>
+      <% end %>
+    <% else %>
+      <span class="px-3 py-2 text-xs text-muted block"><%= empty_text %></span>
+    <% end %>
+  </div>
+</details>

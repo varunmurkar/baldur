@@ -1,0 +1,42 @@
+<%
+  template = !!local_assigns[:template]
+  variant = (local_assigns[:variant] || :notice).to_sym
+  icon_map = {
+    notice: "info",
+    success: "check-circle",
+    warning: "triangle-alert",
+    error: "circle-alert"
+  }
+  title = local_assigns[:title].presence || case variant
+  when :success then "Success"
+  when :notice then "Notice"
+  when :warning then "Warning"
+  when :error then "Error"
+  else "Notice"
+  end
+  icon_content = local_assigns[:icon].presence || icon_map[variant] || "info"
+  dismiss_label = local_assigns[:dismiss_label] || "Dismiss"
+%>
+<div class="snackbar snackbar--<%= variant %>" data-controller="snackbar" data-snackbar data-snackbar-variant="<%= variant %>">
+  <div class="snackbar__icon" data-snackbar-icon>
+    <%= ui_icon(icon_content, class_name: "h-5 w-5") unless template %>
+  </div>
+  <div class="snackbar__body">
+    <p class="snackbar__title" data-snackbar-label><%= title unless template %></p>
+    <p class="snackbar__message" data-snackbar-message><%= message unless template %></p>
+  </div>
+  <button type="button"
+          class="snackbar__dismiss"
+          data-action="snackbar#handleDismiss"
+          data-snackbar-dismiss
+          aria-label="<%= dismiss_label %>"
+          data-snackbar-dismiss-label="<%= dismiss_label %>">
+    <span class="snackbar__dismiss-ring" aria-hidden="true">
+      <svg viewBox="0 0 20 20" focusable="false">
+        <circle class="snackbar__dismiss-track" cx="10" cy="10" r="8" pathLength="100" />
+        <circle class="snackbar__dismiss-indicator" cx="10" cy="10" r="8" pathLength="100" data-snackbar-target="progressIndicator" />
+      </svg>
+    </span>
+    <span class="snackbar__dismiss-icon" aria-hidden="true"><%= ui_icon("x", class_name: "h-4 w-4") %></span>
+  </button>
+</div>

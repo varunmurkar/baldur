@@ -1,0 +1,30 @@
+<%
+  open = !!local_assigns[:open]
+  accordion_id = local_assigns[:id] || "accordion-#{SecureRandom.hex(4)}"
+  summary_class = local_assigns[:summary_class] || "cursor-pointer text-base font-semibold text-on-surface flex items-center gap-2"
+  body_class = ["pt-4 pb-4 space-y-4", local_assigns[:body_class]].compact.join(" ")
+  wrapper_class = [local_assigns[:class]].compact.join(" ")
+%>
+<div class="<%= wrapper_class %>" data-controller="accordion">
+  <div data-accordion-target="item" data-open="<%= open %>">
+    <button
+      type="button"
+      class="<%= [summary_class, "w-full text-left"].compact.join(" ") %>"
+      data-action="click->accordion#toggle"
+      aria-expanded="<%= open ? "true" : "false" %>"
+      aria-controls="<%= accordion_id %>"
+    >
+      <span aria-hidden="true" data-accordion-target="icon"><%= ui_icon("chevron-right", class_name: "h-[18px] w-[18px]") %></span>
+      <span><%= local_assigns[:title] %></span>
+    </button>
+    <div
+      id="<%= accordion_id %>"
+      data-accordion-target="content"
+      aria-hidden="<%= open ? "false" : "true" %>"
+    >
+      <div class="<%= body_class %>">
+        <%= local_assigns[:body].presence || yield %>
+      </div>
+    </div>
+  </div>
+</div>

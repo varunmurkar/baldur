@@ -1,0 +1,61 @@
+<% return if total_pages <= 1 %>
+<%
+  first_page = current_page > 1 ? 1 : nil
+  previous_page = current_page > 1 ? current_page - 1 : nil
+  next_page = current_page < total_pages ? current_page + 1 : nil
+  last_page = current_page < total_pages ? total_pages : nil
+%>
+
+<nav class="pagination" aria-label="Pagination">
+  <div class="pagination__list">
+    <% if first_page %>
+      <%= link_to path_builder.call(first_page), class: "pagination__item", aria: { label: "Go to first page" } do %>
+        <%= ui_icon("chevrons-left", class_name: "pagination__icon") %>
+      <% end %>
+    <% else %>
+      <span class="pagination__item is-disabled" aria-disabled="true">
+        <%= ui_icon("chevrons-left", class_name: "pagination__icon") %>
+      </span>
+    <% end %>
+
+    <% if previous_page %>
+      <%= link_to path_builder.call(previous_page), class: "pagination__item", aria: { label: "Go to previous page" } do %>
+        <%= ui_icon("chevron-left", class_name: "pagination__icon") %>
+      <% end %>
+    <% else %>
+      <span class="pagination__item is-disabled" aria-disabled="true">
+        <%= ui_icon("chevron-left", class_name: "pagination__icon") %>
+      </span>
+    <% end %>
+
+    <% pages.each do |page| %>
+      <% if page == :gap %>
+        <span class="pagination__gap" aria-hidden="true">...</span>
+      <% elsif page == current_page %>
+        <span class="pagination__item is-current" aria-current="page"><%= page %></span>
+      <% else %>
+        <%= link_to page, path_builder.call(page), class: "pagination__item", aria: { label: "Go to page #{page}" } %>
+      <% end %>
+    <% end %>
+
+    <% if next_page %>
+      <%= link_to path_builder.call(next_page), class: "pagination__item", aria: { label: "Go to next page" } do %>
+        <%= ui_icon("chevron-right", class_name: "pagination__icon") %>
+      <% end %>
+    <% else %>
+      <span class="pagination__item is-disabled" aria-disabled="true">
+        <%= ui_icon("chevron-right", class_name: "pagination__icon") %>
+      </span>
+    <% end %>
+
+    <% if last_page %>
+      <%= link_to path_builder.call(last_page), class: "pagination__item", aria: { label: "Go to last page" } do %>
+        <%= ui_icon("chevrons-right", class_name: "pagination__icon") %>
+      <% end %>
+    <% else %>
+      <span class="pagination__item is-disabled" aria-disabled="true">
+        <%= ui_icon("chevrons-right", class_name: "pagination__icon") %>
+      </span>
+    <% end %>
+  </div>
+</nav>

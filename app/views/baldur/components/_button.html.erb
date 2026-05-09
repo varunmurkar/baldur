@@ -1,0 +1,81 @@
+<%
+  label = local_assigns[:label]
+  variant = (local_assigns[:variant] || :primary).to_sym
+  size = (local_assigns[:size] || :md).to_sym
+  href = local_assigns[:href]
+  method = local_assigns[:method].presence&.to_s&.downcase
+  non_get_method = method.present? && method != "get"
+  icon = local_assigns[:icon]
+  variant_classes = {
+    primary: "button button--filled",
+    filled: "button button--filled",
+    tonal: "button button--tonal",
+    secondary: "button button--tonal",
+    danger_tonal: "button button--tonal-error",
+    accent: "button button--tertiary",
+    outline: "button button--outlined",
+    text: "button button--text",
+    ghost: "button button--text",
+    danger: "button button--error",
+    elevated: "button button--elevated"
+  }
+  size_classes = {
+    xs: "button--sm",
+    sm: "button--sm",
+    md: nil,
+    lg: "button--lg"
+  }
+  width_class = local_assigns[:block] ? "button--block" : nil
+  classes = [
+    variant_classes[variant] || variant_classes[:primary],
+    size_classes[size],
+    width_class,
+    local_assigns[:class]
+  ].compact.join(" ")
+  content = capture do
+    if icon.present?
+      icon_markup = icon.to_s.include?("<") ? icon : ui_icon(icon, class_name: "h-4 w-4")
+      concat content_tag(:span, icon_markup, class: "inline-flex items-center", aria: { hidden: true })
+    end
+    concat content_tag(:span, label || "Action")
+  end
+%>
+<% disabled = !!local_assigns[:disabled] %>
+
+<% if href.present? %>
+  <% if non_get_method %>
+    <%= button_to href,
+                  method: method.to_sym,
+                  class: classes,
+                  data: local_assigns[:data],
+                  disabled: disabled,
+                  params: local_assigns[:params],
+                  form_class: ["inline-block", local_assigns[:form_class]].compact.join(" ") do %>
+      <%= content %>
+    <% end %>
+  <% else %>
+    <%
+      safe_rel = local_assigns[:rel]
+      if local_assigns[:target] == "_blank"
+        safe_rel = [safe_rel, "noopener noreferrer"].compact.join(" ").strip
+      end
+    %>
+    <%= link_to href,
+                class: classes,
+                data: local_assigns[:data],
+                aria: local_assigns[:aria],
+                target: local_assigns[:target],
+                rel: safe_rel.presence do %>
+      <%= content %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= button_tag type: local_assigns[:type] || "button",
+                 class: classes,
+                 data: local_assigns[:data],
+                 aria: local_assigns[:aria],
+                 form: local_assigns[:form],
+                 disabled: disabled do %>
+    <%= content %>
+  <% end %>
+<% end %>

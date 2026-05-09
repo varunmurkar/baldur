@@ -1,0 +1,61 @@
+<%
+  variant = (variant || :notice).to_sym
+  collapsible = !!local_assigns[:collapsible]
+  collapsed = !!local_assigns[:collapsed]
+  icon_map = {
+    notice: "info",
+    success: "check-circle",
+    warning: "triangle-alert",
+    error: "circle-alert"
+  }
+  icon_content = icon.presence || icon_map[variant] || "info"
+  classes = ["alert", "alert--#{variant}", ("alert--collapsed" if collapsed), class_name].compact.join(" ")
+  data_attributes = {}
+  if collapsible
+    data_attributes[:controller] = "alert"
+    data_attributes[:alert_collapsed_value] = collapsed
+    data_attributes[:alert_storage_key_value] = local_assigns[:collapse_storage_key] if local_assigns[:collapse_storage_key].present?
+  end
+%>
+<%= content_tag :div, class: classes, data: data_attributes do %>
+  <div class="alert__icon">
+    <%= ui_icon(icon_content, class_name: "h-6 w-6") %>
+  </div>
+  <div class="alert__body">
+    <% if title.present? %>
+      <p class="alert__title"><%= title %></p>
+    <% end %>
+    <% if body.present? %>
+      <div
+        class="<%= ["alert__details", ("alert__details--collapsed" if collapsed)].compact.join(" ") %>"
+        data-alert-target="details"
+        aria-hidden="<%= collapsed %>">
+        <div class="alert__content">
+          <%= body %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <% if actions.present? || collapsible %>
+    <div class="alert__rail">
+      <% if actions.present? %>
+        <div class="alert__actions" data-alert-target="actions" <%= "hidden" if collapsed %>>
+          <%= actions %>
+        </div>
+      <% end %>
+      <% if collapsible %>
+        <div class="alert__summary-action" data-alert-target="expandButton" <%= "hidden" unless collapsed %>>
+          <%= ui_button(
+                label: local_assigns[:collapsed_summary_action_label].presence || "More",
+                variant: :text,
+                size: :sm,
+                type: :button,
+                class: "alert__toggle",
+                data: { action: "alert#expand" },
+                aria: { expanded: (!collapsed).to_s }
+              ) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

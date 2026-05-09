@@ -1,0 +1,39 @@
+<ul class="stepper" role="list">
+  <% steps.each_with_index do |step, index| %>
+    <% status = step[:status] %>
+    <% status_class =
+      case status
+      when :completed then "stepper__item--completed"
+      when :current then "stepper__item--current"
+      else "stepper__item--pending"
+      end %>
+    <% left_classes = [ "stepper__line" ] %>
+    <% if index.zero? %>
+      <% left_classes << "stepper__line--hidden" %>
+    <% elsif steps[index - 1][:status] == :completed %>
+      <% left_classes << "stepper__line--active" %>
+    <% end %>
+    <% right_classes = [ "stepper__line" ] %>
+    <% if index == steps.length - 1 %>
+      <% right_classes << "stepper__line--hidden" %>
+    <% elsif status == :completed %>
+      <% right_classes << "stepper__line--active" %>
+    <% end %>
+    <li
+      class="stepper__item <%= status_class %>"
+      role="listitem"
+      <%= 'aria-current="step"' if status == :current %>>
+      <div class="stepper__indicator-row">
+        <div class="<%= left_classes.join(" ") %>" aria-hidden="true"></div>
+        <div class="stepper__indicator" aria-hidden="true">
+          <span><%= status == :completed ? "✓" : index + 1 %></span>
+        </div>
+        <div class="<%= right_classes.join(" ") %>" aria-hidden="true"></div>
+      </div>
+      <p class="stepper__label"><%= step[:title] %></p>
+      <% if step[:description].present? %>
+        <p class="stepper__description"><%= step[:description] %></p>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

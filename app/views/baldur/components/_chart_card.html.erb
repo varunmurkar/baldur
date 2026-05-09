@@ -1,0 +1,42 @@
+<%
+  actions_content = if actions.respond_to?(:call)
+                      capture(&actions)
+                    else
+                      actions
+                    end
+  footer_content = if footer.respond_to?(:call)
+                     capture(&footer)
+                   else
+                     footer
+                   end
+  card_classes = ["chart-card", local_assigns[:class]].compact.join(" ")
+%>
+<section class="<%= card_classes %>">
+  <% if title.present? || description.present? || actions_content.present? %>
+    <div class="chart-card__header">
+      <div>
+        <% if title.present? %>
+          <h3 class="text-lg font-semibold text-[color:var(--color-on-surface)]"><%= title %></h3>
+        <% end %>
+        <% if description.present? %>
+          <p class="text-sm text-muted"><%= description %></p>
+        <% end %>
+      </div>
+      <% if actions_content.present? %>
+        <div class="flex flex-wrap items-center gap-2">
+          <%= actions_content %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="chart-card__body">
+    <%= body %>
+  </div>
+
+  <% if footer_content.present? %>
+    <div class="chart-card__footer">
+      <%= footer_content %>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,41 @@
+@layer components {
+  .app-bar {
+    position: relative;
+    z-index: 20;
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid var(--color-outline-variant);
+  }
+
+  .app-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    width: 100%;
+  }
+
+  .app-bar__actions {
+    pointer-events: auto;
+  }
+
+  .avatar {
+    inline-size: 40px;
+    block-size: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    font-weight: 700;
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}

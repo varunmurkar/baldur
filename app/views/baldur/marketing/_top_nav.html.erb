@@ -1,0 +1,28 @@
+<%
+  resolved_brand = local_assigns.fetch(:brand).symbolize_keys
+  resolved_brand[:logo_class] = resolved_brand[:logo_class].presence || "h-8 w-8 rounded-lg"
+  resolved_brand[:wordmark_class] = resolved_brand[:wordmark_class].presence || "text-2xl font-bold text-primary"
+  brand_markup = content_tag(:span, class: ["brand-lockup", resolved_brand[:wrapper_class], "text-primary"].compact.join(" ")) do
+    safe_join(
+      [
+        image_tag(resolved_brand[:logo_src], alt: resolved_brand[:logo_alt], class: ["brand-lockup__logo", resolved_brand[:logo_class]].join(" ")),
+        content_tag(:span, resolved_brand[:wordmark], class: ["brand-lockup__wordmark", resolved_brand[:wordmark_class]].join(" "))
+      ]
+    )
+  end
+  brand_markup = link_to(brand_markup, resolved_brand[:href], class: "inline-flex") if resolved_brand[:href].present?
+%>
+<header class="<%= ["marketing-top-nav relative z-50 border-b border-outline-variant bg-surface-high backdrop-blur", local_assigns[:classes]].compact.join(" ") %>">
+  <div class="mx-auto flex h-16 max-w-6xl items-center px-12">
+    <%= brand_markup %>
+    <nav class="ml-auto flex items-center gap-3 text-sm text-soft">
+      <% Array(links).each do |link| %>
+        <%= link_to link.fetch(:label), link.fetch(:href), class: link[:class] %>
+      <% end %>
+      <% if theme_toggle.present? %>
+        <%= ui_marketing_render_content(theme_toggle) %>
+      <% end %>
+      <%= ui_button(**primary_action) %>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,27 @@
+<%
+  input_id = id.presence || [name, value].compact.join("_").to_s.parameterize(separator: "_")
+  wrapper_classes = ["checkbox", ("is-disabled" if disabled), wrapper_class].compact.join(" ")
+  native_classes = ["checkbox__native", input_class].compact.join(" ")
+
+  body_fragments = []
+  if label.present?
+    body_fragments << content_tag(:span, label, class: "checkbox__label")
+  end
+  if description.present?
+    body_fragments << content_tag(:span, description, class: "checkbox__description")
+  end
+  body_fragments << body if body.present?
+  body_content = safe_join(body_fragments) if body_fragments.any?
+%>
+
+<label class="<%= wrapper_classes %>">
+  <span class="checkbox__control">
+    <%= check_box_tag name, value, checked, id: input_id, required: required, disabled: disabled, data: data, aria: aria, form: form, class: native_classes %>
+    <span class="checkbox__box" aria-hidden="true">
+      <span class="checkbox__check"><%= ui_icon("check", class_name: "h-4 w-4") %></span>
+    </span>
+  </span>
+  <% if body_content.present? %>
+    <span class="checkbox__body"><%= body_content %></span>
+  <% end %>
+</label>

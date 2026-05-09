@@ -1,0 +1,27 @@
+/*
+ * Host theme overrides.
+ *
+ * Override only the base palette inputs below. Baldur remains the source of
+ * truth for semantic tokens, light/dark role mapping, and component styling.
+ * Use `fonts.css` to load font files, then map those loaded families to the
+ * font tokens below.
+ *
+ * Example:
+ * :root {
+ *   --_primary-base: oklch(0.68 0.16 27);
+ *   --_secondary-base: oklch(0.30 0.04 195);
+ *   --_accent-base: oklch(0.48 0.07 92);
+ *   --_neutral-base: oklch(0.87 0 0);
+ *   --font-body: "Geist", "Inter", "Segoe UI", "Helvetica Neue", Arial, system-ui, -apple-system, sans-serif;
+ *   --font-heading: var(--font-body);
+ *   --font-ui: var(--font-body);
+ * }
+ */
+
+:root {
+  --font-body: "Geist", "Inter", "Segoe UI", "Helvetica Neue", Arial, system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-body);
+  --font-ui: var(--font-body);
+  --font-family: var(--font-body);
+  --font-sans: var(--font-body);
+}
