@@ -32,5 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "importmap-rails"
   spec.add_dependency "lucide-rails"
   spec.add_dependency "rails", ">= 8.1.0"
-  spec.add_dependency "tailwindcss-rails"
+  spec.add_dependency "tailwindcss-rails", ">= 4.4.0"
 end
