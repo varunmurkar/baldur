@@ -1,12 +1,12 @@
 <%
   resolved_brand_path = local_assigns[:brand_path].presence || "#"
-  auth_shell_classes = ["auth-page", "flex min-h-screen items-center justify-center bg-surface-low px-6 py-12", local_assigns[:shell_class]].compact.join(" ")
+  auth_shell_classes = ["auth-page", local_assigns[:shell_class]].compact.join(" ")
   auth_card_class = local_assigns[:card_class]
 %>
 
 <div class="<%= auth_shell_classes %>">
-  <div class="mx-auto max-w-lg">
-    <div class="mb-6 flex justify-center">
+  <div class="auth-page__container">
+    <div class="auth-page__brand">
       <%= link_to resolved_brand_path, class: "inline-flex items-center justify-center no-underline" do %>
         <%= render "shared/brand_lockup",
                    logo_class: "h-10 w-10 rounded-xl",

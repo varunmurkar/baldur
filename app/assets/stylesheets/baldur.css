@@ -6,6 +6,7 @@
 @import "./baldur/application/components/utilities.css";
 @import "./baldur/application/marketing/layout.css";
 @import "./baldur/application/components/app_bar.css";
+@import "./baldur/application/components/auth-page.css";
 @import "./baldur/application/components/alert.css";
 @import "./baldur/application/components/button.css";
 @import "./baldur/application/components/card.css";

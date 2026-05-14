@@ -1,0 +1,22 @@
+@layer components {
+  .auth-page {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    background: var(--color-surface-low);
+  }
+
+  .auth-page__container {
+    width: 32rem;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .auth-page__brand {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-6);
+  }
+}
