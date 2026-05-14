@@ -1,0 +1,158 @@
+<%
+  resolved_brand = local_assigns.fetch(:brand).symbolize_keys
+  primary_links = Array(local_assigns[:primary_links]).compact
+  secondary_links = Array(local_assigns[:secondary_links]).compact
+  secondary_label = local_assigns[:secondary_label]
+  header_content = local_assigns[:header_content]
+  footer_content = local_assigns[:footer_content]
+  mobile_header_content = local_assigns[:mobile_header_content]
+  mobile_footer_content = local_assigns[:mobile_footer_content]
+  body_content = local_assigns[:body_content]
+  shell_class = local_assigns[:shell_class]
+  collapsed = !!local_assigns[:collapsed]
+
+  brand_markup = content_tag(:span, class: "brand-lockup inline-flex items-center gap-2 text-[color:var(--color-on-surface)]") do
+    safe_join(
+      [
+        image_tag(resolved_brand[:logo_src], alt: resolved_brand[:logo_alt], class: "brand-lockup__logo h-9 w-9 rounded-xl"),
+        content_tag(:span, resolved_brand[:wordmark], class: "brand-lockup__wordmark sidebar__brand-name text-lg font-semibold text-[color:var(--color-on-surface)]")
+      ]
+    )
+  end
+  brand_markup = link_to(brand_markup, resolved_brand[:href], class: "inline-flex no-underline") if resolved_brand[:href].present?
+
+  render_nav_link = lambda do |link, mobile: false|
+    options = link[:html_options].deep_dup
+    options[:title] = link[:title] if link[:title].present?
+    options[:data] = (options[:data] || {}).merge(link[:data] || {}) if link[:data].present?
+    options[:method] = link[:method] if link[:method].present?
+    options[:aria] = (options[:aria] || {}).merge(current: (link[:active] ? "page" : nil))
+
+    if mobile
+      mobile_class = link[:active] ? "bg-primary/10 text-primary" : "text-soft hover:bg-surface-lowest"
+      options[:class] = ["flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium", mobile_class, options[:class]].compact.join(" ")
+      link_to(link[:path], **options) do
+        safe_join(
+          [
+            ui_icon(link[:icon], class_name: "h-5 w-5 shrink-0"),
+            content_tag(:span, link[:name])
+          ]
+        )
+      end
+    else
+      options[:class] = ["sidebar__link", options[:class]].compact.join(" ")
+      link_to(link[:path], **options) do
+        safe_join(
+          [
+            ui_icon(link[:icon], class_name: "sidebar__icon"),
+            content_tag(:span, link[:name], class: "sidebar__label")
+          ]
+        )
+      end
+    end
+  end
+%>
+
+<div class="<%= ["sidebar-shell min-h-screen bg-surface-low md:flex", shell_class].compact.join(" ") %>"
+     data-controller="sidebar"
+     data-sidebar-storage-key-value="baldur-sidebar-collapsed"
+     data-sidebar-collapsed-value="<%= collapsed %>">
+  <aside class="sidebar hidden shrink-0 border-r border-[color:var(--color-outline-variant)] bg-[color:var(--color-surface)] px-3 py-4 md:flex flex-col"
+         aria-label="Primary navigation">
+    <div class="sidebar__header flex items-center justify-between gap-2">
+      <%= brand_markup %>
+      <button type="button"
+              class="icon-button sidebar__toggle"
+              aria-label="Toggle navigation"
+              aria-expanded="<%= (!collapsed).to_s %>"
+              data-sidebar-target="toggleButton"
+              data-action="sidebar#toggle">
+        <span aria-hidden="true" data-sidebar-target="toggleIcon"><%= ui_icon(collapsed ? "chevron-right" : "chevron-left", class_name: "h-5 w-5") %></span>
+      </button>
+    </div>
+
+    <% if header_content.present? %>
+      <div class="sidebar__menu mt-4">
+        <%= header_content %>
+      </div>
+    <% end %>
+
+    <nav class="mt-6 flex flex-1 flex-col gap-1" aria-label="Primary navigation links">
+      <% primary_links.each do |link| %>
+        <%= render_nav_link.call(link) %>
+      <% end %>
+
+      <% if secondary_links.any? %>
+        <div class="my-6 border-t border-[color:var(--color-outline-variant)]"></div>
+        <% if secondary_label.present? %>
+          <p class="sidebar__section-label mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-[color:var(--color-on-surface-variant)]"><%= secondary_label %></p>
+        <% end %>
+        <% secondary_links.each do |link| %>
+          <%= render_nav_link.call(link) %>
+        <% end %>
+      <% end %>
+    </nav>
+
+    <% if footer_content.present? %>
+      <div class="sidebar__footer mt-auto border-t border-[color:var(--color-outline-variant)] pt-4">
+        <div class="sidebar__footer-inner flex flex-col items-start gap-3">
+          <%= footer_content %>
+        </div>
+      </div>
+    <% end %>
+
+    <button type="button" class="sidebar__toggle-hit-area" aria-label="Toggle navigation" data-action="click->sidebar#toggle"></button>
+  </aside>
+
+  <div class="md:hidden" data-controller="mobile-sidebar">
+    <div class="sticky top-0 z-10 flex items-center justify-between border-b border-outline-variant bg-surface-highest px-4 py-3">
+      <div><%= brand_markup %></div>
+      <button type="button" class="icon-button" aria-label="Toggle navigation" data-action="mobile-sidebar#toggle">
+        <%= ui_icon("menu", class_name: "h-6 w-6") %>
+      </button>
+    </div>
+
+    <div id="mobile-sidebar" class="hidden fixed inset-0 z-40 flex" data-mobile-sidebar-target="panel">
+      <div class="fixed inset-0 bg-scrim" data-action="click->mobile-sidebar#close"></div>
+      <div class="relative flex w-full max-w-xs flex-1 flex-col bg-surface-highest">
+        <div class="absolute right-0 top-0 -mr-12 pt-2">
+          <button type="button" class="icon-button text-on-inverse" aria-label="Close navigation" data-action="mobile-sidebar#close">
+            <%= ui_icon("x", class_name: "h-6 w-6 text-on-inverse") %>
+          </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-4 pb-4 pt-5">
+          <% if mobile_header_content.present? %>
+            <div class="mb-5"><%= mobile_header_content %></div>
+          <% end %>
+
+          <nav class="space-y-1" aria-label="Mobile primary navigation links">
+            <% primary_links.each do |link| %>
+              <%= render_nav_link.call(link, mobile: true) %>
+            <% end %>
+
+            <% if secondary_links.any? %>
+              <div class="my-5 border-t border-outline-variant"></div>
+              <% if secondary_label.present? %>
+                <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-on-surface-variant"><%= secondary_label %></p>
+              <% end %>
+              <% secondary_links.each do |link| %>
+                <%= render_nav_link.call(link, mobile: true) %>
+              <% end %>
+            <% end %>
+          </nav>
+        </div>
+
+        <% if mobile_footer_content.present? %>
+          <div class="border-t border-outline-variant px-4 py-4">
+            <%= mobile_footer_content %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex min-w-0 flex-1 flex-col">
+    <%= body_content %>
+  </div>
+</div>

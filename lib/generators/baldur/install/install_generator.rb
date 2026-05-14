@@ -14,6 +14,7 @@ module Baldur
         modal
         marketing_pricing
         marketing_tabs
+        mobile_sidebar
         segmented_tabs
         sidebar
         smooth_scroll

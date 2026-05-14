@@ -30,6 +30,7 @@ class BaldurInstallGeneratorTest < Rails::Generators::TestCase
     assert_file "config/initializers/baldur.rb"
     assert_file "app/assets/stylesheets/fonts.css"
     assert_file "app/assets/stylesheets/theme.css"
+    assert_file "app/javascript/controllers/mobile_sidebar_controller.js", /export \{ default \} from "baldur\/controllers\/mobile_sidebar_controller"/
     assert_file "app/javascript/controllers/sidebar_controller.js", /export \{ default \} from "baldur\/controllers\/sidebar_controller"/
     assert_file "app/javascript/lib/snackbar.js", /export \* from "baldur\/lib\/snackbar"/
   end

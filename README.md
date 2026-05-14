@@ -1,6 +1,6 @@
 # Baldur
 
-Baldur is a reusable Rails UI engine for apps using the same frontend stack as this repository:
+Baldur is a batteries-included, reusable Rails UI engine for apps using the same frontend stack as this repository:
 
 - Rails 8
 - Propshaft
@@ -90,6 +90,16 @@ Canonical Ruby internals live under `Baldur::*`, but the default DX is `ui_*` he
 
 Not every `ui_*` helper is part of the base install. Some helpers belong to optional surfaces and require the matching generator. `ui_auth_page` is part of the default install; `ui_panel_secondary` and google-auth helpers are optional.
 
+For authenticated application shells, use `ui_sidebar`. It is part of the base install and includes:
+
+- desktop sidebar shell markup
+- mobile sidebar shell markup
+- `sidebar` and `mobile-sidebar` controller wiring
+- default brand rendering from `config.marketing_brand`
+- default nav rendering for primary and secondary links
+
+Host apps provide the route arrays, active-state logic, and any optional slot content.
+
 Examples:
 
 ```erb
@@ -102,7 +112,90 @@ Examples:
 <%= ui_panel_secondary(id: "assistant", title: "Assistant", trigger_label: "Open") do %>
   <p>Panel content</p>
 <% end %>
+
+<%= ui_sidebar(
+      brand_path: root_path,
+      primary_links: [
+        { name: "Dashboard", path: root_path, icon: "layout-dashboard", active: current_page?(root_path) }
+      ]
+    ) do |_sidebar| %>
+  <main class="flex-1 p-6">
+    <h1>Dashboard</h1>
+  </main>
+<% end %>
 ```
+
+`ui_sidebar` accepts these link keys:
+
+- `name` required label text
+- `path` required destination
+- `icon` optional Lucide icon name, defaults to `circle`
+- `active` optional boolean for `aria-current="page"`
+- `title` optional hover title
+- `method` optional Rails link method
+- `data` optional data attributes hash
+- `html_options` optional extra HTML attributes hash
+
+Default brand behavior:
+
+- `brand_name`, `brand_wordmark`, and `brand_logo` are optional
+- when omitted, Baldur resolves them from `config.marketing_brand`
+- `brand_path` defaults to `#` if the host app does not provide one
+
+Mobile behavior:
+
+- mobile nav mirrors desktop primary and secondary links automatically
+- the install generator now ships both `sidebar_controller.js` and `mobile_sidebar_controller.js`
+
+You can adopt `ui_sidebar` with no slots. The block content becomes the main app surface beside the sidebar:
+
+```erb
+<%= ui_sidebar(
+      brand_path: root_path,
+      primary_links: sidebar_primary_links,
+      secondary_links: sidebar_secondary_links,
+      secondary_label: "Admin"
+    ) do |_sidebar| %>
+  <main id="main-content" class="flex-1 p-6">
+    <%= yield %>
+  </main>
+<% end %>
+```
+
+For host-specific sidebar surfaces, prefer slots. `*_content` params are also supported for incremental adoption.
+
+```erb
+<%= ui_sidebar(
+      brand_path: root_path,
+      primary_links: sidebar_primary_links,
+      secondary_links: sidebar_secondary_links,
+      secondary_label: "Admin"
+    ) do |sidebar| %>
+  <% sidebar.with_header do %>
+    <%= render "layouts/tenant_switcher" %>
+  <% end %>
+
+  <% sidebar.with_footer do %>
+    <div class="space-y-2">
+      <p class="text-sm text-muted"><%= current_user.email %></p>
+      <%= ui_button(label: "Sign out", href: logout_path, method: :delete, variant: :text, size: :sm, icon: "log-out") %>
+    </div>
+  <% end %>
+<% end %>
+```
+
+Host apps own:
+
+- route definitions
+- active-state logic
+- app-specific header/footer content
+
+Baldur owns:
+
+- desktop and mobile sidebar shell markup
+- toggle behavior wiring
+- default brand rendering
+- default nav rendering
 
 External triggers can open a Baldur panel declaratively:
 

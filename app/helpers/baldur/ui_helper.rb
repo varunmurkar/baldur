@@ -4,6 +4,7 @@ module Baldur
   module UiHelper
     include Baldur::RenderHelper
     include Baldur::UiHelperFeedback
+    include Baldur::UiHelperSidebar
     include Baldur::UiHelperUnavailable
     include Baldur::UiHelperForms
 
