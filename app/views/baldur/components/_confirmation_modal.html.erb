@@ -1,0 +1,99 @@
+<%
+  host_id = local_assigns.fetch(:host_id)
+  dialog_id = local_assigns.fetch(:dialog_id)
+  title = local_assigns.fetch(:title)
+  description = local_assigns[:description]
+  tone = (local_assigns[:tone] || :default).to_sym
+  confirm_label = local_assigns.fetch(:confirm_label, "Confirm")
+  cancel_label = local_assigns.fetch(:cancel_label, "Cancel")
+  confirm_button_options = local_assigns.fetch(:confirm_button_options, {})
+  cancel_button_options = local_assigns.fetch(:cancel_button_options, {})
+  type_to_confirm = local_assigns[:type_to_confirm]
+  body = local_assigns.fetch(:body, nil) unless defined?(body)
+
+  confirm_variant = tone == :danger ? :danger : :primary
+  confirm_btn_opts = { label: confirm_label, variant: confirm_variant, type: :submit }.merge(confirm_button_options.except(:data))
+  if confirm_button_options[:data].present?
+    confirm_btn_opts[:data] = confirm_button_options[:data]
+  end
+
+  cancel_btn_opts = { label: cancel_label, variant: :ghost }.merge(cancel_button_options.except(:data))
+  cancel_btn_opts[:data] = { modal_close: true }.merge(cancel_button_options[:data] || {})
+
+  has_type_to_confirm = type_to_confirm.is_a?(Hash)
+  expected_text = has_type_to_confirm ? type_to_confirm[:expected_text].to_s : nil
+  confirm_input_id = has_type_to_confirm ? "#{dialog_id}-confirm-input" : nil
+  confirm_input_label = has_type_to_confirm ? type_to_confirm[:label].to_s : nil
+  confirm_input_placeholder = has_type_to_confirm ? (type_to_confirm[:placeholder].to_s.presence || expected_text) : nil
+  confirm_input_hint = has_type_to_confirm ? type_to_confirm[:hint] : nil
+  case_sensitive = has_type_to_confirm ? (type_to_confirm[:case_sensitive] != false) : true
+
+  if has_type_to_confirm
+    confirm_btn_opts[:disabled] = true
+    confirm_btn_opts[:data] = (confirm_btn_opts[:data] || {}).merge(confirmation_target: "submit")
+  end
+%>
+<div id="<%= host_id %>"
+     class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/40 p-4"
+     data-controller="modal<%= has_type_to_confirm ? " confirmation" : "" %>"
+     <%= has_type_to_confirm ? 'data-confirmation-case-sensitive-value="' + case_sensitive.to_s + '"' : '' %>
+     data-modal-selector-value="#<%= host_id %>"
+     data-modal="true"
+     aria-hidden="true">
+  <div id="<%= dialog_id %>" class="dialog motion-fade-scale">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h3 class="text-xl font-semibold text-[color:var(--color-on-surface)]">
+          <% if tone == :danger %>
+            <span class="inline-flex items-center gap-2">
+              <%= ui_icon("triangle-alert", class_name: "h-5 w-5 text-[color:var(--color-error)]") %>
+              <%= title %>
+            </span>
+          <% else %>
+            <%= title %>
+          <% end %>
+        </h3>
+        <% if description.present? %>
+          <p class="text-sm text-[color:color-mix(in srgb,var(--color-on-surface) 75%,transparent)]"><%= description %></p>
+        <% end %>
+      </div>
+      <button type="button" class="icon-button" aria-label="Close modal" data-modal-close="true">
+        <%= ui_icon("x", class_name: "h-5 w-5") %>
+      </button>
+    </div>
+    <% if body.present? %>
+      <div class="mt-4 space-y-3 text-sm text-[color:var(--color-on-surface)]">
+        <%= body %>
+      </div>
+    <% end %>
+    <% if has_type_to_confirm %>
+      <div class="mt-4 space-y-2">
+        <% if confirm_input_label.present? %>
+          <label for="<%= confirm_input_id %>" class="field__label text-sm font-medium text-[color:var(--color-on-surface)]"><%= confirm_input_label %></label>
+        <% end %>
+        <div class="text-field__input">
+          <input id="<%= confirm_input_id %>"
+                 type="text"
+                 autocomplete="off"
+                 class="text-field__control"
+                 data-confirmation-target="input"
+                 data-action="input->confirmation#validate"
+                 <%= confirm_input_placeholder.present? ? "placeholder=\"#{confirm_input_placeholder}\"".html_safe : "" %>
+                 data-modal-autofocus="true" />
+        </div>
+        <% if confirm_input_hint.present? %>
+          <p class="text-sm text-muted"><%= confirm_input_hint %></p>
+        <% end %>
+        <% if expected_text.present? %>
+          <span hidden data-confirmation-target="expectedText"><%= expected_text %></span>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <div class="ml-auto flex flex-wrap gap-3 justify-end">
+        <%= render "baldur/components/button", **cancel_btn_opts %>
+        <%= render "baldur/components/button", **confirm_btn_opts %>
+      </div>
+    </div>
+  </div>
+</div>

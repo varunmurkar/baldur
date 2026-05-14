@@ -165,6 +165,31 @@ module Baldur
              }.merge(options)
     end
 
+    def ui_modal_host(id:, classes: nil, &block)
+      body = block_given? ? capture(&block) : nil
+      baldur_render "baldur/components/modal_host",
+             id: id,
+             classes: classes,
+             body: body
+    end
+
+    def ui_confirmation_modal(host_id:, dialog_id:, title:, description: nil, tone: :default, confirm_label: "Confirm", cancel_label: "Cancel", confirm_button_options: {}, cancel_button_options: {}, type_to_confirm: nil, body: nil, &block)
+      body = block_given? ? capture(&block) : body
+      type_to_confirm = nil unless type_to_confirm.is_a?(Hash)
+      baldur_render "baldur/components/confirmation_modal",
+             host_id: host_id,
+             dialog_id: dialog_id,
+             title: title,
+             description: description,
+             tone: tone,
+             confirm_label: confirm_label,
+             cancel_label: cancel_label,
+             confirm_button_options: confirm_button_options,
+             cancel_button_options: cancel_button_options,
+             type_to_confirm: type_to_confirm,
+             body: body
+    end
+
     def ui_badge(text:, variant: :default, size: :sm, html_options: {})
       baldur_render "baldur/components/badge", text: text, variant: variant, size: size, html_options: html_options
     end

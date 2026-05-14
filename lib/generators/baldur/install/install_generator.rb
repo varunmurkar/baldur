@@ -7,6 +7,7 @@ module Baldur
 
       CORE_CONTROLLERS = %w[
         accordion
+        confirmation
         date_field
         details_menu
         form_submit
