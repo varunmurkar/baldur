@@ -133,6 +133,14 @@ For auth layouts, use `ui_auth_page` (available after `baldur:install`):
 <% end %>
 ```
 
+Auth flash messaging can be rendered inside the card by passing `notice:` / `alert:`:
+
+```erb
+<%= ui_auth_page(title: "Sign in", description: nil, brand_path: root_path, notice: notice, alert: alert) do %>
+  <%= yield %>
+<% end %>
+```
+
 If a host app keeps a shared wrapper partial around `ui_modal`, treat `modal_body:` as the wrapper-local input and let the wrapper pass that content into `ui_modal`. Avoid calling a wrapper with `body:` through `render`, since `body` collides with Rails render options.
 
 For horizontal primary/secondary CTA groups, prefer `ui_action_row`:

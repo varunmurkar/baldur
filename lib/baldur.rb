@@ -1,4 +1,5 @@
 require "rails"
+require "lucide-rails"
 
 require_relative "baldur/version"
 require_relative "baldur/configuration"

@@ -5,7 +5,7 @@
 %>
 
 <div class="<%= auth_shell_classes %>">
-  <div class="mx-auto max-w-md">
+  <div class="mx-auto max-w-lg">
     <div class="mb-6 flex justify-center">
       <%= link_to resolved_brand_path, class: "inline-flex items-center justify-center no-underline" do %>
         <%= render "shared/brand_lockup",
@@ -15,7 +15,17 @@
     </div>
 
     <%= ui_card(title: title, description: description, classes: auth_card_class || "shadow-sm") do %>
-      <%= body %>
+      <div class="space-y-4">
+        <%= body %>
+
+        <% if local_assigns[:notice].present? %>
+          <%= ui_alert(body: local_assigns[:notice], variant: :success) %>
+        <% end %>
+
+        <% if local_assigns[:alert].present? %>
+          <%= ui_alert(body: local_assigns[:alert], variant: :error) %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
