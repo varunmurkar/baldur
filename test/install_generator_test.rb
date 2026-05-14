@@ -26,6 +26,7 @@ class BaldurInstallGeneratorTest < Rails::Generators::TestCase
     assert_operator tailwind_source.index("@import \"../builds/tailwind/baldur.css\";"), :<, tailwind_source.index("@import \"../stylesheets/theme.css\";")
 
     assert_file "app/helpers/ui_helper.rb"
+    assert_file "app/helpers/ui_helper.rb", /include Baldur::Optional::AuthPageHelper/
     assert_file "config/initializers/baldur.rb"
     assert_file "app/assets/stylesheets/fonts.css"
     assert_file "app/assets/stylesheets/theme.css"

@@ -43,6 +43,10 @@ bundle exec rails generate baldur:install_panel_secondary
 bundle exec rails generate baldur:install_google_auth
 ```
 
+`baldur:install` now includes `Baldur::Optional::AuthPageHelper` in generated `UiHelper`, so `ui_auth_page` is available by default after base install.
+
+The generators above are still optional and only required when using those specific surfaces.
+
 Default install behavior keeps Geist loaded through the host `fonts.css` scaffold. If a host app wants a different stack, it should update `fonts.css` and then map the loaded families in `theme.css`.
 
 ## Security
@@ -84,6 +88,8 @@ Tailwind provides the utility/base layer. Baldur is the source of truth for shar
 
 Canonical Ruby internals live under `Baldur::*`, but the default DX is `ui_*` helpers through the generated `UiHelper` include.
 
+Not every `ui_*` helper is part of the base install. Some helpers belong to optional surfaces and require the matching generator. `ui_auth_page` is part of the default install; `ui_panel_secondary` and google-auth helpers are optional.
+
 Examples:
 
 ```erb
@@ -116,6 +122,14 @@ For modals, prefer `ui_modal` directly:
 ```erb
 <%= ui_modal(id: "confirm-delete", title: "Delete item") do %>
   <p>This action cannot be undone.</p>
+<% end %>
+```
+
+For auth layouts, use `ui_auth_page` (available after `baldur:install`):
+
+```erb
+<%= ui_auth_page(title: "Sign in", description: nil, brand_path: root_path) do %>
+  <%= yield %>
 <% end %>
 ```
 
