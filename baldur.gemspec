@@ -4,8 +4,8 @@ Gem::Specification.new do |spec|
   spec.name        = "baldur"
   spec.version     = Baldur::VERSION
   spec.authors     = [ "Varun Murkar" ]
-  spec.summary     = "Reusable Rails UI engine for same-stack application interfaces"
-  spec.description = "Baldur packages reusable Rails view helpers, components, styles, and Stimulus controllers."
+  spec.summary     = "Batteries-included Rails UI engine for the importmap, Stimulus, Tailwind stack"
+  spec.description = "Baldur helps Rails teams ship polished UI faster with install generators, reusable ui_* helpers, Tailwind components, and Stimulus wiring for apps using Propshaft, importmap-rails, stimulus-rails, and tailwindcss-rails."
   spec.homepage    = "https://github.com/varunmurkar/baldur"
   spec.license     = "MIT"
   spec.metadata = {

@@ -1,6 +1,5 @@
 # Baldur TODO
 
-- Improve RubyGems page description for DX
 - Reduce min required versions for Rails and TailwindCSS to maximise support
 
 - Add a dedicated dummy app in the extracted gem repo for visual smoke checks.
