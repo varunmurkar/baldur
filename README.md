@@ -2,6 +2,8 @@
 
 [![Gem Version](https://badge.fury.io/rb/baldur.svg)](https://badge.fury.io/rb/baldur)
 
+Batteries-included opinionated Rails UI engine for the importmap, Stimulus, Tailwind stack. Baldur helps Rails teams ship polished UI faster with install generators, reusable ui_* helpers, Tailwind components, and Stimulus wiring for apps using Propshaft, importmap-rails, stimulus-rails, and tailwindcss-rails.
+
 ## Supported Stack
 
 - Rails 7+
