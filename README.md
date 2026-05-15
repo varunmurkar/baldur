@@ -2,13 +2,13 @@
 
 [![Gem Version](https://badge.fury.io/rb/baldur.svg)](https://badge.fury.io/rb/baldur)
 
-Baldur is a batteries-included Rails UI engine for apps using this stack:
+## Supported Stack
 
-- Rails 8
+- Rails 7+
 - Propshaft
 - `importmap-rails`
 - `stimulus-rails`
-- `tailwindcss-rails`
+- `tailwindcss-rails` >= 4.3.0
 
 It ships install generators, ready `ui_*` helpers, Tailwind components, and Stimulus controllers so host teams can skip rebuilding common UI primitives per app.
 

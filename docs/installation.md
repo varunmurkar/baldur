@@ -8,7 +8,7 @@ Add to the host `Gemfile`:
 gem "baldur", ">= 0.1.3"
 ```
 
-Baldur declares `tailwindcss-rails >= 4.4.0` as a dependency, so hosts do not need to add it separately unless they want to enforce their own minimum version.
+Baldur declares `tailwindcss-rails >= 4.3.0` as a dependency, so hosts do not need to add it separately unless they want to enforce their own minimum version.
 
 ## Install and Generate
 
