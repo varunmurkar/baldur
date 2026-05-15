@@ -1,16 +1,17 @@
 # Baldur
 
-[![Gem Version](https://badge.fury.io/rb/baldur.svg)](https://badge.fury.io/rb/baldur)
+[![Gem Version](https://badge.fury.io/rb/baldur.svg)](https://badge.fury.io/rb/baldur) [![CI](https://github.com/varunmurkar/baldur/actions/workflows/ci.yml/badge.svg)](https://github.com/varunmurkar/baldur/actions)
 
 Batteries-included opinionated Rails UI engine for the importmap, Stimulus, Tailwind stack. Baldur helps Rails teams ship polished UI faster with install generators, reusable ui_* helpers, Tailwind components, and Stimulus wiring for apps using Propshaft, importmap-rails, stimulus-rails, and tailwindcss-rails.
 
 ## Supported Stack
 
-- Rails 7+
+- **Ruby** `>= 3.3`
+- **Rails** `>= 7.0`
 - Propshaft
 - `importmap-rails`
 - `stimulus-rails`
-- `tailwindcss-rails` >= 4.3.0
+- `tailwindcss-rails` `>= 4.3.0`
 
 It ships install generators, ready `ui_*` helpers, Tailwind components, and Stimulus controllers so host teams can skip rebuilding common UI primitives per app.
 
@@ -59,6 +60,11 @@ Render a sidebar with navigation and a main content area:
   </main>
 <% end %>
 ```
+
+## Getting Started
+
+- See [docs/installation.md](docs/installation.md) for install steps.
+- See [docs/sidebar.md](docs/sidebar.md) and [docs/auth.md](docs/auth.md) for common usage patterns.
 
 ## Documentation
 
@@ -127,6 +133,14 @@ See [docs/security.md](docs/security.md) for artifact verification, MFA requirem
 - Add I18n-friendly labels/messages for reusable helpers
 - Remove hard-coded helper copy where practical
 - Document translation override points
+
+## Contributing
+
+Open an issue or PR. Before you start, read [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/security.md](docs/security.md).
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

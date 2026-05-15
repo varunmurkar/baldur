@@ -44,3 +44,7 @@
 - [ ] Add I18n-friendly labels/messages for reusable helpers
 - [ ] Remove hard-coded helper copy where practical
 - [ ] Document translation override points
+
+## Contributor and Agent Guidance
+- [ ] Add `.agents/AGENTS.md` with project conventions and reference files for LLM agents
+- [ ] Keep `.agents/AGENTS.md` in sync with actual project conventions
