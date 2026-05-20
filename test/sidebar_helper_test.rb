@@ -1,10 +1,10 @@
-require_relative "test_helper"
+require_relative 'test_helper'
 
-require "action_controller"
+require 'action_controller'
 
 class BaldurSidebarHelperTest < Minitest::Test
   class TestController < ActionController::Base
-    append_view_path File.expand_path("../app/views", __dir__)
+    append_view_path File.expand_path('../app/views', __dir__)
     helper Baldur::UiHelper
     helper Baldur::UiHelperSidebar
   end
@@ -12,10 +12,10 @@ class BaldurSidebarHelperTest < Minitest::Test
   def setup
     @original_brand = Baldur.config.marketing_brand
     Baldur.config.marketing_brand = {
-      name: "Acme",
-      wordmark: "Acme Ops",
-      logo_src: "/acme.svg",
-      logo_alt: "Acme logo"
+      name: 'Acme',
+      wordmark: 'Acme Ops',
+      logo_src: '/acme.svg',
+      logo_alt: 'Acme logo'
     }
   end
 
@@ -33,16 +33,16 @@ class BaldurSidebarHelperTest < Minitest::Test
               secondary_label: "Admin"
             ) %>
       ERB
-      formats: [ :html ]
+      formats: [:html]
     )
 
     assert_includes html, 'data-controller="sidebar"'
     assert_includes html, 'data-controller="mobile-sidebar"'
-    assert_includes html, "Acme Ops"
+    assert_includes html, 'Acme Ops'
     assert_includes html, 'href="/dashboard"'
     assert_includes html, 'href="/settings"'
     assert_includes html, 'aria-current="page"'
-    assert_includes html, "Admin"
+    assert_includes html, 'Admin'
   end
 
   def test_sidebar_renders_slot_content_and_mobile_fallbacks
@@ -57,13 +57,13 @@ class BaldurSidebarHelperTest < Minitest::Test
           <% end %>
         <% end %>
       ERB
-      formats: [ :html ]
+      formats: [:html]
     )
 
-    assert_includes html, "Tenant Switcher"
-    assert_includes html, "user-menu"
-    assert_includes html, "Sign out"
-    assert_operator html.scan("Tenant Switcher").size, :>=, 2
-    assert_operator html.scan("Sign out").size, :>=, 2
+    assert_includes html, 'Tenant Switcher'
+    assert_includes html, 'user-menu'
+    assert_includes html, 'Sign out'
+    assert_operator html.scan('Tenant Switcher').size, :>=, 2
+    assert_operator html.scan('Sign out').size, :>=, 2
   end
 end

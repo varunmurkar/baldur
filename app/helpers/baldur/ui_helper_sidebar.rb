@@ -39,11 +39,12 @@ module Baldur
       end
     end
 
-    def ui_sidebar(primary_links:, secondary_links: [], secondary_label: nil, brand_path: nil, brand_name: nil, brand_wordmark: nil, brand_logo: nil, header_content: nil, footer_content: nil, mobile_header_content: nil, mobile_footer_content: nil, shell_class: nil, &block)
+    def ui_sidebar(primary_links:, secondary_links: [], secondary_label: nil, brand_path: nil, brand_name: nil,
+                   brand_wordmark: nil, brand_logo: nil, header_content: nil, footer_content: nil, mobile_header_content: nil, mobile_footer_content: nil, shell_class: nil, &block)
       builder = SidebarBuilder.new(self)
       body_content = capture(builder, &block) if block_given?
 
-      baldur_render "baldur/components/sidebar",
+      baldur_render 'baldur/components/sidebar',
                     brand: ui_sidebar_resolve_brand(
                       brand_path: brand_path,
                       brand_name: brand_name,
@@ -69,7 +70,7 @@ module Baldur
         name: brand_name,
         wordmark: brand_wordmark,
         logo_src: brand_logo,
-        href: brand_path.presence || "#"
+        href: brand_path.presence || '#'
       }.compact
 
       ui_marketing_resolve_brand(overrides)
@@ -85,7 +86,7 @@ module Baldur
         {
           name: normalized[:name].to_s,
           path: normalized[:path],
-          icon: normalized[:icon].presence || "circle",
+          icon: normalized[:icon].presence || 'circle',
           active: !!normalized[:active],
           title: normalized[:title].presence || normalized[:name].to_s,
           method: normalized[:method],
@@ -98,7 +99,7 @@ module Baldur
     def ui_sidebar_collapsed?
       return false unless respond_to?(:cookies)
 
-      cookies["baldur-sidebar-collapsed"] == "true"
+      cookies['baldur-sidebar-collapsed'] == 'true'
     end
   end
 end

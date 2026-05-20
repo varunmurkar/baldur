@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require_relative 'test_helper'
 
 class BaldurMarketingHelperTest < Minitest::Test
   HelperHost = Struct.new(:config) do
@@ -15,17 +15,17 @@ class BaldurMarketingHelperTest < Minitest::Test
 
   def test_uses_configured_brand_without_host_helper_fallback
     Baldur.config.marketing_brand = {
-      name: "Standalone",
-      wordmark: "Standalone UI",
-      logo_src: "/standalone-logo.svg"
+      name: 'Standalone',
+      wordmark: 'Standalone UI',
+      logo_src: '/standalone-logo.svg'
     }
 
     helper = HelperHost.new(Baldur.config)
     resolved = helper.send(:ui_marketing_configured_brand)
 
-    assert_equal "Standalone", resolved[:name]
-    assert_equal "Standalone UI", resolved[:wordmark]
-    assert_equal "/standalone-logo.svg", resolved[:logo_src]
+    assert_equal 'Standalone', resolved[:name]
+    assert_equal 'Standalone UI', resolved[:wordmark]
+    assert_equal '/standalone-logo.svg', resolved[:logo_src]
   end
 
   def test_returns_empty_brand_hash_when_no_brand_is_configured

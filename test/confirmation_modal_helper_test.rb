@@ -1,10 +1,10 @@
-require_relative "test_helper"
-require "action_controller"
-require_relative "../lib/generators/baldur/install/install_generator"
+require_relative 'test_helper'
+require 'action_controller'
+require_relative '../lib/generators/baldur/install/install_generator'
 
 class BaldurConfirmationModalHelperTest < Minitest::Test
   class TestController < ActionController::Base
-    append_view_path File.expand_path("../app/views", __dir__)
+    append_view_path File.expand_path('../app/views', __dir__)
     helper Baldur::UiHelper
     helper Baldur::RenderHelper
   end
@@ -24,7 +24,7 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
     assert_includes html, 'data-modal-selector-value="#test-modal"'
     assert_includes html, 'data-modal="true"'
     assert_includes html, 'aria-hidden="true"'
-    assert_includes html, "Modal content"
+    assert_includes html, 'Modal content'
     assert_includes html, 'class="fixed inset-0 z-50'
   end
 
@@ -38,8 +38,8 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "my-extra-class"
-    assert_includes html, "Custom"
+    assert_includes html, 'my-extra-class'
+    assert_includes html, 'Custom'
   end
 
   def test_ui_confirmation_modal_renders_basic_structure
@@ -57,9 +57,9 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
     assert_includes html, 'id="delete-modal"'
     assert_includes html, 'id="delete-dialog"'
     assert_includes html, 'data-controller="modal"'
-    assert_includes html, "Delete item?"
-    assert_includes html, "Confirm"
-    assert_includes html, "Cancel"
+    assert_includes html, 'Delete item?'
+    assert_includes html, 'Confirm'
+    assert_includes html, 'Cancel'
     assert_includes html, 'data-modal-close="true"'
   end
 
@@ -76,8 +76,8 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "color-error"
-    assert_includes html, "Discard collection?"
+    assert_includes html, 'color-error'
+    assert_includes html, 'Discard collection?'
   end
 
   def test_ui_confirmation_modal_default_tone_no_icon
@@ -92,8 +92,8 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    refute_includes html, "color-error"
-    assert_includes html, "Proceed?"
+    refute_includes html, 'color-error'
+    assert_includes html, 'Proceed?'
   end
 
   def test_ui_confirmation_modal_danger_tone_sets_danger_button_variant
@@ -109,7 +109,7 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "button--error"
+    assert_includes html, 'button--error'
   end
 
   def test_ui_confirmation_modal_default_tone_sets_primary_button_variant
@@ -124,8 +124,8 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "button--filled"
-    refute_includes html, "button--error"
+    assert_includes html, 'button--filled'
+    refute_includes html, 'button--error'
   end
 
   def test_ui_confirmation_modal_with_type_to_confirm
@@ -149,15 +149,15 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "modal confirmation"
-    assert_includes html, "confirmation-case-sensitive-value"
+    assert_includes html, 'modal confirmation'
+    assert_includes html, 'confirmation-case-sensitive-value'
     assert_includes html, 'data-confirmation-target="input"'
     assert_includes html, 'data-confirmation-target="submit"'
-    assert_includes html, "confirmation#validate"
-    assert_includes html, "Type confirm to continue"
-    assert_includes html, "This permanently removes all data."
-    assert_includes html, "Flush All Data"
-    assert_includes html, "Confirm"
+    assert_includes html, 'confirmation#validate'
+    assert_includes html, 'Type confirm to continue'
+    assert_includes html, 'This permanently removes all data.'
+    assert_includes html, 'Flush All Data'
+    assert_includes html, 'Confirm'
   end
 
   def test_ui_confirmation_modal_type_to_confirm_disables_submit
@@ -176,8 +176,8 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "disabled"
-    assert_includes html, "Type DELETE"
+    assert_includes html, 'disabled'
+    assert_includes html, 'Type DELETE'
   end
 
   def test_ui_confirmation_modal_type_to_confirm_case_insensitive
@@ -196,9 +196,9 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "confirmation-case-sensitive-value"
-    refute_includes html, "case-sensitive-value=\"true\""
-    assert_includes html, "case-sensitive-value=&quot;false&quot;"
+    assert_includes html, 'confirmation-case-sensitive-value'
+    refute_includes html, 'case-sensitive-value="true"'
+    assert_includes html, 'case-sensitive-value=&quot;false&quot;'
   end
 
   def test_ui_confirmation_modal_without_type_to_confirm_has_no_confirmation_controller
@@ -214,7 +214,7 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
     )
 
     assert_includes html, 'data-controller="modal"'
-    refute_includes html, "confirmation"
+    refute_includes html, 'confirmation'
   end
 
   def test_ui_confirmation_modal_custom_labels
@@ -231,11 +231,11 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
       formats: [:html]
     )
 
-    assert_includes html, "Discard"
-    assert_includes html, "Go back"
+    assert_includes html, 'Discard'
+    assert_includes html, 'Go back'
   end
 
   def test_install_generator_includes_confirmation_controller
-    assert_includes Baldur::Generators::InstallGenerator::CORE_CONTROLLERS, "confirmation"
+    assert_includes Baldur::Generators::InstallGenerator::CORE_CONTROLLERS, 'confirmation'
   end
 end

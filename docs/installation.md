@@ -56,7 +56,8 @@ Default install behavior keeps Geist loaded through the host `fonts.css` scaffol
 After installation, run from the host app root:
 
 ```sh
+bundle exec rails tailwindcss:build
 bundle exec ruby "$(bundle show baldur)/script/verify_host_install"
 ```
 
-That verifies the host can render core helpers and confirms the Tailwind entrypoint contains the required Baldur imports.
+That verifies the host can render core helpers, confirms the Tailwind entrypoint contains the required Baldur imports, and checks that Baldur template utility classes (e.g. `px-6`, `py-4`, `uppercase`, `tracking-wide`) are present in the compiled CSS. If utility classes are missing, the engine `@source` paths in `engine.css` may be misconfigured — ensure they resolve correctly from `app/assets/tailwind/baldur/` to `app/helpers` and `app/views`.

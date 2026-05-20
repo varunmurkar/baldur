@@ -1,44 +1,46 @@
 module Baldur
   module UiHelperFeedback
-    def ui_alert(body: nil, variant: :notice, title: nil, icon: nil, actions: nil, collapsible: false, collapse_key: nil, collapsed_summary_action_label: "More", class_name: nil, &block)
+    def ui_alert(body: nil, variant: :notice, title: nil, icon: nil, actions: nil, collapsible: false,
+                 collapse_key: nil, collapsed_summary_action_label: 'More', class_name: nil, &block)
       content = body
       content = capture(&block) if block_given?
       storage_key = collapsible ? ui_alert_storage_key(collapse_key) : nil
 
-      baldur_render "baldur/components/alert",
-             variant: variant,
-             title: title,
-             icon: icon,
-             body: content,
-             actions: actions,
-             collapsible: collapsible,
-             collapse_storage_key: storage_key,
-             collapsed: collapsible && ui_alert_collapsed?(storage_key),
-             collapsed_summary_action_label: collapsed_summary_action_label,
-             class_name: class_name
+      baldur_render 'baldur/components/alert',
+                    variant: variant,
+                    title: title,
+                    icon: icon,
+                    body: content,
+                    actions: actions,
+                    collapsible: collapsible,
+                    collapse_storage_key: storage_key,
+                    collapsed: collapsible && ui_alert_collapsed?(storage_key),
+                    collapsed_summary_action_label: collapsed_summary_action_label,
+                    class_name: class_name
     end
 
     def ui_snackbar_stack(snackbars: [])
-      baldur_render "baldur/components/snackbar_stack", snackbars: normalize_snackbars(snackbars)
+      baldur_render 'baldur/components/snackbar_stack', snackbars: normalize_snackbars(snackbars)
     end
 
-    def ui_checkbox_tag(name, label: nil, description: nil, value: "1", checked: false, required: false, disabled: false, id: nil, data: nil, aria: nil, form: nil, wrapper_class: nil, input_class: nil, &block)
+    def ui_checkbox_tag(name, label: nil, description: nil, value: '1', checked: false, required: false,
+                        disabled: false, id: nil, data: nil, aria: nil, form: nil, wrapper_class: nil, input_class: nil, &block)
       body = block_given? ? capture(&block) : nil
-      baldur_render "baldur/components/checkbox",
-             name: name,
-             label: label,
-             description: description,
-             value: value,
-             checked: checked,
-             required: required,
-             disabled: disabled,
-             id: id,
-             data: data,
-             aria: aria,
-             form: form,
-             wrapper_class: wrapper_class,
-             input_class: input_class,
-             body: body
+      baldur_render 'baldur/components/checkbox',
+                    name: name,
+                    label: label,
+                    description: description,
+                    value: value,
+                    checked: checked,
+                    required: required,
+                    disabled: disabled,
+                    id: id,
+                    data: data,
+                    aria: aria,
+                    form: form,
+                    wrapper_class: wrapper_class,
+                    input_class: input_class,
+                    body: body
     end
 
     private
@@ -54,12 +56,12 @@ module Baldur
 
     def normalize_snackbar_payload(snackbar)
       payload = if snackbar.respond_to?(:with_indifferent_access)
-        snackbar.with_indifferent_access
-      elsif snackbar.respond_to?(:to_h)
-        snackbar.to_h.with_indifferent_access
-      else
-        { message: snackbar }.with_indifferent_access
-      end
+                  snackbar.with_indifferent_access
+                elsif snackbar.respond_to?(:to_h)
+                  snackbar.to_h.with_indifferent_access
+                else
+                  { message: snackbar }.with_indifferent_access
+                end
 
       {
         variant: (payload[:variant].presence || :notice).to_sym,
@@ -85,7 +87,7 @@ module Baldur
     def ui_alert_collapsed?(storage_key)
       return false if storage_key.blank?
 
-      cookies[storage_key] == "true"
+      cookies[storage_key] == 'true'
     rescue NoMethodError
       false
     end

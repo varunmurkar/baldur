@@ -3,8 +3,9 @@ module Baldur
     module PanelSecondaryHelper
       include Baldur::RenderHelper
 
-      def ui_panel_secondary(id:, title:, trigger_label:, trigger_icon: "message-square", panel_class: nil, trigger_class: nil, shell_class: nil, shell_data: nil, panel_data: nil, trigger_data: nil, &block)
-        baldur_render "baldur/optional/panel_secondary",
+      def ui_panel_secondary(id:, title:, trigger_label:, trigger_icon: 'message-square', panel_class: nil,
+                             trigger_class: nil, shell_class: nil, shell_data: nil, panel_data: nil, trigger_data: nil, &block)
+        baldur_render 'baldur/optional/panel_secondary',
                       id: id,
                       title: title,
                       trigger_label: trigger_label,
