@@ -9,6 +9,7 @@
 - [ ] Add end-to-end install verification in dummy app
 
 ## Showcase App and Docs
+- [ ] Add agent-friendly docs, fetchable by Context7
 - [ ] Add a dedicated dummy app in the extracted gem repo for visual smoke checks
 - [ ] Add a component inventory/showcase page in that dummy app
 - [ ] Add interaction showcase pages for modal, sidebar, menu select, snackbar, and `panel_secondary`

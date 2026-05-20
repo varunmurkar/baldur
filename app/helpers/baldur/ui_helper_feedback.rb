@@ -23,6 +23,16 @@ module Baldur
       baldur_render 'baldur/components/snackbar_stack', snackbars: normalize_snackbars(snackbars)
     end
 
+    FLASH_SNACKBAR_VARIANTS = { success: :success, notice: :notice, alert: :error, warning: :warning }.freeze
+
+    def snackbar_flash_payloads(flash)
+      FLASH_SNACKBAR_VARIANTS.filter_map do |flash_key, variant|
+        payload = flash[flash_key]
+        next if payload.blank?
+        normalize_flash_snackbar(variant, payload)
+      end
+    end
+
     def ui_checkbox_tag(name, label: nil, description: nil, value: '1', checked: false, required: false,
                         disabled: false, id: nil, data: nil, aria: nil, form: nil, wrapper_class: nil, input_class: nil, &block)
       body = block_given? ? capture(&block) : nil
@@ -75,6 +85,20 @@ module Baldur
     def normalize_snackbar_message(message)
       values = Array(message).flatten.compact.map(&:to_s).map(&:strip).reject(&:blank?)
       values.to_sentence
+    end
+
+    def normalize_flash_snackbar(variant, payload)
+      return { variant: variant, message: payload } if payload.is_a?(String)
+
+      structured_payload = if payload.is_a?(Hash)
+        payload
+      elsif defined?(ActionController::Parameters) && payload.is_a?(ActionController::Parameters)
+        payload.to_unsafe_h
+      end
+
+      return { variant: variant, message: payload } unless structured_payload
+
+      structured_payload.symbolize_keys.reverse_merge(variant: variant)
     end
 
     def ui_alert_storage_key(collapse_key)
