@@ -17,6 +17,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New task-based `docs/` directory with focused usage guides.
 - Public roadmap in `README.md` grouped by initiative.
 
+## [0.2.5]
+
+### Added
+
+- `snackbar_flash_payloads(flash)` helper — normalizes Rails flash messages into snackbar payloads for `ui_snackbar_stack`. Maps `flash[:success]` → `:success`, `flash[:notice]` → `:notice`, `flash[:alert]` → `:error`, `flash[:warning]` → `:warning`. Supports string and hash payloads (hash allows custom `title:`, `icon:`, etc.).
+- `test/snackbar_flash_helper_test.rb` — coverage for string, hash, blank, and multi-key flash payloads.
+
+## [0.2.4]
+
+### Fixed
+
+- Confirmation modal typed-confirm input now uses shared `ui_text_field_tag` component instead of hand-built markup. Input inherits `.field .text-field` wrapper, CSS variables, and focus styles for free.
+- Removed dead `[data-confirmation]` CSS selector in `confirmation.css` that never matched modal markup. Focus styling now comes from shared `forms.css` via `.text-field__input:focus-within`.
+- `test/confirmation_modal_helper_test.rb` — added assertions for `.field.text-field` wrapper and `field__label` class in typed-confirm mode.
+
 ## [0.2.3]
 
 ### Fixed
