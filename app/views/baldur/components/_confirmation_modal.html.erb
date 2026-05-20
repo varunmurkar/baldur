@@ -68,19 +68,19 @@
     <% end %>
     <% if has_type_to_confirm %>
       <div class="mt-4 space-y-2">
-        <% if confirm_input_label.present? %>
-          <label for="<%= confirm_input_id %>" class="field__label text-sm font-medium text-[color:var(--color-on-surface)]"><%= confirm_input_label %></label>
-        <% end %>
-        <div class="text-field__input">
-          <input id="<%= confirm_input_id %>"
-                 type="text"
-                 autocomplete="off"
-                 class="text-field__control"
-                 data-confirmation-target="input"
-                 data-action="input->confirmation#validate"
-                 <%= confirm_input_placeholder.present? ? "placeholder=\"#{confirm_input_placeholder}\"".html_safe : "" %>
-                 data-modal-autofocus="true" />
-        </div>
+        <%= ui_text_field_tag(nil, nil,
+              label: confirm_input_label,
+              placeholder: confirm_input_placeholder,
+              input_options: {
+                id: confirm_input_id,
+                autocomplete: "off",
+                data: {
+                  confirmation_target: "input",
+                  action: "input->confirmation#validate",
+                  modal_autofocus: true
+                }
+              }
+            ) %>
         <% if confirm_input_hint.present? %>
           <p class="text-sm text-muted"><%= confirm_input_hint %></p>
         <% end %>

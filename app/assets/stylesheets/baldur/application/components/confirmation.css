@@ -2,10 +2,4 @@
   .confirmation-modal__input-wrapper {
     margin-top: var(--space-4);
   }
-
-  [data-confirmation] .text-field__control:focus {
-    border-color: var(--color-primary);
-    outline: none;
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 24%, transparent);
-  }
 }

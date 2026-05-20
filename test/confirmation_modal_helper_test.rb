@@ -158,6 +158,8 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
     assert_includes html, 'This permanently removes all data.'
     assert_includes html, 'Flush All Data'
     assert_includes html, 'Confirm'
+    assert_includes html, 'field text-field'
+    assert_includes html, 'field__label'
   end
 
   def test_ui_confirmation_modal_type_to_confirm_disables_submit
@@ -215,6 +217,7 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
 
     assert_includes html, 'data-controller="modal"'
     refute_includes html, 'confirmation'
+    refute_includes html, 'field text-field'
   end
 
   def test_ui_confirmation_modal_custom_labels
