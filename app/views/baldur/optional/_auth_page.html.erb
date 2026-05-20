@@ -6,6 +6,12 @@
 
 <div class="<%= auth_shell_classes %>">
   <div class="auth-page__container">
+    <% if local_assigns[:top_rail].present? %>
+      <div class="auth-page__top-rail">
+        <%= local_assigns[:top_rail] %>
+      </div>
+    <% end %>
+
     <div class="auth-page__brand">
       <%= link_to resolved_brand_path, class: "inline-flex items-center justify-center no-underline" do %>
         <%= render "shared/brand_lockup",

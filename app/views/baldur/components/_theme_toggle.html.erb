@@ -1,0 +1,23 @@
+<%
+  aria_label = local_assigns[:aria_label] || "Toggle theme"
+  extra_classes = local_assigns[:classes]
+  toggle_classes = ["switch", "theme-toggle"].tap do |classes|
+    classes << extra_classes if extra_classes.present?
+  end.join(" ")
+%>
+<label class="<%= toggle_classes %>">
+  <input type="checkbox"
+         data-theme-target="toggle"
+         data-theme-toggle
+         aria-label="<%= aria_label %>" />
+  <span class="switch__track">
+    <span class="switch__icon switch__icon--sun" aria-hidden="true"><%= ui_icon("sun", class_name: "h-4 w-4") %></span>
+    <span class="switch__icon switch__icon--moon" aria-hidden="true"><%= ui_icon("moon", class_name: "h-4 w-4") %></span>
+    <span class="switch__thumb"></span>
+  </span>
+  <span class="icon-button theme-toggle__compact" aria-hidden="true" data-action="click->theme#toggle">
+    <span class="theme-toggle__compact-icon theme-toggle__compact-icon--sun"><%= ui_icon("sun", class_name: "h-5 w-5") %></span>
+    <span class="theme-toggle__compact-icon theme-toggle__compact-icon--moon"><%= ui_icon("moon", class_name: "h-5 w-5") %></span>
+  </span>
+  <span class="sr-only"><%= aria_label %></span>
+</label>

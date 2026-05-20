@@ -232,6 +232,10 @@ module Baldur
                     inline: inline
     end
 
+    def ui_theme_toggle(aria_label: "Toggle theme", classes: nil)
+      baldur_render 'baldur/components/theme_toggle', aria_label: aria_label, classes: classes
+    end
+
     def ui_pagination_pages(current_page:, total_pages:, window:)
       return [] if total_pages <= 1
 
