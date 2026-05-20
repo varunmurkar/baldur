@@ -1,5 +1,5 @@
-@source "../../helpers";
-@source "../../views";
+@source "../../../helpers";
+@source "../../../views";
 
 @import "../../stylesheets/baldur.css";
 @import "../../stylesheets/baldur_panel_secondary.css";

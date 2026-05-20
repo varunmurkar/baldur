@@ -1,5 +1,7 @@
 # Baldur TODO
 
+- [ ] Consider `pagy` gem for tables component
+
 ## Install and Verification
 - [ ] Harden `baldur:install` so host assumptions are reduced
 - [ ] Audit generated controller shims against all shipped components
@@ -19,6 +21,7 @@
 - [ ] Add starter settings page layout
 - [ ] Add starter CRUD index/show/form templates
 - [ ] Add starter dashboard shell/page templates
+- [ ] Add boilerplate page template with page title component
 
 ## Forms
 - [ ] Add Rails form-builder integration for Baldur fields
@@ -29,11 +32,14 @@
 - [ ] Add a higher-level resource index pattern on top of existing table primitives
 - [ ] Support search, filters, row actions, bulk select, and empty states
 - [ ] Document recommended resource index composition
+- [ ] Table accessibility: add <caption> or aria-label to admin tables
 
 ## Theming
 - [ ] Add a small set of starter theme presets
+- [ ] Add first-class `ui_theme_toggle` helper/component so hosts do not need to copy Mimir toggle partial
 - [ ] Improve dark-mode/theme controller documentation
-- [ ] Document brand-token customization more clearly
+  - [ ] Theme toggle on auth page templates need top rail 
+  - [ ] Document brand-token customization more clearly
 
 ## Accessibility
 - [ ] Audit keyboard and focus behavior across interactive components
