@@ -4,13 +4,12 @@
     min-height: 100vh;
     align-items: center;
     justify-content: center;
-    padding: var(--space-6);
-    background: var(--color-surface-low);
+    padding: var(--space-6, 1.5rem);
+    background: var(--color-surface-low, var(--color-surface, #f8fafc));
   }
 
   .auth-page__container {
-    width: 32rem;
-    max-width: 100%;
+    width: min(32rem, 100%);
     margin-inline: auto;
   }
 
@@ -18,12 +17,12 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-4, 1rem);
   }
 
   .auth-page__brand {
     display: flex;
     justify-content: center;
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-6, 1.5rem);
   }
 }

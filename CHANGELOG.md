@@ -9,8 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Lowered minimum Rails dependency from `>= 8.1.0` to `>= 7.0.0`.
+- Lowered minimum Rails dependency from `>= 8.1.0` to `>= 7.0`.
 - Lowered minimum `tailwindcss-rails` dependency from `>= 4.4.0` to `>= 4.3.0`.
+
+### Fixed
+
+- `ui_auth_page` now includes explicit Tailwind padding, centering, and responsive container width so auth pages no longer go full-bleed on narrow viewports or when CSS custom properties resolve late.
 
 ### Added
 

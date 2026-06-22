@@ -86,6 +86,8 @@ class BaldurAuthPageTopRailTest < Minitest::Test
     )
 
     refute_includes html, 'auth-page__top-rail'
+    assert_includes html, 'auth-page min-h-screen flex items-center justify-center p-6 bg-base-200'
+    assert_includes html, 'auth-page__container w-full max-w-lg mx-auto'
   end
 
   def test_auth_page_with_top_rail_renders_slot

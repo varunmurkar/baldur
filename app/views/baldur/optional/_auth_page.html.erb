@@ -4,8 +4,8 @@
   auth_card_class = local_assigns[:card_class]
 %>
 
-<div class="<%= auth_shell_classes %>">
-  <div class="auth-page__container">
+<div class="<%= auth_shell_classes %> min-h-screen flex items-center justify-center p-6 bg-base-200">
+  <div class="auth-page__container w-full max-w-lg mx-auto">
     <% if local_assigns[:top_rail].present? %>
       <div class="auth-page__top-rail">
         <%= local_assigns[:top_rail] %>
