@@ -19,6 +19,10 @@ module Baldur
       baldur_render 'baldur/components/button', **options
     end
 
+    def ui_hidden_field_tag(name, value = nil, options = {})
+      hidden_field_tag(name, value, options)
+    end
+
     def ui_action_row(primary_button:, secondary_button: nil, extra_buttons: [], classes: nil)
       buttons = []
       buttons << secondary_button if secondary_button.present?
