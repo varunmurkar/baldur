@@ -19,8 +19,21 @@ module Baldur
                     class_name: class_name
     end
 
-    def ui_snackbar_stack(snackbars: [])
-      baldur_render 'baldur/components/snackbar_stack', snackbars: normalize_snackbars(snackbars)
+    def ui_snackbar_stack(snackbars: [], id: nil, class_name: nil, data: nil)
+      baldur_render 'baldur/components/snackbar_stack',
+                    snackbars: normalize_snackbars(snackbars),
+                    id: id,
+                    class_name: class_name,
+                    data: data
+    end
+
+    def ui_snackbar_turbo_stream(flash, target: 'snackbar-stack', **stack_options)
+      raise_missing_turbo_stream_helper! unless respond_to?(:turbo_stream)
+
+      turbo_stream.update(
+        target,
+        html: ui_snackbar_stack(snackbars: snackbar_flash_payloads(flash), id: target, **stack_options)
+      )
     end
 
     FLASH_SNACKBAR_VARIANTS = { success: :success, notice: :notice, alert: :error, warning: :warning }.freeze
@@ -114,6 +127,10 @@ module Baldur
       cookies[storage_key] == 'true'
     rescue NoMethodError
       false
+    end
+
+    def raise_missing_turbo_stream_helper!
+      raise ArgumentError, "ui_snackbar_turbo_stream requires turbo-rails and a Turbo Stream view context"
     end
   end
 end
