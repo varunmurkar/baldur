@@ -34,7 +34,7 @@
 - [ ] Document model-bound form usage
 - [x] Add `ui_hidden_field_tag` helper (or document `hidden_field_tag` as the canonical Baldur-free hidden field primitive)
 - [x] Consider adding `step:` and other HTML5 input attributes to `ui_text_field_tag` public signature, or document passing them through `input_options`
-- [ ] Add first-class guidance for hidden state fields used with interactive Baldur controls
+- [x] Add first-class guidance for hidden state fields used with interactive Baldur controls
   - examples: active tab, filters, stepped form state, selected panel
   - clarify when plain `hidden_field_tag` is acceptable vs when Baldur should wrap it
 - [ ] Document the recommended pattern for submit buttons that intentionally switch UI context before submit

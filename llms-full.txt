@@ -71,6 +71,8 @@ See: `docs/auth.md`
 - `ui_text_field_tag` accepts Baldur-owned named parameters for labels, support text, wrappers, prefix/suffix, and multiline behavior.
 - Pass raw HTML5 input attributes such as `step`, `min`, `max`, `pattern`, `inputmode`, and `autocomplete` through `input_options:`.
 - `ui_hidden_field_tag` is a thin wrapper over Rails `hidden_field_tag` for hidden state fields.
+- Use hidden fields to preserve interactive state such as active tabs, filters, stepped form state, and selected panels across submits or Turbo rerenders.
+- Prefer `ui_hidden_field_tag` for documented Baldur interaction patterns; plain `hidden_field_tag` remains acceptable for simple Rails glue.
 
 See: `docs/forms.md`
 
