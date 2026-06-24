@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ui_segmented_buttons` now supports wrapper `id:` / `data:` and per-item `id` / `aria` wiring for stronger tab-to-panel association.
 - `segmented_tabs_controller.js` now supports keyboard tab navigation (`ArrowLeft`, `ArrowRight`, `Home`, `End`), hidden panel attributes, and optional hidden-input syncing.
 - `ui_table` now supports `numeric: true` on columns to right-align header and cell. The previous global last-column right-align CSS rule has been removed; alignment is now explicit per column.
+- `docs/tables.md` now includes a Pagy integration section with controller/view recipes and a mapping reference. Pagy is not bundled as a runtime dependency; Baldur's table helpers accept any pagination library through the existing `current_page:` / `total_pages:` / `total_count:` / `per_page:` contract.
 - `ui_snackbar_stack` now accepts `id:`, `class_name:`, and `data:` so the stack can be targeted by Turbo Streams.
 - `ui_snackbar_turbo_stream(flash, target: "snackbar-stack")` helper for opt-in Turbo Stream snackbar updates. Raises a clear `ArgumentError` if `turbo-rails` is not available in the host app.
 - `docs/alerts-and-snackbars.md` now includes Turbo Stream layout and usage examples.

@@ -67,7 +67,7 @@
 
 ## Tables and Resource Screens
 - [x] Numeric cols should be right-aligned by default
-- [ ] Consider `pagy` gem for tables component
+- [x] Consider `pagy` gem for tables component
 - [ ] Add a higher-level resource index pattern on top of existing table primitives
 - [ ] Support search, filters, row actions, bulk select, and empty states
 - [ ] Document recommended resource index composition
