@@ -99,6 +99,15 @@ See: `docs/alerts-and-snackbars.md`
 
 See: `docs/modals-and-panels.md`
 
+### Tabs and segmented controls
+
+- `ui_segmented_buttons` should be treated as Baldur's tabs trigger primitive.
+- It already renders `role="tablist"`, `role="tab"`, `aria-selected`, and roving `tabindex`.
+- Host apps still own panel markup, visibility, URL state, Turbo flows, and form-state persistence.
+- `baldur:install` ships `segmented_tabs_controller.js` for local instant switching.
+
+See: `docs/tabs-and-segmented-controls.md`
+
 ### Data display
 
 - `ui_table`
@@ -152,6 +161,7 @@ Prefer these boundaries when integrating or extending Baldur:
 - `docs/auth.md`
 - `docs/modals-and-panels.md`
 - `docs/alerts-and-snackbars.md`
+- `docs/tabs-and-segmented-controls.md`
 - `docs/tables.md`
 - `docs/marketing.md`
 - `docs/security.md`

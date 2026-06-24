@@ -12,6 +12,7 @@ Baldur is an opinionated Rails UI engine for apps using Propshaft, importmap-rai
 - [Auth](docs/auth.md): `ui_auth_page` usage and auth-page composition guidance.
 - [Modals and Panels](docs/modals-and-panels.md): `ui_modal`, confirmation modal, panel helpers, and interaction wiring.
 - [Alerts and Snackbars](docs/alerts-and-snackbars.md): `ui_alert`, `ui_snackbar_stack`, `snackbar_flash_payloads`, and Turbo Stream snackbar updates.
+- [Tabs and Segmented Controls](docs/tabs-and-segmented-controls.md): `ui_segmented_buttons` as a tabs trigger primitive, with local, Turbo-backed, and form-state cookbook examples.
 - [Tables](docs/tables.md): Table helper APIs, table card composition, and rendering guidance.
 - [Marketing](docs/marketing.md): Marketing page helpers and composition patterns.
 - [Security](docs/security.md): Artifact verification, MFA requirements, and vulnerability reporting.
@@ -28,5 +29,6 @@ Baldur is an opinionated Rails UI engine for apps using Propshaft, importmap-rai
 
 - For first-time adoption, start with [Installation](docs/installation.md).
 - For app-shell composition, read [Sidebar](docs/sidebar.md), [Auth](docs/auth.md), and [Modals and Panels](docs/modals-and-panels.md).
+- For tabs or segmented controls, read [Tabs and Segmented Controls](docs/tabs-and-segmented-controls.md).
 - For feedback surfaces, read [Alerts and Snackbars](docs/alerts-and-snackbars.md).
 - For host theming or appearance changes, read [Styling](docs/styling.md) and [Theme](docs/theme.md).

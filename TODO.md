@@ -12,8 +12,8 @@
 - [ ] Add a component inventory/showcase page in that dummy app
 - [ ] Add interaction showcase pages for modal, sidebar, menu select, snackbar, and `panel_secondary`
 - [ ] Add copy-paste examples for core surfaces from the showcase app back into docs
-- [ ] Document `ui_segmented_buttons` as a tabs primitive, not just a visual button group
-- [ ] Add cookbook examples for segmented tabs covering:
+- [x] Document `ui_segmented_buttons` as a tabs primitive, not just a visual button group
+- [x] Add cookbook examples for segmented tabs covering:
   - local instant switching
   - server-driven / Turbo-backed tab selection
   - preserving selected tab across form submits
