@@ -38,6 +38,13 @@
   - avoid host apps inventing ad hoc flow-state patterns just to support review/commit loops
 
 ## Tabs and Segmented Controls
+- [ ] reusable rich-cell tables across app:
+badges
+icons
+links
+custom cell partials
+Then adding a cell_renderer / block yield to Baldur could make sense
+
 - [x] Add a first-class `ui_tabs` primitive or documented tabs pattern built on `ui_segmented_buttons`
   - selected tab trigger
   - tab panels
