@@ -217,8 +217,17 @@
     background-color: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface-highest));
   }
 
-  .table tbody td:first-child,
-  .table tbody td:last-child {
+  .table tbody td:first-child {
+    font-weight: 600;
+  }
+
+  /*
+   * Opt-in modifier for tables where the last column should be visually
+   * emphasized (e.g. a total or primary action column). Default tables leave
+   * the last body cell at normal weight so numeric columns are not
+   * unexpectedly bold.
+   */
+  .table--emphasize-last-column tbody td:last-child {
     font-weight: 600;
   }
 

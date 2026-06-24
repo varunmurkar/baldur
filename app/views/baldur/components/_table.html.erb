@@ -16,7 +16,9 @@
   sort_path_builder = local_assigns[:sort_path_builder]
   header_classes = "px-6 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[color:var(--color-on-surface-variant)]"
   cell_classes = "px-6 py-4 text-sm text-[color:var(--color-on-surface)]"
-  table_classes = ["table", local_assigns[:table_class], local_assigns[:class]].compact.join(" ")
+  emphasize_last_column = local_assigns[:emphasize_last_column].present?
+  table_modifier_class = emphasize_last_column ? "table--emphasize-last-column" : nil
+  table_classes = ["table", table_modifier_class, local_assigns[:table_class], local_assigns[:class]].compact.join(" ")
 %>
 <div class="table-card__scroll">
   <table class="<%= table_classes %>">

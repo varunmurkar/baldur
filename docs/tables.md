@@ -91,4 +91,5 @@ Use `ui_table_card` when the table is a standalone surface:
 - `controls_position: :header` for compact data-view controls in the top-right header zone. Keep `:row` for wider filter bars.
 - `title_meta:` renders subdued inline metadata beside the title, for example `title_meta: "24 rows"`.
 - Sorting is opt-in: header sort controls render only when a column is marked `sortable: true` and the table receives `sort:` plus `sort_path_builder:`.
+- `emphasize_last_column: true` makes the last body cell semibold. The default is `false` so numeric final columns are not unexpectedly bold.
 - Use `ui_pagination` directly only when you need bare page navigation without the table-footer composition.
