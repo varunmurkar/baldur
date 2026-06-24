@@ -1,8 +1,12 @@
-<div class="snackbar-stack"
-     data-baldur-snackbar-stack
-     role="status"
-     aria-live="polite"
-     aria-atomic="true">
+<%
+  stack_classes = ["snackbar-stack", local_assigns[:class_name]].compact.join(" ")
+  stack_data = { "baldur-snackbar-stack" => true }.merge((local_assigns[:data] || {}).stringify_keys)
+%>
+<%= tag.div class: stack_classes,
+            id: local_assigns[:id],
+            data: stack_data,
+            role: "status",
+            aria: { live: "polite", atomic: "true" } do %>
   <% Array(snackbars).each do |snackbar| %>
     <%= render "baldur/components/snackbar", **snackbar %>
   <% end %>
@@ -10,4 +14,4 @@
   <template data-baldur-snackbar-template>
     <%= render "baldur/components/snackbar", template: true %>
   </template>
-</div>
+<% end %>
