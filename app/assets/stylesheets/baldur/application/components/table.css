@@ -231,8 +231,8 @@
     font-weight: 600;
   }
 
-  .table thead th:last-child,
-  .table tbody td:last-child {
+  .table th.text-right,
+  .table td.text-right {
     text-align: right;
   }
 

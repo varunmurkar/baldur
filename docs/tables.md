@@ -20,7 +20,7 @@ Use `ui_table` directly for embedded or simple tables:
   columns: [
     { label: "SKU", key: :sku },
     { label: "Status", key: :status },
-    { label: "Revenue", key: :revenue, header_class: "text-right", cell_class: "text-right" }
+    { label: "Revenue", key: :revenue, numeric: true }
   ],
   rows: [
     { sku: "SKU-001", status: "Active", revenue: number_to_currency(12_500) },
@@ -73,10 +73,9 @@ Use `ui_table_card` when the table is a standalone surface:
       {
         label: "Revenue",
         key: :revenue,
+        numeric: true,
         sortable: true,
         sort_key: "revenue",
-        header_class: "text-right",
-        cell_class: "text-right",
         header_tooltip: "Total revenue attributed to the current filter window."
       }
     ],
@@ -91,5 +90,6 @@ Use `ui_table_card` when the table is a standalone surface:
 - `controls_position: :header` for compact data-view controls in the top-right header zone. Keep `:row` for wider filter bars.
 - `title_meta:` renders subdued inline metadata beside the title, for example `title_meta: "24 rows"`.
 - Sorting is opt-in: header sort controls render only when a column is marked `sortable: true` and the table receives `sort:` plus `sort_path_builder:`.
+- `numeric: true` on a column right-aligns both header and cell. Use it for currency, counts, percentages, and other numeric data. Columns without this flag stay left-aligned regardless of position.
 - `emphasize_last_column: true` makes the last body cell semibold. The default is `false` so numeric final columns are not unexpectedly bold.
 - Use `ui_pagination` directly only when you need bare page navigation without the table-footer composition.

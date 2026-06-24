@@ -66,7 +66,7 @@
 - [ ] Consider adding a higher-level `ui_tabs` helper on top of the documented segmented-buttons pattern once host usage stabilizes
 
 ## Tables and Resource Screens
-- [ ] Numeric cols should be right-aligned by default 
+- [x] Numeric cols should be right-aligned by default
 - [ ] Consider `pagy` gem for tables component
 - [ ] Add a higher-level resource index pattern on top of existing table primitives
 - [ ] Support search, filters, row actions, bulk select, and empty states

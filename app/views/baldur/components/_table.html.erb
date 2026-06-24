@@ -14,7 +14,7 @@
   sort_key = sort_config[:key].to_s
   sort_direction = sort_config[:direction].to_s.downcase == "asc" ? "asc" : "desc"
   sort_path_builder = local_assigns[:sort_path_builder]
-  header_classes = "px-6 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[color:var(--color-on-surface-variant)]"
+  header_classes = "px-6 py-4 text-xs font-semibold uppercase tracking-wide text-[color:var(--color-on-surface-variant)]"
   cell_classes = "px-6 py-4 text-sm text-[color:var(--color-on-surface)]"
   emphasize_last_column = local_assigns[:emphasize_last_column].present?
   table_modifier_class = emphasize_last_column ? "table--emphasize-last-column" : nil
@@ -25,7 +25,7 @@
     <thead>
       <tr>
         <% normalized_columns.each do |column| %>
-          <% column_header_class = [header_classes, column[:header_class]].compact.join(" ") %>
+          <% column_header_class = [header_classes, ("text-right" if column[:numeric]), column[:header_class]].compact.join(" ") %>
           <% column_sort_key = (column[:sort_key] || column[:key]).to_s %>
           <% sortable = !!column[:sortable] && sort_path_builder.respond_to?(:call) && column_sort_key.present? %>
           <% sorted = sortable && sort_key == column_sort_key %>
@@ -108,7 +108,7 @@
         %>
           <%= tag.tr(**attributes) do %>
             <% cells.each_with_index do |cell, index| %>
-              <% column_cell_class = [cell_classes, normalized_columns[index]&.fetch(:cell_class, nil)].compact.join(" ") %>
+              <% column_cell_class = [cell_classes, ("text-right" if normalized_columns[index]&.fetch(:numeric, nil)), normalized_columns[index]&.fetch(:cell_class, nil)].compact.join(" ") %>
               <td class="<%= column_cell_class %>"><%= cell %></td>
             <% end %>
           <% end %>
