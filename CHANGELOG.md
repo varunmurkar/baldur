@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Agent-friendly doc entrypoints: `llms.txt`, `llms-full.txt`, and `context7.json` for Context7 and similar doc-ingestion tools.
 - New `docs/tabs-and-segmented-controls.md` page documenting `ui_segmented_buttons` as a tabs trigger primitive, including cookbook examples for local switching, Turbo-backed selection, and preserving selected tab across form submits.
+- `docs/tabs-and-segmented-controls.md` now documents `ui_hidden_field_tag` as the Baldur wrapper for hidden tab state, while clarifying that plain Rails `hidden_field_tag` remains acceptable.
 - `ui_snackbar_stack` now accepts `id:`, `class_name:`, and `data:` so the stack can be targeted by Turbo Streams.
 - `ui_snackbar_turbo_stream(flash, target: "snackbar-stack")` helper for opt-in Turbo Stream snackbar updates. Raises a clear `ArgumentError` if `turbo-rails` is not available in the host app.
 - `docs/alerts-and-snackbars.md` now includes Turbo Stream layout and usage examples.

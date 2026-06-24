@@ -32,7 +32,7 @@
 - [ ] Add Rails form-builder integration for Baldur fields
 - [ ] Bind labels, hints, errors, and invalid states automatically
 - [ ] Document model-bound form usage
-- [ ] Add `ui_hidden_field_tag` helper (or document `hidden_field_tag` as the canonical Baldur-free hidden field primitive)
+- [x] Add `ui_hidden_field_tag` helper (or document `hidden_field_tag` as the canonical Baldur-free hidden field primitive)
 - [ ] Consider adding `step:` and other HTML5 input attributes to `ui_text_field_tag` public signature, or document passing them through `input_options`
 - [ ] Add first-class guidance for hidden state fields used with interactive Baldur controls
   - examples: active tab, filters, stepped form state, selected panel

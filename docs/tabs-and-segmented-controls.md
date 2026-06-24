@@ -19,6 +19,8 @@ That makes it a good starting point for tabs. Host apps still own panel markup, 
 ui_segmented_buttons(items:, aria_label: "Tabs", classes: nil)
 ```
 
+For hidden tab state inside forms, Baldur also ships `ui_hidden_field_tag(name, value = nil, options = {})`. It is a thin wrapper around Rails `hidden_field_tag`, so either helper is acceptable. Prefer `ui_hidden_field_tag` when you want app code to stay on Baldur helper naming consistently.
+
 Each item can include:
 
 - `label`
@@ -157,7 +159,7 @@ For tabs that drive filtering, expensive queries, or frame-local rendering, let 
                   turbo_frame: "catalog-tabs",
                   report_tabs_current_tab_value: current_tab
                 } do %>
-    <%= hidden_field_tag :tab, current_tab, data: { report_tabs_target: "hiddenInput" } %>
+    <%= ui_hidden_field_tag :tab, current_tab, data: { report_tabs_target: "hiddenInput" } %>
 
     <%= ui_segmented_buttons(
       aria_label: "Catalog tabs",
@@ -238,15 +240,15 @@ When tabs live inside a form, store selected tab in a hidden field so validation
 ```erb
 <% selected_tab = params[:report_tab].presence || "details" %>
 
-<%= form_with url: reports_path,
+  <%= form_with url: reports_path,
               method: :post,
               data: {
                 controller: "report-form-tabs",
                 report_form_tabs_current_tab_value: selected_tab
               } do %>
-  <%= hidden_field_tag :report_tab,
-                       selected_tab,
-                       data: { report_form_tabs_target: "hiddenInput" } %>
+  <%= ui_hidden_field_tag :report_tab,
+                          selected_tab,
+                          data: { report_form_tabs_target: "hiddenInput" } %>
 
   <%= ui_segmented_buttons(
     aria_label: "Report form tabs",
