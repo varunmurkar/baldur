@@ -218,8 +218,13 @@ module Baldur
                     action: action
     end
 
-    def ui_segmented_buttons(items:, aria_label: 'Tabs', classes: nil)
-      baldur_render 'baldur/components/segmented_buttons', items: items, aria_label: aria_label, classes: classes
+    def ui_segmented_buttons(items:, aria_label: 'Tabs', classes: nil, id: nil, data: nil)
+      baldur_render 'baldur/components/segmented_buttons',
+                    items: items,
+                    aria_label: aria_label,
+                    classes: classes,
+                    id: id,
+                    data: data
     end
 
     def ui_tooltip(text:, content:, show_icon: true, icon: 'circle-help', variant: :link, wrapper_class: nil,

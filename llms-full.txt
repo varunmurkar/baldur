@@ -112,9 +112,9 @@ See: `docs/modals-and-panels.md`
 ### Tabs and segmented controls
 
 - `ui_segmented_buttons` should be treated as Baldur's tabs trigger primitive.
-- It already renders `role="tablist"`, `role="tab"`, `aria-selected`, and roving `tabindex`.
-- Host apps still own panel markup, visibility, URL state, Turbo flows, and form-state persistence.
-- `baldur:install` ships `segmented_tabs_controller.js` for local instant switching.
+- It renders `role="tablist"`, `role="tab"`, `aria-selected`, and roving `tabindex`, and now accepts wrapper `id` / `data` plus per-item `id` / `aria` for panel association.
+- Host apps still own panel markup, URL state, Turbo flows, and form-state persistence.
+- `baldur:install` ships `segmented_tabs_controller.js` for click selection, keyboard navigation, panel hide/show, and optional hidden-input syncing.
 - `ui_hidden_field_tag` is available as a thin wrapper over Rails `hidden_field_tag` for preserving selected tab state across form submits.
 
 See: `docs/tabs-and-segmented-controls.md`

@@ -1,9 +1,16 @@
 <%
   segments = Array(items)
   return if segments.empty?
+  wrapper_classes = ['segmented', classes].compact.join(' ')
+  wrapper_data = (local_assigns[:data] || {}).stringify_keys
 %>
-<div class="segmented <%= classes %>" role="tablist" aria-label="<%= aria_label %>">
+<%= tag.div class: wrapper_classes,
+            id: local_assigns[:id],
+            data: wrapper_data,
+            role: 'tablist',
+            aria: { label: aria_label } do %>
   <% segments.each do |segment| %>
+    <% segment = segment.respond_to?(:symbolize_keys) ? segment.symbolize_keys : segment %>
     <% label = segment[:label].to_s %>
     <% badge_label = segment[:badge_label].to_s.presence %>
     <% icon = segment[:icon].presence %>
@@ -11,7 +18,9 @@
     <% disabled = !!segment[:disabled] %>
     <% value = segment[:value].presence || label.parameterize %>
     <% icon_only = icon.present? && label.blank? %>
-    <% data_attributes = (segment[:data] || {}).merge(value: value) %>
+    <% data_attributes = (segment[:data] || {}).stringify_keys.merge('value' => value) %>
+    <% button_aria = (segment[:aria] || {}).symbolize_keys %>
+    <% button_aria = button_aria.reverse_merge(selected: selected, disabled: disabled) %>
     <% button_classes = [
       "segmented__button",
       ("is-selected" if selected),
@@ -22,11 +31,9 @@
     <% button_options = {
       type: "button",
       class: button_classes,
+      id: segment[:id],
       role: "tab",
-      aria: {
-        selected: selected,
-        disabled: disabled
-      },
+      aria: button_aria,
       tabindex: selected ? 0 : -1,
       data: data_attributes
     } %>
@@ -48,4 +55,4 @@
       <% end %>
     <% end %>
   <% end %>
-</div>
+<% end %>

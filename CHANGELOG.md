@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/forms.md` now includes first-class hidden state guidance for interactive Baldur controls, covering active tabs, filters, stepped form state, selected panels, and when to use `ui_hidden_field_tag` vs plain Rails `hidden_field_tag`.
 - New `docs/tabs-and-segmented-controls.md` page documenting `ui_segmented_buttons` as a tabs trigger primitive, including cookbook examples for local switching, Turbo-backed selection, and preserving selected tab across form submits.
 - `docs/tabs-and-segmented-controls.md` now documents `ui_hidden_field_tag` as the Baldur wrapper for hidden tab state, while clarifying that plain Rails `hidden_field_tag` remains acceptable.
+- `ui_segmented_buttons` now supports wrapper `id:` / `data:` and per-item `id` / `aria` wiring for stronger tab-to-panel association.
+- `segmented_tabs_controller.js` now supports keyboard tab navigation (`ArrowLeft`, `ArrowRight`, `Home`, `End`), hidden panel attributes, and optional hidden-input syncing.
 - `ui_snackbar_stack` now accepts `id:`, `class_name:`, and `data:` so the stack can be targeted by Turbo Streams.
 - `ui_snackbar_turbo_stream(flash, target: "snackbar-stack")` helper for opt-in Turbo Stream snackbar updates. Raises a clear `ArgumentError` if `turbo-rails` is not available in the host app.
 - `docs/alerts-and-snackbars.md` now includes Turbo Stream layout and usage examples.

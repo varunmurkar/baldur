@@ -51,18 +51,19 @@
   - avoid host apps inventing ad hoc flow-state patterns just to support review/commit loops
 
 ## Tabs and Segmented Controls
-- [ ] Add a first-class `ui_tabs` primitive or documented tabs pattern built on `ui_segmented_buttons`
+- [x] Add a first-class `ui_tabs` primitive or documented tabs pattern built on `ui_segmented_buttons`
   - selected tab trigger
   - tab panels
   - ARIA wiring
   - keyboard behavior
   - hidden / inactive panel handling
-- [ ] Provide a small Stimulus controller for segmented-button tabs so host apps do not hand-roll `show/hide` logic
-- [ ] Support syncing selected tab into a hidden input for form-backed workflows
-- [ ] Document when tabs should be:
+- [x] Provide a small Stimulus controller for segmented-button tabs so host apps do not hand-roll `show/hide` logic
+- [x] Support syncing selected tab into a hidden input for form-backed workflows
+- [x] Document when tabs should be:
   - instant client-side state
   - Turbo GET navigation
   - preserved across POST / redirect / render flows
+- [ ] Consider adding a higher-level `ui_tabs` helper on top of the documented segmented-buttons pattern once host usage stabilizes
 
 ## Tables and Resource Screens
 - [ ] Numeric cols should be right-aligned by default 
