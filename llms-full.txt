@@ -66,6 +66,14 @@ See: `docs/sidebar.md`
 
 See: `docs/auth.md`
 
+### Forms
+
+- `ui_text_field_tag` accepts Baldur-owned named parameters for labels, support text, wrappers, prefix/suffix, and multiline behavior.
+- Pass raw HTML5 input attributes such as `step`, `min`, `max`, `pattern`, `inputmode`, and `autocomplete` through `input_options:`.
+- `ui_hidden_field_tag` is a thin wrapper over Rails `hidden_field_tag` for hidden state fields.
+
+See: `docs/forms.md`
+
 ### Feedback
 
 - `ui_alert`: inline status surface with optional actions and collapsible state.
@@ -160,6 +168,7 @@ Prefer these boundaries when integrating or extending Baldur:
 - `docs/theme.md`
 - `docs/sidebar.md`
 - `docs/auth.md`
+- `docs/forms.md`
 - `docs/modals-and-panels.md`
 - `docs/alerts-and-snackbars.md`
 - `docs/tabs-and-segmented-controls.md`

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Agent-friendly doc entrypoints: `llms.txt`, `llms-full.txt`, and `context7.json` for Context7 and similar doc-ingestion tools.
+- New `docs/forms.md` page documenting `ui_text_field_tag` HTML5 attribute pass-through via `input_options:` and clarifying `ui_hidden_field_tag` / `hidden_field_tag` guidance.
 - New `docs/tabs-and-segmented-controls.md` page documenting `ui_segmented_buttons` as a tabs trigger primitive, including cookbook examples for local switching, Turbo-backed selection, and preserving selected tab across form submits.
 - `docs/tabs-and-segmented-controls.md` now documents `ui_hidden_field_tag` as the Baldur wrapper for hidden tab state, while clarifying that plain Rails `hidden_field_tag` remains acceptable.
 - `ui_snackbar_stack` now accepts `id:`, `class_name:`, and `data:` so the stack can be targeted by Turbo Streams.

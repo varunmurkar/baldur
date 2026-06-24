@@ -72,6 +72,7 @@ Render a sidebar with navigation and a main content area:
 - [Styling](docs/styling.md)
 - [Sidebar](docs/sidebar.md)
 - [Auth](docs/auth.md)
+- [Forms](docs/forms.md)
 - [Modals and Panels](docs/modals-and-panels.md)
 - [Alerts and Snackbars](docs/alerts-and-snackbars.md)
 - [Tabs and Segmented Controls](docs/tabs-and-segmented-controls.md)
