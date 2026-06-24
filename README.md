@@ -78,6 +78,14 @@ Render a sidebar with navigation and a main content area:
 - [Marketing](docs/marketing.md)
 - [Security](docs/security.md)
 
+## LLM / Context7 Docs
+
+- [llms.txt](llms.txt) for agent-friendly doc discovery and page summaries.
+- [llms-full.txt](llms-full.txt) for a denser, one-file integration guide.
+- [context7.json](context7.json) scopes Context7 parsing to Baldur's primary docs and agent rules.
+
+These files are intended for Context7 and other doc-ingestion tools that look for machine-readable documentation entrypoints.
+
 ## Security
 
 See [docs/security.md](docs/security.md) for artifact verification, MFA requirements, and vulnerability reporting.

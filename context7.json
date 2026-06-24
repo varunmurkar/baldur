@@ -1,0 +1,17 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Baldur",
+  "description": "Opinionated Rails UI engine for Propshaft, importmap-rails, stimulus-rails, and tailwindcss-rails host apps.",
+  "folders": [
+    "docs"
+  ],
+  "excludeFiles": [
+    "TODO.md"
+  ],
+  "rules": [
+    "Target Rails host apps using Propshaft, importmap-rails, stimulus-rails, and tailwindcss-rails.",
+    "Prefer Baldur ui_* helpers over ad hoc duplicated component markup when a helper exists.",
+    "Treat optional surfaces as generator-backed and verify install requirements before suggesting their use.",
+    "Turbo support is opt-in. ui_snackbar_turbo_stream requires turbo-rails in the host app."
+  ]
+}

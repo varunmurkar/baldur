@@ -17,8 +17,11 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir.chdir(__dir__) do
     Dir[
-      '{app,config,lib,script,test}/**/*',
+      '{app,config,docs,lib,script,test}/**/*',
       'README.md',
+      'llms.txt',
+      'llms-full.txt',
+      'context7.json',
       'TODO.md',
       'LICENSE',
       'SECURITY.md',

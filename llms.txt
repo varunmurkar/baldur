@@ -1,0 +1,32 @@
+# Baldur
+
+Baldur is an opinionated Rails UI engine for apps using Propshaft, importmap-rails, stimulus-rails, and tailwindcss-rails. It provides reusable `ui_*` helpers, Tailwind-backed components, install generators, and Stimulus wiring for common application surfaces.
+
+## Project Links
+
+- [README](README.md): Overview, install summary, supported stack, and roadmap.
+- [Installation](docs/installation.md): Required install flow, host assumptions, optional generators, and smoke checks.
+- [Styling](docs/styling.md): Theme tokens, CSS variable conventions, and host customization boundaries.
+- [Theme](docs/theme.md): Theme controller behavior and `ui_theme_toggle` usage.
+- [Sidebar](docs/sidebar.md): `ui_sidebar` usage, link options, slot patterns, and ownership boundaries.
+- [Auth](docs/auth.md): `ui_auth_page` usage and auth-page composition guidance.
+- [Modals and Panels](docs/modals-and-panels.md): `ui_modal`, confirmation modal, panel helpers, and interaction wiring.
+- [Alerts and Snackbars](docs/alerts-and-snackbars.md): `ui_alert`, `ui_snackbar_stack`, `snackbar_flash_payloads`, and Turbo Stream snackbar updates.
+- [Tables](docs/tables.md): Table helper APIs, table card composition, and rendering guidance.
+- [Marketing](docs/marketing.md): Marketing page helpers and composition patterns.
+- [Security](docs/security.md): Artifact verification, MFA requirements, and vulnerability reporting.
+
+## Key Constraints
+
+- Supported stack: Ruby `>= 3.3`, Rails `>= 7.0`, Propshaft, `importmap-rails`, `stimulus-rails`, `tailwindcss-rails >= 4.3.0`.
+- Base install assumes host app has `app/assets/tailwind/application.css`, `app/javascript/controllers`, `app/assets/stylesheets/fonts.css`, and `app/assets/stylesheets/theme.css`.
+- Prefer Baldur `ui_*` helpers over ad hoc markup when a helper exists.
+- Optional surfaces may require generators such as `baldur:install_panel_secondary` and `baldur:install_google_auth`.
+- Turbo support is opt-in. `ui_snackbar_turbo_stream` requires `turbo-rails` in host app.
+
+## Agent Starting Points
+
+- For first-time adoption, start with [Installation](docs/installation.md).
+- For app-shell composition, read [Sidebar](docs/sidebar.md), [Auth](docs/auth.md), and [Modals and Panels](docs/modals-and-panels.md).
+- For feedback surfaces, read [Alerts and Snackbars](docs/alerts-and-snackbars.md).
+- For host theming or appearance changes, read [Styling](docs/styling.md) and [Theme](docs/theme.md).

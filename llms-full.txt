@@ -1,0 +1,157 @@
+# Baldur Full Agent Guide
+
+Baldur is an opinionated Rails UI engine for the Propshaft + importmap + Stimulus + Tailwind stack. It ships install generators, reusable `ui_*` helpers, partial-backed components, Tailwind styles, and Stimulus controllers so host apps can compose polished UI without rebuilding common primitives.
+
+## Supported Stack
+
+- Ruby `>= 3.3`
+- Rails `>= 7.0`
+- Propshaft
+- `importmap-rails`
+- `stimulus-rails`
+- `tailwindcss-rails >= 4.3.0`
+
+## Install Flow
+
+Add to the host `Gemfile`:
+
+```ruby
+gem "baldur", ">= 0.1.3"
+```
+
+Run:
+
+```sh
+bundle install
+bundle exec rails tailwindcss:engines
+bundle exec rails generate baldur:install
+bundle exec rails tailwindcss:build
+```
+
+Optional generators:
+
+```sh
+bundle exec rails generate baldur:install_panel_secondary
+bundle exec rails generate baldur:install_google_auth
+```
+
+## Host App Assumptions
+
+- Tailwind entrypoint exists at `app/assets/tailwind/application.css`.
+- Host app uses importmap Stimulus boot with `app/javascript/controllers`.
+- Host app has `app/assets/stylesheets/fonts.css` and `app/assets/stylesheets/theme.css`.
+- Host app can import `app/assets/builds/tailwind/baldur.css` from `app/assets/tailwind/application.css`.
+
+After installation, smoke-check with:
+
+```sh
+bundle exec rails tailwindcss:build
+bundle exec ruby "$(bundle show baldur)/script/verify_host_install"
+```
+
+## Core Helper Families
+
+### App shell and navigation
+
+- `ui_sidebar`: authenticated application shell with desktop + mobile sidebar behavior.
+- Host app owns routes, active-state logic, and app-specific slot content.
+- Baldur owns sidebar shell markup, toggle behavior, and default nav rendering.
+
+See: `docs/sidebar.md`
+
+### Auth
+
+- `ui_auth_page`: branded auth layout shell.
+- Default base install already includes auth page helper.
+
+See: `docs/auth.md`
+
+### Feedback
+
+- `ui_alert`: inline status surface with optional actions and collapsible state.
+- `ui_snackbar_stack`: global snackbar wrapper. Accepts `snackbars:`, `id:`, `class_name:`, `data:`.
+- `snackbar_flash_payloads(flash)`: maps Rails flash into snackbar payloads.
+- `ui_snackbar_turbo_stream(flash, target: "snackbar-stack")`: opt-in Turbo Stream update helper. Requires `turbo-rails`.
+
+Recommended layout pattern:
+
+```erb
+<%= ui_snackbar_stack(
+  snackbars: snackbar_flash_payloads(flash),
+  id: "snackbar-stack"
+) %>
+```
+
+Recommended Turbo Stream pattern:
+
+```erb
+<%= ui_snackbar_turbo_stream(flash) %>
+```
+
+See: `docs/alerts-and-snackbars.md`
+
+### Dialogs and side surfaces
+
+- `ui_modal`
+- `ui_modal_host`
+- `ui_confirmation_modal`
+- optional panel helpers via generators
+
+See: `docs/modals-and-panels.md`
+
+### Data display
+
+- `ui_table`
+- table card composition helpers
+- pagination and supporting surfaces
+
+See: `docs/tables.md`
+
+### Theming and styling
+
+- Theme and brand tokens flow through `theme.css` and shared CSS variables.
+- `ui_theme_toggle` exposes first-class theme switching UI.
+- Host apps should customize semantic tokens and font mappings instead of rewriting component styles first.
+
+See: `docs/styling.md`, `docs/theme.md`
+
+### Marketing surfaces
+
+- marketing hero, features, testimonials, FAQ, pricing, CTA, footer helpers
+
+See: `docs/marketing.md`
+
+## Ownership Boundaries
+
+Prefer these boundaries when integrating or extending Baldur:
+
+- Baldur owns reusable shell markup, shared class structure, Stimulus hooks, and component-level interaction wiring.
+- Host apps own routes, persistence, controller actions, authorization, data loading, and app-specific page composition.
+- Host apps should prefer `ui_*` helpers over duplicating Baldur component HTML directly.
+- If a host app needs a missing HTML pass-through or repeated composition pattern, add it upstream rather than forking markup locally.
+
+## Turbo Guidance
+
+- Baldur does not require Turbo globally.
+- For Turbo-enabled apps, treat snackbar stack as a stable server target with explicit `id`.
+- `ui_snackbar_turbo_stream` raises `ArgumentError` if used outside a Turbo Stream-capable context.
+
+## Security and Contribution
+
+- Security reporting and artifact verification: `docs/security.md`
+- Release history: `CHANGELOG.md`
+- Contribution guide: `CONTRIBUTING.md`
+
+## Doc Index
+
+- `README.md`
+- `docs/installation.md`
+- `docs/styling.md`
+- `docs/theme.md`
+- `docs/sidebar.md`
+- `docs/auth.md`
+- `docs/modals-and-panels.md`
+- `docs/alerts-and-snackbars.md`
+- `docs/tables.md`
+- `docs/marketing.md`
+- `docs/security.md`
