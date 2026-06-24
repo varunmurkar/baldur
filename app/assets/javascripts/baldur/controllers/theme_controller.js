@@ -27,12 +27,13 @@ export default class ThemeController extends Controller {
   }
 
   getCurrentTheme() {
-    // 1. Check localStorage
     const stored = getFromStorage(this.storageKeyValue);
     if (stored && this.themesValue.includes(stored)) return stored;
 
-    // 2. Default to light when user has not chosen a theme.
-    return "light";
+    const systemTheme = getSystemPreference("color-scheme", this.themesValue);
+    if (systemTheme && this.themesValue.includes(systemTheme)) return systemTheme;
+
+    return this.themesValue[0] || "light";
   }
 
   handleToggleChange(toggle) {

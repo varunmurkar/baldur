@@ -75,10 +75,10 @@
 
 ## Theming
 - [ ] Add a small set of starter theme presets
-- [ ] Add first-class `ui_theme_toggle` helper/component so hosts do not need to copy Mimir toggle partial
-- [ ] Improve dark-mode/theme controller documentation
-  - [ ] Theme toggle on auth page templates need top rail 
-  - [ ] Document brand-token customization more clearly
+- [x] Add first-class `ui_theme_toggle` helper/component so hosts do not need to copy Mimir toggle partial
+- [x] Improve dark-mode/theme controller documentation
+  - [x] Theme toggle on auth page templates need top rail 
+  - [x] Document brand-token customization more clearly
 
 ## Accessibility
 - [ ] Audit keyboard and focus behavior across interactive components

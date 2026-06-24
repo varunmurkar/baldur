@@ -28,7 +28,7 @@ That is all — the controller initializes on connect, reads any stored preferen
 
 | Step | Behavior |
 |------|----------|
-| Connect | Reads stored preference from `localStorage` (`baldur.theme` by default). Falls back to `"light"`. |
+| Connect | Reads stored preference from `localStorage` (`baldur.theme` by default). Falls back to system preference (`prefers-color-scheme`), then the first configured theme. Once the user toggles, the stored choice wins over system preference. |
 | Apply | Adds the theme class (`"light"` or `"dark"`) to `<html>`. Sets `data-theme` attribute. |
 | Toggle | Checkbox inputs with `data-theme-target="toggle"` sync checked state. Compact icon buttons use `data-action="click->theme#toggle"`. |
 | Persist | Stores chosen theme to `localStorage` under `baldur.theme`. |

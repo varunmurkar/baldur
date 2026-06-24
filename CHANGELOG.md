@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lowered minimum Rails dependency from `>= 8.1.0` to `>= 7.0`.
 - Lowered minimum `tailwindcss-rails` dependency from `>= 4.4.0` to `>= 4.3.0`.
 - Removed global last-column right-align CSS rule. Columns now right-align only when explicitly marked `numeric: true`.
+- Theme controller now falls back to system preference (`prefers-color-scheme`) when no stored user choice exists. Previously defaulted to `"light"`. Stored user choice still wins over system preference.
 
 ### Fixed
 
