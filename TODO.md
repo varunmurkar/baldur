@@ -7,16 +7,10 @@
 - [ ] Add end-to-end install verification in dummy app
 
 ## Showcase App and Docs
-- [x] Add agent-friendly docs, fetchable by Context7
 - [ ] Add a dedicated dummy app in the extracted gem repo for visual smoke checks
 - [ ] Add a component inventory/showcase page in that dummy app
 - [ ] Add interaction showcase pages for modal, sidebar, menu select, snackbar, and `panel_secondary`
 - [ ] Add copy-paste examples for core surfaces from the showcase app back into docs
-- [x] Document `ui_segmented_buttons` as a tabs primitive, not just a visual button group
-- [x] Add cookbook examples for segmented tabs covering:
-  - local instant switching
-  - server-driven / Turbo-backed tab selection
-  - preserving selected tab across form submits
 - [ ] Add a dummy-app example showing segmented tabs inside a form with hidden tab state
 
 ## Starter Templates
@@ -32,13 +26,6 @@
 - [ ] Add Rails form-builder integration for Baldur fields
 - [ ] Bind labels, hints, errors, and invalid states automatically
 - [ ] Document model-bound form usage
-- [x] Add `ui_hidden_field_tag` helper (or document `hidden_field_tag` as the canonical Baldur-free hidden field primitive)
-- [x] Consider adding `step:` and other HTML5 input attributes to `ui_text_field_tag` public signature, or document passing them through `input_options`
-- [x] Add first-class guidance for hidden state fields used with interactive Baldur controls
-  - examples: active tab, filters, stepped form state, selected panel
-  - clarify when plain `hidden_field_tag` is acceptable vs when Baldur should wrap it
-- [ ] Document the recommended pattern for submit buttons that intentionally switch UI context before submit
-  - example: a review button that moves the user into a Targets tab before rendering results
 
 ## Buttons
 - [x] `ui_button` should support `formaction` and `formmethod` attributes so host apps can use it as a form-action button (e.g. Turbo-frame-aware submit that posts to a different endpoint)
@@ -66,8 +53,6 @@
 - [ ] Consider adding a higher-level `ui_tabs` helper on top of the documented segmented-buttons pattern once host usage stabilizes
 
 ## Tables and Resource Screens
-- [x] Numeric cols should be right-aligned by default
-- [x] Consider `pagy` gem for tables component
 - [ ] Add a higher-level resource index pattern on top of existing table primitives
 - [ ] Support search, filters, row actions, bulk select, and empty states
 - [ ] Document recommended resource index composition
@@ -75,23 +60,12 @@
 
 ## Theming
 - [ ] Add a small set of starter theme presets
-- [x] Add first-class `ui_theme_toggle` helper/component so hosts do not need to copy Mimir toggle partial
-- [x] Improve dark-mode/theme controller documentation
-  - [x] Theme toggle on auth page templates need top rail 
-  - [x] Document brand-token customization more clearly
 
 ## Accessibility
 - [ ] Audit keyboard and focus behavior across interactive components
 - [ ] ADA WCAG 2.1 AA compliance
 - [ ] Add accessibility-focused tests for core surfaces
 - [ ] Document a11y guarantees and known gaps
-- [ ] Audit `ui_segmented_buttons` for tab semantics when used as tabs
-  - `role="tablist"`
-  - `role="tab"`
-  - `aria-selected`
-  - `tabindex`
-  - panel association guidance
-- [ ] Document that segmented buttons alone are not a complete tabs solution without panel semantics
 
 ## Internationalization
 - [ ] Add I18n-friendly labels/messages for reusable helpers

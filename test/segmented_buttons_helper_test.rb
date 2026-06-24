@@ -64,4 +64,22 @@ class BaldurSegmentedButtonsHelperTest < Minitest::Test
     assert_includes html, 'tabindex="0"'
     assert_includes html, 'tabindex="-1"'
   end
+
+  def test_ui_segmented_buttons_renders_role_tab_and_aria_selected_false_on_unselected
+    html = TestController.render(
+      inline: <<~ERB,
+        <%= ui_segmented_buttons(
+              items: [
+                { label: "First", value: "first", selected: true },
+                { label: "Second", value: "second" }
+              ]
+            ) %>
+      ERB
+      formats: [:html]
+    )
+
+    assert_includes html, 'role="tab"'
+    assert_includes html, 'aria-selected="true"'
+    assert_includes html, 'aria-selected="false"'
+  end
 end
