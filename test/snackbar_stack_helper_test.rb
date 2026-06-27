@@ -16,9 +16,6 @@ class BaldurSnackbarStackHelperTest < Minitest::Test
 
     assert_includes html, 'class="snackbar-stack"'
     assert_includes html, 'data-baldur-snackbar-stack="true"'
-    assert_includes html, 'role="status"'
-    assert_includes html, 'aria-live="polite"'
-    assert_includes html, 'aria-atomic="true"'
     assert_includes html, '<template data-baldur-snackbar-template>'
   end
 
@@ -60,7 +57,22 @@ class BaldurSnackbarStackHelperTest < Minitest::Test
     )
 
     assert_includes html, 'class="snackbar snackbar--success"'
+    assert_includes html, 'role="status"'
+    assert_includes html, 'aria-live="polite"'
+    assert_includes html, 'data-snackbar-snackbar-timeout-value="6000"'
     assert_includes html, 'Saved.'
+  end
+
+  def test_error_snackbar_uses_alert_semantics_and_longer_timeout
+    html = TestController.render(
+      inline: '<%= ui_snackbar_stack(snackbars: [{ variant: :error, message: "Failed." }]) %>',
+      formats: [:html]
+    )
+
+    assert_includes html, 'class="snackbar snackbar--error"'
+    assert_includes html, 'role="alert"'
+    assert_includes html, 'aria-live="assertive"'
+    assert_includes html, 'data-snackbar-snackbar-timeout-value="12000"'
   end
 
   def test_turbo_stream_helper_requires_turbo_context
@@ -118,4 +130,3 @@ class BaldurSnackbarStackHelperTest < Minitest::Test
     TestController.instance_variable_set(:@turbo_test_module, nil)
   end
 end
-

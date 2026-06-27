@@ -4,10 +4,12 @@
   selected_value = selected_tab&.dig(:value)
   tab_segments = resolved_tabs.map do |tab|
     {
+      id: "#{id}-tab-#{tab[:value]}",
       label: tab[:label],
       value: tab[:value],
       selected: tab[:value] == selected_value,
-      data: { action: "marketing-tabs#select", marketing_tabs_target: "option" }
+      aria: { controls: "#{id}-panel-#{tab[:value]}" },
+      data: { action: "click->marketing-tabs#select keydown->marketing-tabs#keydown", marketing_tabs_target: "option" }
     }
   end
 %>
@@ -28,11 +30,13 @@
         <% resolved_tabs.each do |tab| %>
           <% active = tab[:value] == selected_value %>
           <% panel_classes = [("motion-slide-up" if active), ("hidden" unless active)].compact.join(" ") %>
-          <div data-marketing-tabs-target="panel"
-               data-tab="<%= tab[:value] %>"
-               role="tabpanel"
-               class="<%= panel_classes %>"
-               <%= 'hidden aria-hidden="true"' unless active %>>
+             <div data-marketing-tabs-target="panel"
+                id="<%= "#{id}-panel-#{tab[:value]}" %>"
+                data-tab="<%= tab[:value] %>"
+                role="tabpanel"
+                aria-labelledby="<%= "#{id}-tab-#{tab[:value]}" %>"
+                class="<%= panel_classes %>"
+                <%= 'hidden aria-hidden="true"' unless active %>>
             <div class="grid items-start gap-8 md:grid-cols-[0.9fr_1.1fr]">
               <div class="rounded-3xl border border-outline-variant bg-surface p-6">
                 <h3 class="text-2xl font-semibold text-on-surface"><%= tab[:panel_title].presence || tab[:label] %></h3>

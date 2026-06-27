@@ -1,0 +1,55 @@
+<% content_for :title, "Segmented tabs — Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Segmented tabs</h1>
+  <p class="showcase-page-header__lede">Button-group tabs with arrow-key roving focus and ARIA panel wiring.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Client-side segmented tabs", source: "ui_segmented_buttons(items: [...]) + panels" } do %>
+  <div data-controller="segmented-tabs" data-segmented-tabs-active-value="overview">
+    <%= ui_segmented_buttons(
+          id: "demo-tabs",
+          aria_label: "Demo tabs",
+          items: [
+            {
+              id: "demo-tab-overview",
+              label: "Overview",
+              value: "overview",
+              selected: true,
+              aria: { controls: "demo-panel-overview" },
+              data: { action: "click->segmented-tabs#select keydown->segmented-tabs#handleKeydown", segmented_tabs_target: "tab", tab_value: "overview" }
+            },
+            {
+              id: "demo-tab-targets",
+              label: "Targets",
+              value: "targets",
+              aria: { controls: "demo-panel-targets" },
+              data: { action: "click->segmented-tabs#select keydown->segmented-tabs#handleKeydown", segmented_tabs_target: "tab", tab_value: "targets" }
+            },
+            {
+              id: "demo-tab-history",
+              label: "History",
+              value: "history",
+              aria: { controls: "demo-panel-history" },
+              data: { action: "click->segmented-tabs#select keydown->segmented-tabs#handleKeydown", segmented_tabs_target: "tab", tab_value: "history" }
+            }
+          ]
+        ) %>
+
+    <section id="demo-panel-overview" role="tabpanel" aria-labelledby="demo-tab-overview" data-segmented-tabs-target="panel" data-tab-value="overview">
+      <p>Overview content.</p>
+    </section>
+    <section id="demo-panel-targets" role="tabpanel" aria-labelledby="demo-tab-targets" hidden aria-hidden="true" class="hidden" data-segmented-tabs-target="panel" data-tab-value="targets">
+      <p>Targets content.</p>
+    </section>
+    <section id="demo-panel-history" role="tabpanel" aria-labelledby="demo-tab-history" hidden aria-hidden="true" class="hidden" data-segmented-tabs-target="panel" data-tab-value="history">
+      <p>History content.</p>
+    </section>
+  </div>
+<% end %>
+
+<p class="showcase-note">
+  Keyboard test: <kbd>ArrowLeft/Right</kbd> moves between tabs, <kbd>Home/End</kbd> jumps,
+  only the selected tab is in page tab order.
+</p>

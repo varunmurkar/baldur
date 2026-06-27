@@ -1,0 +1,41 @@
+<% content_for :title, "Menu select — Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Menu select</h1>
+  <p class="showcase-page-header__lede">Custom styled single-select with full keyboard listbox navigation.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Default", source: "ui_menu_select_tag(:status, options: [...], selected: 'active')" } do %>
+  <%= ui_menu_select_tag(
+        :status,
+        options: [
+          { value: "active", label: "Active" },
+          { value: "archived", label: "Archived" },
+          { value: "pending", label: "Pending", disabled: true },
+          { value: "draft", label: "Draft" }
+        ],
+        selected: "active",
+        label: "Status"
+      ) %>
+<% end %>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "With support text", source: "ui_menu_select_tag(:plan, options: [...], selected: 'pro')" } do %>
+  <%= ui_menu_select_tag(
+        :plan,
+        options: [
+          { value: "starter", label: "Starter", support: "$0/month" },
+          { value: "pro", label: "Pro", support: "$29/month", badge: "Popular" },
+          { value: "enterprise", label: "Enterprise", support: "Custom pricing" }
+        ],
+        selected: "pro",
+        label: "Billing plan",
+        supporting_text: "Pick the plan that fits your team."
+      ) %>
+<% end %>
+
+<p class="showcase-note">
+  Keyboard test: focus trigger, press <kbd>Space/Enter</kbd>, use <kbd>Arrow keys</kbd>,
+  <kbd>Home/End</kbd>, typeahead, <kbd>Enter</kbd> to select, <kbd>Escape</kbd> to close.
+</p>

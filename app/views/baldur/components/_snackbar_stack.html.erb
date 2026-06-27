@@ -4,9 +4,7 @@
 %>
 <%= tag.div class: stack_classes,
             id: local_assigns[:id],
-            data: stack_data,
-            role: "status",
-            aria: { live: "polite", atomic: "true" } do %>
+            data: stack_data do %>
   <% Array(snackbars).each do |snackbar| %>
     <%= render "baldur/components/snackbar", **snackbar %>
   <% end %>

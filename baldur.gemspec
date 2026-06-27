@@ -36,4 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'lucide-rails'
   spec.add_dependency 'rails', '>= 7.0.0'
   spec.add_dependency 'tailwindcss-rails', '>= 4.3.0'
+
+  spec.add_development_dependency 'rubocop', '~> 1.75'
 end

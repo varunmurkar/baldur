@@ -51,7 +51,10 @@
   }
 
   .segmented__button.is-disabled {
-    opacity: 0.45;
+    opacity: 1;
+    color: color-mix(in srgb, var(--color-on-surface) 45%, transparent);
+    border-color: color-mix(in srgb, var(--color-outline-variant) 65%, transparent);
+    background-color: color-mix(in srgb, var(--color-surface-low) 85%, transparent);
     cursor: not-allowed;
   }
 

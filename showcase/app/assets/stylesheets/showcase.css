@@ -1,0 +1,157 @@
+/* Showcase-only styles. Nothing here should be required by Baldur itself. */
+
+.showcase-layout {
+  min-height: 100vh;
+  display: flex;
+}
+
+.showcase-nav {
+  width: 240px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--color-outline-variant);
+  background: var(--color-surface);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: fixed;
+  inset: 0 auto 0 0;
+  overflow-y: auto;
+}
+
+.showcase-nav__brand {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-on-surface);
+  text-decoration: none;
+}
+
+.showcase-nav__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.showcase-nav__heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.showcase-nav__link {
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+}
+
+.showcase-nav__link:hover,
+.showcase-nav__link.is-active {
+  background: var(--color-surface-medium);
+  color: var(--color-on-surface);
+}
+
+.showcase-main {
+  flex: 1;
+  margin-left: 240px;
+  padding: var(--space-6);
+  max-width: calc(100% - 240px);
+}
+
+.showcase-page-header {
+  margin-bottom: var(--space-6);
+}
+
+.showcase-page-header__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin-bottom: var(--space-2);
+}
+
+.showcase-page-header__lede {
+  color: var(--color-on-surface-variant);
+  max-width: 65ch;
+}
+
+.showcase-example-card {
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+}
+
+.showcase-example-card__header {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.showcase-example-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.showcase-example-card__description {
+  font-size: 0.875rem;
+  color: var(--color-on-surface-variant);
+  margin-top: var(--space-1);
+}
+
+.showcase-example-card__canvas {
+  padding: var(--space-5);
+  background: var(--color-surface-medium);
+}
+
+.showcase-example-card__source {
+  border-top: 1px solid var(--color-outline-variant);
+  padding: var(--space-4) var(--space-5);
+  font-size: 0.875rem;
+}
+
+.showcase-example-card__source pre {
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-highest);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.showcase-tile {
+  display: block;
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  text-decoration: none;
+}
+
+.showcase-tile:hover {
+  border-color: var(--color-primary);
+}
+
+.showcase-tile__title {
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.showcase-tile__meta {
+  font-size: 0.875rem;
+  color: var(--color-on-surface-variant);
+}
+
+.showcase-checklist {
+  display: grid;
+  gap: var(--space-3);
+}

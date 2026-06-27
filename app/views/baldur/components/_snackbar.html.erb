@@ -16,8 +16,18 @@
   end
   icon_content = local_assigns[:icon].presence || icon_map[variant] || "info"
   dismiss_label = local_assigns[:dismiss_label] || "Dismiss"
+  live_role = variant == :error ? "alert" : "status"
+  live_mode = variant == :error ? "assertive" : "polite"
+  timeout = variant == :error ? 12000 : 6000
 %>
-<div class="snackbar snackbar--<%= variant %>" data-controller="snackbar" data-snackbar data-snackbar-variant="<%= variant %>">
+<div class="snackbar snackbar--<%= variant %>"
+     data-controller="snackbar"
+     data-snackbar
+     data-snackbar-variant="<%= variant %>"
+     data-snackbar-snackbar-timeout-value="<%= timeout %>"
+     role="<%= live_role %>"
+     aria-live="<%= live_mode %>"
+     aria-atomic="true">
   <div class="snackbar__icon" data-snackbar-icon>
     <%= ui_icon(icon_content, class_name: "h-5 w-5") unless template %>
   </div>

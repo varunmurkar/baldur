@@ -7,12 +7,20 @@
 <% show_footer = local_assigns.key?(:show_footer) ? local_assigns[:show_footer] : true %>
 <% dialog_class = local_assigns[:dialog_class] %>
 <% dialog_classes = ["dialog", "motion-fade-scale", *dialog_class.to_s.split].uniq.join(" ") %>
-<div id="<%= id %>" class="<%= dialog_classes %>">
+<% title_id = "#{id}-title" %>
+<% description_id = description.present? ? "#{id}-description" : nil %>
+<div id="<%= id %>"
+     class="<%= dialog_classes %>"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="<%= title_id %>"
+     <% if description_id.present? %>aria-describedby="<%= description_id %>"<% end %>
+     data-modal-target="dialog">
   <div class="flex items-start justify-between gap-4">
     <div>
-      <h3 class="text-xl font-semibold text-[color:var(--color-on-surface)]"><%= title %></h3>
+      <h3 id="<%= title_id %>" class="text-xl font-semibold text-[color:var(--color-on-surface)]"><%= title %></h3>
       <% if description.present? %>
-        <p class="text-sm text-[color:color-mix(in srgb,var(--color-on-surface) 75%,transparent)]"><%= description %></p>
+        <p id="<%= description_id %>" class="text-sm text-[color:color-mix(in srgb,var(--color-on-surface) 75%,transparent)]"><%= description %></p>
       <% end %>
     </div>
     <% if local_assigns[:close_button] != false %>

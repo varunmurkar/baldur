@@ -1,0 +1,53 @@
+/*
+ * Host theme overrides.
+ *
+ * ── Brand inputs ─────────────────────────────────────────
+ * Override the four base palette tokens to rebrand. Baldur
+ * derives all semantic and role tokens from these inputs;
+ * do NOT override the semantic outputs directly.
+ *
+ *   --_primary-base   primary actions / CTA
+ *   --_secondary-base sidebar, nav, subdued surfaces
+ *   --_accent-base    highlights, badges, tags
+ *   --_neutral-base   surfaces, text, borders
+ *
+ * Values are oklch(). To pick a color, convert to oklch and
+ * paste the three channels (L C H) — no parens needed:
+ *
+ *   --_primary-base: oklch(0.68 0.16 27);
+ *
+ * ── Semantic tokens ──────────────────────────────────────
+ * Baldur owns all --color-* semantic tokens (e.g. --color-primary,
+ * --color-surface, --color-on-surface). They adapt between
+ * light/dark automatically. Do not override them here.
+ *
+ * ── Font mapping ─────────────────────────────────────────
+ * Load web fonts in fonts.css, then map the loaded families
+ * to the tokens below. Baldur uses --font-body as the default
+ * family for body, heading, and UI text unless overridden.
+ *
+ *   --font-body     body copy
+ *   --font-heading  headings (falls back to --font-body)
+ *   --font-ui       buttons, labels, form text (falls back to --font-body)
+ *
+ * ── Example ──────────────────────────────────────────────
+ * :root {
+ *   --_primary-base: oklch(0.68 0.16 27);
+ *   --_secondary-base: oklch(0.30 0.04 195);
+ *   --_accent-base: oklch(0.48 0.07 92);
+ *   --_neutral-base: oklch(0.87 0 0);
+ *   --font-body: "Geist", "Inter", "Segoe UI", "Helvetica Neue", Arial, system-ui, -apple-system, sans-serif;
+ *   --font-heading: var(--font-body);
+ *   --font-ui: var(--font-body);
+ *   --font-family: var(--font-body);
+ *   --font-sans: var(--font-body);
+ * }
+ */
+
+:root {
+  --font-body: "Geist", "Inter", "Segoe UI", "Helvetica Neue", Arial, system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-body);
+  --font-ui: var(--font-body);
+  --font-family: var(--font-body);
+  --font-sans: var(--font-body);
+}

@@ -1,0 +1,37 @@
+<% content_for :title, "Tables — Patterns — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Table pattern</h1>
+  <p class="showcase-page-header__lede">Card-wrapped table with search/filter controls and pagination.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Resource index", source: "ui_table_card + ui_table + ui_pagination" } do %>
+  <%= ui_table_card(
+        title: "Users",
+        description: "Manage workspace members.",
+        actions: ui_button(label: "Invite", icon: "plus", size: :sm),
+        controls: ui_text_field_tag(:search, nil, placeholder: "Search users...", input_options: { name: "search" }),
+        footer: ui_pagination(
+          current_page: 2,
+          total_pages: 5,
+          total_count: 48,
+          per_page: 10,
+          path_builder: ->(p) { "#page=#{p}" }
+        )
+      ) do %>
+    <%= ui_table(
+          columns: [
+            { label: "Name", key: :name },
+            { label: "Role", key: :role },
+            { label: "Status", key: :status },
+            { label: "Last active", key: :last_active }
+          ],
+          rows: [
+            { name: "Ada Lovelace", role: "Owner", status: "Active", last_active: "2 hours ago" },
+            { name: "Grace Hopper", role: "Editor", status: "Active", last_active: "1 day ago" },
+            { name: "Alan Turing", role: "Viewer", status: "Inactive", last_active: "3 days ago" }
+          ]
+        ) %>
+  <% end %>
+<% end %>

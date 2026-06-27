@@ -1,0 +1,54 @@
+<% content_for :title, "Card — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Card</h1>
+  <p class="showcase-page-header__lede">Content container with title, description, badge, icon and action slots.</p>
+</header>
+
+<% default_source = <<~ERB.strip
+  ui_card(
+    title: 'Deployment settings',
+    description: 'Configure how builds are triggered and published.',
+    badge: 'Advanced',
+    actions: ui_button(label: 'Save', size: :sm)
+  )
+ERB
+
+default_content = capture do
+  concat ui_card(
+    title: "Deployment settings",
+    description: "Configure how builds are triggered and published.",
+    badge: "Advanced",
+    actions: ui_button(label: "Save", size: :sm)
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Default card", source: default_source } do %>
+  <%= default_content %>
+<% end %>
+
+<% body_source = <<~ERB.strip
+  ui_card(
+    title: 'Invite link',
+    description: 'Share this link to let people join your workspace.',
+    variant: :surface,
+    actions: ui_button(label: 'Copy link', variant: :outline, size: :sm)
+  ) do
+    tag.code('https://baldur.run/join/acme-7x9k', class: 'block rounded-lg border border-outline bg-surface-lowest p-3 text-sm text-on-surface')
+  end
+ERB
+
+body_content = capture do
+  concat ui_card(
+    title: "Invite link",
+    description: "Share this link to let people join your workspace.",
+    variant: :surface,
+    actions: ui_button(label: "Copy link", variant: :outline, size: :sm)
+  ) do
+    tag.code("https://baldur.run/join/acme-7x9k", class: "block rounded-lg border border-outline bg-surface-lowest p-3 text-sm text-on-surface")
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Card with body block", source: body_source } do %>
+  <%= body_content %>
+<% end %>

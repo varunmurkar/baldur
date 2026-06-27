@@ -1,0 +1,45 @@
+<% content_for :title, "Badge — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Badge</h1>
+</header>
+
+<% variants_source = <<~ERB.strip
+  ui_badge(text: 'Default')
+  ui_badge(text: 'Primary', variant: :primary)
+  ui_badge(text: 'Success', variant: :success)
+  ui_badge(text: 'Warning', variant: :warning)
+  ui_badge(text: 'Danger', variant: :danger)
+ERB
+
+variants_content = capture do
+  concat content_tag(:div, class: "flex flex-wrap gap-2") do
+    concat ui_badge(text: "Default")
+    concat ui_badge(text: "Primary", variant: :primary)
+    concat ui_badge(text: "Success", variant: :success)
+    concat ui_badge(text: "Warning", variant: :warning)
+    concat ui_badge(text: "Danger", variant: :danger)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Variants", source: variants_source } do %>
+  <%= variants_content %>
+<% end %>
+
+<% sizes_source = <<~ERB.strip
+  ui_badge(text: 'Small', size: :sm)
+  ui_badge(text: 'Medium', size: :md)
+  ui_badge(text: 'Large', size: :lg)
+ERB
+
+sizes_content = capture do
+  concat content_tag(:div, class: "flex flex-wrap items-center gap-2") do
+    concat ui_badge(text: "Small", size: :sm)
+    concat ui_badge(text: "Medium", size: :md)
+    concat ui_badge(text: "Large", size: :lg)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Sizes", source: sizes_source } do %>
+  <%= sizes_content %>
+<% end %>

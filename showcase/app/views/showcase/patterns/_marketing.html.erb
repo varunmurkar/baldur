@@ -1,0 +1,108 @@
+<% content_for :title, "Marketing — Patterns — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Marketing pattern</h1>
+  <p class="showcase-page-header__lede">Landing page composition using marketing partials.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Landing sections", source: "ui_marketing_* helpers" } do %>
+  <%= ui_marketing_top_nav(
+        links: [
+          { label: "Features", href: "#features" },
+          { label: "Pricing", href: "#pricing" }
+        ],
+        primary_action: { label: "Get started", href: "#", variant: :primary }
+      ) %>
+
+  <%= ui_marketing_hero_section(
+        variant: :solar_system,
+        headline: "Ship faster with Baldur",
+        body: "Batteries-included Rails UI components.",
+        primary_action: { label: "Get started", href: "#" },
+        secondary_action: { label: "View docs", href: "#" },
+        centerpiece_image: { src: "/icon.svg", alt: "Baldur icon" },
+        callouts: [
+          { label: "Rails 8 ready" },
+          { label: "Tailwind 4" },
+          { label: "Accessible" }
+        ],
+        orbit_sources: [
+          { name: "Rails", asset_path: "/icon.svg" },
+          { name: "Hotwire", asset_path: "/icon.svg" },
+          { name: "Tailwind", asset_path: "/icon.svg" },
+          { name: "Lucide", asset_path: "/icon.svg" }
+        ]
+      ) %>
+
+  <%= ui_marketing_features_section(
+        id: "features",
+        title: "Everything you need",
+        tabs: [
+          { label: "Components", value: "components", panel: "Reusable UI helpers." },
+          { label: "Theming", value: "theming", panel: "Tailwind tokens and dark mode." },
+          { label: "Accessible", value: "accessible", panel: "Keyboard and screen reader support." }
+        ]
+      ) %>
+
+  <%= ui_marketing_pricing_tables(
+        headline: "Simple pricing",
+        subheadline: "Start free, upgrade when you need to.",
+        billing_options: [
+          { label: "Monthly", value: "monthly", data: { action: "click" } },
+          { label: "Yearly", value: "yearly", data: { action: "click" } }
+        ],
+        shared_capabilities: {
+          title: "Included with every plan",
+          subtitle: "Core components, dark mode, and updates."
+        },
+        plans: [
+          {
+            key: "starter",
+            name: "Starter",
+            prices: {
+              monthly: { primary: "$0", secondary: "/month" },
+              yearly: { primary: "$0", secondary: "/year" }
+            },
+            subtitle: "For side projects.",
+            card_bullets: ["Core components", "Community support"],
+            capabilities: { extra_credits: "None" },
+            cta: { label: "Get started", href: "#", variant: :outline }
+          },
+          {
+            key: "pro",
+            name: "Pro",
+            highlight_badge: "Popular",
+            prices: {
+              monthly: { primary: "$29", secondary: "/month" },
+              yearly: { primary: "$290", secondary: "/year" }
+            },
+            subtitle: "For growing teams.",
+            card_bullets: ["All components", "Priority support"],
+            capabilities: { extra_credits: "10,000" },
+            cta: { label: "Start trial", href: "#", variant: :primary }
+          }
+        ]
+      ) %>
+
+  <%= ui_marketing_faq_section(
+        id: "faq",
+        title: "Questions?",
+        items: [
+          { question: "Is this open source?", answer: "Yes, MIT licensed." },
+          { question: "Does it work with Rails 7?", answer: "Rails 7+ with Propshaft, importmap, and Tailwind." }
+        ]
+      ) %>
+
+  <%= ui_marketing_cta_banner(
+        banner: { title: "Ready to build?", subtitle: "Install Baldur in minutes.", primary_action: { label: "Get started", href: "#" } }
+      ) %>
+
+  <%= ui_marketing_footer(
+        description: "Batteries-included Rails UI engine.",
+        columns: [
+          { title: "Product", links: [{ label: "Features", href: "#" }, { label: "Pricing", href: "#" }] },
+          { title: "Resources", links: [{ label: "Docs", href: "#" }, { label: "GitHub", href: "#" }] }
+        ]
+      ) %>
+<% end %>

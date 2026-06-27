@@ -14,7 +14,7 @@ class EngineCssTest < Minitest::Test
 
     source = engine_css_path.read
 
-    %w[helpers views].each do |dir|
+    ['helpers', 'views'].each do |dir|
       assert_includes source, "@source \"../../../#{dir}\"",
                       "engine.css @source for #{dir} must resolve from app/assets/tailwind/baldur/ → app/#{dir}\n" \
                       "Expected: @source \"../../../#{dir}\"\n" \
@@ -27,7 +27,7 @@ class EngineCssTest < Minitest::Test
 
     source = engine_css_path.read
 
-    %w[helpers views].each do |dir|
+    ['helpers', 'views'].each do |dir|
       refute_includes source, "@source \"../../#{dir}\"",
                       "engine.css uses shallow @source \"../../#{dir}\" which resolves to app/assets/tailwind/#{dir} (nonexistent)\n" \
                       "Must use \"../../../#{dir}\" to reach app/#{dir}"

@@ -1,0 +1,84 @@
+<% content_for :title, "Testimonials section — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Testimonials section</h1>
+  <p class="showcase-page-header__lede">Bento-style grid of customer quotes with metric callouts and attribution.</p>
+</header>
+
+<% testimonials_source = <<~ERB.strip
+  ui_marketing_testimonials_section(
+    variant: :bento,
+    title: 'Loved by agent builders',
+    items: [
+      {
+        heading: '40%',
+        subheading: 'faster UI iteration',
+        quote: 'Baldur let us stop reinventing buttons and tables and focus on agent logic.',
+        name: 'Ada Lovelace',
+        company: 'Analytical Engines'
+      },
+      {
+        heading: '3x',
+        subheading: 'fewer a11y regressions',
+        quote: 'The built-in accessible markup saved us weeks of remediation.',
+        name: 'Grace Hopper',
+        company: 'Flowmatic Inc'
+      },
+      {
+        heading: 'Zero',
+        subheading: 'design drift',
+        quote: 'Our product and marketing sites finally share the same visual language.',
+        name: 'Margaret Hamilton',
+        company: 'Apollo Systems'
+      },
+      {
+        heading: '99.9%',
+        subheading: 'component coverage',
+        quote: 'We shipped our settings, dashboard and landing pages with one library.',
+        name: 'Barbara Liskov',
+        company: 'CLU Labs'
+      }
+    ]
+  )
+ERB
+
+testimonials_content = capture do
+  concat ui_marketing_testimonials_section(
+    variant: :bento,
+    title: "Loved by agent builders",
+    items: [
+      {
+        heading: "40%",
+        subheading: "faster UI iteration",
+        quote: "Baldur let us stop reinventing buttons and tables and focus on agent logic.",
+        name: "Ada Lovelace",
+        company: "Analytical Engines"
+      },
+      {
+        heading: "3x",
+        subheading: "fewer a11y regressions",
+        quote: "The built-in accessible markup saved us weeks of remediation.",
+        name: "Grace Hopper",
+        company: "Flowmatic Inc"
+      },
+      {
+        heading: "Zero",
+        subheading: "design drift",
+        quote: "Our product and marketing sites finally share the same visual language.",
+        name: "Margaret Hamilton",
+        company: "Apollo Systems"
+      },
+      {
+        heading: "99.9%",
+        subheading: "component coverage",
+        quote: "We shipped our settings, dashboard and landing pages with one library.",
+        name: "Barbara Liskov",
+        company: "CLU Labs"
+      }
+    ]
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Bento testimonials", source: testimonials_source } do %>
+  <%= testimonials_content %>
+<% end %>

@@ -31,6 +31,8 @@ export default class AccordionController extends Controller {
       content.style.overflow = "hidden";
 
       if (isOpen) {
+        content.removeAttribute("hidden");
+        content.removeAttribute("inert");
         content.style.maxHeight = "200px";
         content.style.opacity = "1";
 
@@ -44,6 +46,8 @@ export default class AccordionController extends Controller {
           }, this.transitionDurationValue);
         }, 100);
       } else {
+        content.setAttribute("hidden", "");
+        content.setAttribute("inert", "");
         content.style.maxHeight = "0px";
         content.style.opacity = "0";
       }
@@ -92,6 +96,8 @@ export default class AccordionController extends Controller {
   }
 
   openItem(item, content, icon, button) {
+    content.removeAttribute("hidden");
+    content.removeAttribute("inert");
     content.style.maxHeight = `${content.scrollHeight}px`;
     content.style.opacity = "1";
     item.dataset.open = "true";
@@ -112,9 +118,17 @@ export default class AccordionController extends Controller {
     content.style.maxHeight = "0px";
     content.style.opacity = "0";
     item.dataset.open = "false";
+    content.setAttribute("inert", "");
 
     this.updateIcon(icon, false);
     this.updateAriaState(button, content, false);
+
+    clearTimeout(content.__accordionHideTimeout);
+    content.__accordionHideTimeout = setTimeout(() => {
+      if (item.dataset.open !== "true") {
+        content.setAttribute("hidden", "");
+      }
+    }, this.transitionDurationValue);
   }
 
   closeAllItems(exceptItem) {

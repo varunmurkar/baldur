@@ -23,3 +23,27 @@ jobs:
 
       - name: Run standalone tests
         run: bundle exec ruby test/run_all.rb
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
+
+  showcase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: showcase
+
+      - name: Build Tailwind for showcase
+        working-directory: showcase
+        run: bundle exec rails tailwindcss:build
+
+      - name: Run showcase smoke tests
+        working-directory: showcase
+        run: bundle exec ruby test/showcase_render_smoke_test.rb

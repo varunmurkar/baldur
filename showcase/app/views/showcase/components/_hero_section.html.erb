@@ -1,0 +1,74 @@
+<% content_for :title, "Hero section — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Hero section</h1>
+  <p class="showcase-page-header__lede">Solar-system style marketing hero with headline, actions and orbital social proof.</p>
+</header>
+
+<% hero_source = <<~ERB.strip
+  ui_marketing_hero_section(
+    variant: :solar_system,
+    headline: 'Build agent-native software faster.',
+    body: 'Baldur gives your team UI components, patterns and interactions designed for autonomous agents.',
+    primary_action: { label: 'Start building', href: '#' },
+    secondary_action: { label: 'Read docs', href: '#', variant: :outline },
+    supporting_action: { label: 'Watch demo', href: '#', icon: 'play' },
+    callouts: [
+      { label: 'Open source' },
+      { label: 'Rails-first' },
+      { label: 'Agent-ready' }
+    ],
+    orbit_sources: [
+      { name: 'Baldur', asset_path: '/icon.png' }
+    ],
+    centerpiece_image: { src: '/icon.png', alt: 'Baldur centerpiece' }
+  )
+ERB
+
+hero_content = capture do
+  concat ui_marketing_hero_section(
+    variant: :solar_system,
+    headline: "Build agent-native software faster.",
+    body: "Baldur gives your team UI components, patterns and interactions designed for autonomous agents.",
+    primary_action: { label: "Start building", href: "#" },
+    secondary_action: { label: "Read docs", href: "#", variant: :outline },
+    supporting_action: { label: "Watch demo", href: "#", icon: "play" },
+    callouts: [
+      { label: "Open source" },
+      { label: "Rails-first" },
+      { label: "Agent-ready" }
+    ],
+    orbit_sources: [
+      { name: "Baldur", asset_path: "/icon.png" }
+    ],
+    centerpiece_image: { src: "/icon.png", alt: "Baldur centerpiece" }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Solar system hero", source: hero_source } do %>
+  <%= hero_content %>
+<% end %>
+
+<% minimal_source = <<~ERB.strip
+  ui_marketing_hero_section(
+    variant: :solar_system,
+    headline: 'Deploy in minutes.',
+    body: 'Drop the gem into your Rails app and start shipping consistent UI.',
+    primary_action: { label: 'Install gem', href: '#' },
+    centerpiece_image: { src: '/icon.png', alt: 'Baldur logo' }
+  )
+ERB
+
+minimal_content = capture do
+  concat ui_marketing_hero_section(
+    variant: :solar_system,
+    headline: "Deploy in minutes.",
+    body: "Drop the gem into your Rails app and start shipping consistent UI.",
+    primary_action: { label: "Install gem", href: "#" },
+    centerpiece_image: { src: "/icon.png", alt: "Baldur logo" }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Minimal hero", source: minimal_source } do %>
+  <%= minimal_content %>
+<% end %>

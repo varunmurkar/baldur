@@ -26,7 +26,10 @@
     options[:title] = link[:title] if link[:title].present?
     options[:data] = (options[:data] || {}).merge(link[:data] || {}) if link[:data].present?
     options[:method] = link[:method] if link[:method].present?
-    options[:aria] = (options[:aria] || {}).merge(current: (link[:active] ? "page" : nil))
+    options[:aria] = (options[:aria] || {}).merge(
+      current: (link[:active] ? "page" : nil),
+      label: (options.dig(:aria, :label) || link[:name])
+    )
 
     if mobile
       mobile_class = link[:active] ? "sidebar-mobile__link sidebar-mobile__link--active" : "sidebar-mobile__link"
@@ -107,14 +110,27 @@
   <div class="sidebar-mobile" data-controller="mobile-sidebar">
     <div class="sidebar-mobile__topbar">
       <div class="sidebar-mobile__brand"><%= brand_markup %></div>
-      <button type="button" class="icon-button" aria-label="Toggle navigation" data-action="mobile-sidebar#toggle">
+      <button type="button"
+              class="icon-button"
+              aria-label="Toggle navigation"
+              aria-controls="mobile-sidebar"
+              aria-expanded="false"
+              data-mobile-sidebar-target="button"
+              data-action="mobile-sidebar#toggle">
         <%= ui_icon("menu", class_name: "h-6 w-6") %>
       </button>
     </div>
 
-    <div id="mobile-sidebar" class="sidebar-mobile__panel hidden" data-mobile-sidebar-target="panel">
+    <div id="mobile-sidebar"
+         class="sidebar-mobile__panel hidden"
+         aria-hidden="true"
+         data-mobile-sidebar-target="panel">
       <div class="bg-scrim sidebar-mobile__scrim" data-action="click->mobile-sidebar#close"></div>
-      <div class="sidebar-mobile__surface">
+      <div class="sidebar-mobile__surface"
+           role="dialog"
+           aria-modal="true"
+           aria-label="Navigation menu"
+           data-mobile-sidebar-target="surface">
         <div class="sidebar-mobile__close-shell">
           <button type="button" class="icon-button sidebar-mobile__close" aria-label="Close navigation" data-action="mobile-sidebar#close">
             <%= ui_icon("x", class_name: "sidebar-mobile__close-icon") %>

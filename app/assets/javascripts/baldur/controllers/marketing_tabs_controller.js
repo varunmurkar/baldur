@@ -23,6 +23,30 @@ export default class extends Controller {
     this.tabValue = tab
   }
 
+  keydown(event) {
+    const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"]
+    if (!keys.includes(event.key)) return
+
+    event.preventDefault()
+    const options = this.optionTargets
+    if (options.length === 0) return
+
+    const currentIndex = options.indexOf(event.currentTarget)
+    if (currentIndex < 0) return
+
+    let nextIndex = currentIndex
+    if (event.key === "Home") nextIndex = 0
+    if (event.key === "End") nextIndex = options.length - 1
+    if (["ArrowRight", "ArrowDown"].includes(event.key)) nextIndex = (currentIndex + 1) % options.length
+    if (["ArrowLeft", "ArrowUp"].includes(event.key)) nextIndex = (currentIndex - 1 + options.length) % options.length
+
+    const nextButton = options[nextIndex]
+    if (!nextButton) return
+
+    this.tabValue = nextButton.dataset.value
+    nextButton.focus()
+  }
+
   tabValueChanged() {
     this.updateView()
   }

@@ -1,0 +1,15 @@
+<% content_for :title, "Patterns — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Pattern Gallery</h1>
+  <p class="showcase-page-header__lede">Common compositions copied from docs or generated back into docs.</p>
+</header>
+
+<div class="showcase-grid">
+  <% @patterns.each do |id| %>
+    <%= link_to pattern_path(id), class: "showcase-tile" do %>
+      <div class="showcase-tile__title"><%= id.humanize %></div>
+      <div class="showcase-tile__meta">Composition example for <%= id %>.</div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,112 @@
+<% content_for :title, "Pricing tables — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Pricing tables</h1>
+  <p class="showcase-page-header__lede">Tiered pricing with billing toggle, per-plan bullets and shared capabilities.</p>
+</header>
+
+<% pricing_source = <<~ERB.strip
+  ui_marketing_pricing_tables(
+    headline: 'Simple, transparent pricing',
+    subheadline: 'Start free and upgrade as your agents scale.',
+    billing_options: [
+      { label: 'Monthly', value: 'monthly' },
+      { label: 'Yearly', value: 'yearly', selected: true }
+    ],
+    plans: [
+      {
+        key: 'starter',
+        name: 'Starter',
+        subtitle: 'For hobby projects and experiments.',
+        highlight_badge: nil,
+        prices: { monthly: { primary: '$0', secondary: '/mo' }, yearly: { primary: '$0', secondary: '/yr' } },
+        card_bullets: ['1 workspace', '3 agents', 'Community support'],
+        capabilities: { extra_credits: 'No extra credits' },
+        cta: { label: 'Start free', href: '#' }
+      },
+      {
+        key: 'pro',
+        name: 'Pro',
+        subtitle: 'For teams shipping agent-native apps.',
+        highlight_badge: 'Popular',
+        prices: { monthly: { primary: '$29', secondary: '/mo' }, yearly: { primary: '$290', secondary: '/yr' } },
+        card_bullets: ['Unlimited workspaces', 'Unlimited agents', 'Priority support'],
+        capabilities: { extra_credits: '$10 per 1,000 extra runs' },
+        cta: { label: 'Start trial', href: '#' }
+      },
+      {
+        key: 'enterprise',
+        name: 'Enterprise',
+        subtitle: 'For organizations with custom needs.',
+        highlight_badge: nil,
+        prices: { monthly: { primary: 'Custom', secondary: '' }, yearly: { primary: 'Custom', secondary: '' } },
+        card_bullets: ['SSO', 'Audit logs', 'Dedicated support'],
+        capabilities: { extra_credits: 'Custom volume pricing' },
+        cta: { label: 'Contact sales', href: '#' }
+      }
+    ],
+    shared_capabilities: {
+      title: 'Everything you need to ship',
+      subtitle: 'Every plan includes the core platform features.',
+      items: [
+        { title: 'Rails gem', body: 'Install Baldur as a gem in your existing Rails app.' },
+        { title: 'Documentation', body: 'Full API docs and component examples.' }
+      ]
+    }
+  )
+ERB
+
+pricing_content = capture do
+  concat ui_marketing_pricing_tables(
+    headline: "Simple, transparent pricing",
+    subheadline: "Start free and upgrade as your agents scale.",
+    billing_options: [
+      { label: "Monthly", value: "monthly" },
+      { label: "Yearly", value: "yearly", selected: true }
+    ],
+    plans: [
+      {
+        key: "starter",
+        name: "Starter",
+        subtitle: "For hobby projects and experiments.",
+        highlight_badge: nil,
+        prices: { monthly: { primary: "$0", secondary: "/mo" }, yearly: { primary: "$0", secondary: "/yr" } },
+        card_bullets: ["1 workspace", "3 agents", "Community support"],
+        capabilities: { extra_credits: "No extra credits" },
+        cta: { label: "Start free", href: "#" }
+      },
+      {
+        key: "pro",
+        name: "Pro",
+        subtitle: "For teams shipping agent-native apps.",
+        highlight_badge: "Popular",
+        prices: { monthly: { primary: "$29", secondary: "/mo" }, yearly: { primary: "$290", secondary: "/yr" } },
+        card_bullets: ["Unlimited workspaces", "Unlimited agents", "Priority support"],
+        capabilities: { extra_credits: "$10 per 1,000 extra runs" },
+        cta: { label: "Start trial", href: "#" }
+      },
+      {
+        key: "enterprise",
+        name: "Enterprise",
+        subtitle: "For organizations with custom needs.",
+        highlight_badge: nil,
+        prices: { monthly: { primary: "Custom", secondary: "" }, yearly: { primary: "Custom", secondary: "" } },
+        card_bullets: ["SSO", "Audit logs", "Dedicated support"],
+        capabilities: { extra_credits: "Custom volume pricing" },
+        cta: { label: "Contact sales", href: "#" }
+      }
+    ],
+    shared_capabilities: {
+      title: "Everything you need to ship",
+      subtitle: "Every plan includes the core platform features.",
+      items: [
+        { title: "Rails gem", body: "Install Baldur as a gem in your existing Rails app." },
+        { title: "Documentation", body: "Full API docs and component examples." }
+      ]
+    }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Pricing tables", source: pricing_source } do %>
+  <%= pricing_content %>
+<% end %>

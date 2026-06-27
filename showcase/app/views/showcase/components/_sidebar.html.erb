@@ -1,0 +1,72 @@
+<% content_for :title, "Sidebar — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Sidebar</h1>
+  <p class="showcase-page-header__lede">Collapsible application sidebar with primary, secondary and custom header/footer slots.</p>
+</header>
+
+<% sidebar_source = <<~ERB.strip
+  ui_sidebar(
+    brand_name: 'Baldur',
+    brand_path: '/',
+    primary_links: [
+      { name: 'Dashboard', path: '#', icon: 'home', active: true },
+      { name: 'Runs', path: '#', icon: 'zap' },
+      { name: 'Settings', path: '#', icon: 'settings' }
+    ],
+    secondary_links: [
+      { name: 'Help', path: '#', icon: 'help-circle' }
+    ],
+    secondary_label: 'Support'
+  ) { tag.div('Page content goes here.', class: 'p-6') }
+ERB
+
+sidebar_content = capture do
+  concat ui_sidebar(
+    brand_name: "Baldur",
+    brand_path: "/",
+    primary_links: [
+      { name: "Dashboard", path: "#", icon: "home", active: true },
+      { name: "Runs", path: "#", icon: "zap" },
+      { name: "Settings", path: "#", icon: "settings" }
+    ],
+    secondary_links: [
+      { name: "Help", path: "#", icon: "help-circle" }
+    ],
+    secondary_label: "Support"
+  ) { tag.div("Page content goes here.", class: "p-6") }
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Sidebar shell", source: sidebar_source } do %>
+  <%= sidebar_content %>
+<% end %>
+
+<% header_footer_source = <<~ERB.strip
+  ui_sidebar(
+    brand_name: 'Baldur',
+    brand_path: '/',
+    primary_links: [
+      { name: 'Projects', path: '#', icon: 'folder' },
+      { name: 'Team', path: '#', icon: 'users' }
+    ],
+    header_content: ui_badge(text: 'Pro', variant: :primary),
+    footer_content: ui_button(label: 'Logout', variant: :ghost, size: :sm)
+  ) { tag.div('Main area', class: 'p-6') }
+ERB
+
+header_footer_content = capture do
+  concat ui_sidebar(
+    brand_name: "Baldur",
+    brand_path: "/",
+    primary_links: [
+      { name: "Projects", path: "#", icon: "folder" },
+      { name: "Team", path: "#", icon: "users" }
+    ],
+    header_content: ui_badge(text: "Pro", variant: :primary),
+    footer_content: ui_button(label: "Logout", variant: :ghost, size: :sm)
+  ) { tag.div("Main area", class: "p-6") }
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "With header and footer slots", source: header_footer_source } do %>
+  <%= header_footer_content %>
+<% end %>

@@ -43,6 +43,11 @@ class BaldurSidebarHelperTest < Minitest::Test
     assert_includes html, 'href="/settings"'
     assert_includes html, 'aria-current="page"'
     assert_includes html, 'Admin'
+    assert_includes html, 'aria-controls="mobile-sidebar"'
+    assert_includes html, 'aria-expanded="false"'
+    assert_includes html, 'role="dialog"'
+    assert_includes html, 'aria-modal="true"'
+    assert_includes html, 'aria-label="Navigation menu"'
   end
 
   def test_sidebar_renders_slot_content_and_mobile_fallbacks

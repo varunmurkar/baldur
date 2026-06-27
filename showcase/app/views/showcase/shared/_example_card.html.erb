@@ -1,0 +1,20 @@
+<% source = local_assigns[:source] %>
+<article class="showcase-example-card" data-example-card="true">
+  <header class="showcase-example-card__header">
+    <h3 class="showcase-example-card__title"><%= title %></h3>
+    <% if local_assigns[:description].present? %>
+      <p class="showcase-example-card__description"><%= description %></p>
+    <% end %>
+  </header>
+
+  <div class="showcase-example-card__canvas">
+    <%= yield %>
+  </div>
+
+  <% if source.present? %>
+    <details class="showcase-example-card__source">
+      <summary>Source</summary>
+      <pre><code class="language-erb"><%= ERB::Util.html_escape(source) %></code></pre>
+    </details>
+  <% end %>
+</article>

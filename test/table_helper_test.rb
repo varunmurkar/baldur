@@ -115,4 +115,34 @@ class BaldurTableHelperTest < Minitest::Test
 
     assert_includes html, '<td class="px-6 py-4 text-sm text-[color:var(--color-on-surface)] text-right font-mono">'
   end
+
+  def test_ui_table_with_card_title_names_the_table
+    html = TestController.render(
+      inline: <<~ERB,
+        <%= ui_table(
+              title: "Revenue table",
+              columns: [{ label: "SKU", key: :sku }],
+              rows: [{ sku: "SKU-001" }]
+            ) %>
+      ERB
+      formats: [:html]
+    )
+
+    assert_includes html, 'aria-label="Revenue table"'
+  end
+
+  def test_ui_table_accepts_explicit_caption
+    html = TestController.render(
+      inline: <<~ERB,
+        <%= ui_table(
+              caption: "Quarterly revenue by SKU",
+              columns: [{ label: "SKU", key: :sku }],
+              rows: [{ sku: "SKU-001" }]
+            ) %>
+      ERB
+      formats: [:html]
+    )
+
+    assert_includes html, '<caption class="">Quarterly revenue by SKU</caption>'
+  end
 end

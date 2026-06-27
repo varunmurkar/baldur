@@ -1,0 +1,14 @@
+/*
+ * Host font loading overrides.
+ *
+ * Load the font families your app needs here using either `@import` or
+ * `@font-face`. Baldur does not load web fonts directly.
+ *
+ * Default:
+ * - Geist for body, headings, and UI surfaces
+ *
+ * Example:
+ * @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap");
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");

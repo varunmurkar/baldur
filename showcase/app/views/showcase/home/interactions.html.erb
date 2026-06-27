@@ -1,0 +1,15 @@
+<% content_for :title, "Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Interaction Showcase</h1>
+  <p class="showcase-page-header__lede">Use these pages for keyboard-only and screen-reader smoke testing.</p>
+</header>
+
+<div class="showcase-grid">
+  <% @interactions.each do |id| %>
+    <%= link_to interaction_path(id), class: "showcase-tile" do %>
+      <div class="showcase-tile__title"><%= id.humanize %></div>
+      <div class="showcase-tile__meta">Keyboard/focus/a11y behavior for <%= id %>.</div>
+    <% end %>
+  <% end %>
+</div>

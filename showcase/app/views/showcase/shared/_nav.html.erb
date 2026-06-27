@@ -1,0 +1,24 @@
+<nav class="showcase-nav" aria-label="Showcase">
+  <%= link_to "Baldur Showcase", root_path, class: "showcase-nav__brand" %>
+
+  <div class="showcase-nav__section">
+    <span class="showcase-nav__heading">Overview</span>
+    <%= link_to "Home", root_path, class: "showcase-nav__link#{' is-active' if current_page?(root_path)}" %>
+    <%= link_to "Components", components_index_path, class: "showcase-nav__link#{' is-active' if current_page?(components_index_path)}" %>
+    <%= link_to "Interactions", interactions_index_path, class: "showcase-nav__link#{' is-active' if current_page?(interactions_index_path)}" %>
+    <%= link_to "Patterns", patterns_index_path, class: "showcase-nav__link#{' is-active' if current_page?(patterns_index_path)}" %>
+  </div>
+
+  <div class="showcase-nav__section">
+    <span class="showcase-nav__heading">Interactive Pages</span>
+    <% %w[menu_select modal sidebar snackbar panel_secondary segmented_tabs].each do |id| %>
+      <%= link_to id.humanize,
+                  interaction_path(id),
+                  class: "showcase-nav__link#{' is-active' if request.path == interaction_path(id)}" %>
+    <% end %>
+  </div>
+
+  <div class="showcase-nav__section">
+    <%= ui_theme_toggle(classes: "mt-auto") %>
+  </div>
+</nav>

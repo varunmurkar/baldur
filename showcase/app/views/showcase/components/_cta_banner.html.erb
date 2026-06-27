@@ -1,0 +1,58 @@
+<% content_for :title, "CTA banner — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">CTA banner</h1>
+  <p class="showcase-page-header__lede">High-contrast call-to-action banner with title, body and a primary link.</p>
+</header>
+
+<% banner_source = <<~ERB.strip
+  ui_marketing_cta_banner(
+    banner: {
+      title: 'Ready to ship agent-native UI?',
+      body: 'Install the Baldur gem and start building consistent components today.',
+      cta_label: 'Get started',
+      cta_href: '#'
+    }
+  )
+ERB
+
+banner_content = capture do
+  concat ui_marketing_cta_banner(
+    banner: {
+      title: "Ready to ship agent-native UI?",
+      body: "Install the Baldur gem and start building consistent components today.",
+      cta_label: "Get started",
+      cta_href: "#"
+    }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "CTA banner", source: banner_source } do %>
+  <%= banner_content %>
+<% end %>
+
+<% compact_source = <<~ERB.strip
+  ui_marketing_cta_banner(
+    banner: {
+      title: 'Start your free trial',
+      body: 'No credit card required. Cancel anytime.',
+      cta_label: 'Sign up',
+      cta_href: '#'
+    }
+  )
+ERB
+
+compact_content = capture do
+  concat ui_marketing_cta_banner(
+    banner: {
+      title: "Start your free trial",
+      body: "No credit card required. Cancel anytime.",
+      cta_label: "Sign up",
+      cta_href: "#"
+    }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Compact banner", source: compact_source } do %>
+  <%= compact_content %>
+<% end %>

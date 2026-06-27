@@ -1,0 +1,26 @@
+<% content_for :title, "Snackbar — Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Snackbar</h1>
+  <p class="showcase-page-header__lede">Live-region status messages and queued dismissible toasts.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Snackbar stack", source: "ui_snackbar_stack(snackbars: [...])" } do %>
+  <%= ui_snackbar_stack(
+        id: "demo-stack",
+        snackbars: [
+          { message: "Changes saved", variant: :success },
+          { message: "2 items failed to sync", variant: :error, actions: [{ label: "Retry", href: "#" }] }
+        ]
+      ) %>
+
+  <%= ui_button(
+        label: "Push snackbar",
+        data: { controller: "snackbar", action: "click->snackbar#push", snackackbar_message_value: "Hello from keyboard test", snackackbar_variant_value: "notice" }
+      ) %>
+<% end %>
+
+<p class="showcase-note">
+  Screen reader test: new snackbars should announce via <code>role="status"</code> polite live region.
+</p>

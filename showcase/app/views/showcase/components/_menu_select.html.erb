@@ -1,0 +1,58 @@
+<% content_for :title, "Menu select — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Menu select</h1>
+  <p class="showcase-page-header__lede">Accessible dropdown select with options, badges, supporting text and disabled items.</p>
+</header>
+
+<% basic_source = <<~ERB.strip
+  ui_menu_select_tag(
+    'status',
+    options: %w[Draft Published Archived],
+    selected: 'Published',
+    label: 'Status'
+  )
+ERB
+
+basic_content = capture do
+  concat ui_menu_select_tag(
+    "status",
+    options: %w[Draft Published Archived],
+    selected: "Published",
+    label: "Status"
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Basic menu select", source: basic_source } do %>
+  <%= basic_content %>
+<% end %>
+
+<% rich_source = <<~ERB.strip
+  ui_menu_select_tag(
+    'plan',
+    label: 'Plan',
+    options: [
+      { value: 'starter', label: 'Starter', badge: '$0', badge_variant: :default },
+      { value: 'pro', label: 'Pro', badge: '$29', badge_variant: :primary },
+      { value: 'enterprise', label: 'Enterprise', badge: 'Custom', badge_variant: :success, disabled: true }
+    ],
+    selected: 'pro'
+  )
+ERB
+
+rich_content = capture do
+  concat ui_menu_select_tag(
+    "plan",
+    label: "Plan",
+    options: [
+      { value: "starter", label: "Starter", badge: "$0", badge_variant: :default },
+      { value: "pro", label: "Pro", badge: "$29", badge_variant: :primary },
+      { value: "enterprise", label: "Enterprise", badge: "Custom", badge_variant: :success, disabled: true }
+    ],
+    selected: "pro"
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Rich options with badges", source: rich_source } do %>
+  <%= rich_content %>
+<% end %>

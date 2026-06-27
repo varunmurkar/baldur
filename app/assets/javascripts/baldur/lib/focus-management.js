@@ -21,6 +21,10 @@ export const focusFirstFocusable = (container) => {
   }
 };
 
+export const trapFocus = (element, onEscape) => {
+  return createFocusTrap(element, onEscape);
+};
+
 export const createFocusTrap = (element, onEscape) => {
   const focusableElements = element.querySelectorAll(
     "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
@@ -71,7 +75,7 @@ export const updateAriaHidden = (element, hidden) => {
 
 export const updateAriaChecked = (element, checked) => {
   if (element) {
-    element.setAttribute("aria-checked", checked ? "true" : "false");
+    element.setAttribute("aria-selected", checked ? "true" : "false");
   }
 };
 

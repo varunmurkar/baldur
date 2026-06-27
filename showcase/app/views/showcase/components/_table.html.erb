@@ -1,0 +1,98 @@
+<% content_for :title, "Table — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Table</h1>
+  <p class="showcase-page-header__lede">Sortable data table with column customization, numeric alignment and empty state.</p>
+</header>
+
+<% plain_source = <<~ERB.strip
+  ui_table(
+    columns: [
+      { label: 'Name', key: :name },
+      { label: 'Role', key: :role },
+      { label: 'Status', key: :status }
+    ],
+    rows: [
+      { name: 'Ada Lovelace', role: 'Engineer', status: 'Active' },
+      { name: 'Grace Hopper', role: 'Engineer', status: 'Away' }
+    ]
+  )
+ERB
+
+plain_content = capture do
+  concat ui_table(
+    columns: [
+      { label: "Name", key: :name },
+      { label: "Role", key: :role },
+      { label: "Status", key: :status }
+    ],
+    rows: [
+      { name: "Ada Lovelace", role: "Engineer", status: "Active" },
+      { name: "Grace Hopper", role: "Engineer", status: "Away" }
+    ]
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Plain table", source: plain_source } do %>
+  <%= plain_content %>
+<% end %>
+
+<% numeric_source = <<~ERB.strip
+  ui_table(
+    columns: [
+      { label: 'Metric', key: :metric },
+      { label: 'Value', key: :value, numeric: true },
+      { label: 'Change', key: :change, numeric: true }
+    ],
+    rows: [
+      { metric: 'Requests', value: '1,234', change: '+12%' },
+      { metric: 'Errors', value: '3', change: '-2%' }
+    ],
+    empty_state: 'No metrics to display'
+  )
+ERB
+
+numeric_content = capture do
+  concat ui_table(
+    columns: [
+      { label: "Metric", key: :metric },
+      { label: "Value", key: :value, numeric: true },
+      { label: "Change", key: :change, numeric: true }
+    ],
+    rows: [
+      { metric: "Requests", value: "1,234", change: "+12%" },
+      { metric: "Errors", value: "3", change: "-2%" }
+    ],
+    empty_state: "No metrics to display"
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Numeric columns", source: numeric_source } do %>
+  <%= numeric_content %>
+<% end %>
+
+<% empty_source = <<~ERB.strip
+  ui_table(
+    columns: [
+      { label: 'Project', key: :name },
+      { label: 'Owner', key: :owner }
+    ],
+    rows: [],
+    empty_state: 'No projects yet. Create one to get started.'
+  )
+ERB
+
+empty_content = capture do
+  concat ui_table(
+    columns: [
+      { label: "Project", key: :name },
+      { label: "Owner", key: :owner }
+    ],
+    rows: [],
+    empty_state: "No projects yet. Create one to get started."
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Empty state", source: empty_source } do %>
+  <%= empty_content %>
+<% end %>

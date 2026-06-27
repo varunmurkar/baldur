@@ -1,0 +1,91 @@
+<% content_for :title, "Accessibility — Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Accessibility</h1>
+  <p class="showcase-page-header__lede">One page to manually smoke-test the highest-risk keyboard, focus, and announcement behaviors.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Manual checklist" } do %>
+  <div class="showcase-checklist">
+    <p><strong>Keyboard</strong>: Tab into each trigger, verify visible focus, open with Enter/Space, close with Escape, and confirm focus returns to the trigger.</p>
+    <p><strong>Dialogs / drawers</strong>: Background should stop taking focus while open.</p>
+    <p><strong>Tabs</strong>: Arrow keys, Home, and End should move between tabs.</p>
+    <p><strong>Menus / disclosures</strong>: Closed content should not be tabbable.</p>
+    <p><strong>Announcements</strong>: Success should be polite; errors should announce immediately.</p>
+  </div>
+<% end %>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Modal focus trap" } do %>
+  <%= ui_modal(
+        id: "a11y-modal",
+        title: "Review destructive change",
+        description: "Focus should move into the dialog and stay there until the dialog closes.",
+        submit_label: "Continue",
+        close_label: "Cancel"
+      ) do %>
+    <%= ui_text_field_tag(:reason, nil, label: "Reason", supporting_text: "Type anything, then tab through the dialog.") %>
+  <% end %>
+  <%= ui_button(label: "Open modal", data: { open_modal: "#a11y-modal" }) %>
+<% end %>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Menu select keyboard + exit" } do %>
+  <%= ui_menu_select_tag(
+        :review_state,
+        label: "Review state",
+        selected: "ready",
+        options: [
+          { value: "draft", label: "Draft" },
+          { value: "ready", label: "Ready for review" },
+          { value: "approved", label: "Approved" }
+        ]
+      ) %>
+<% end %>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Segmented tabs keyboard" } do %>
+  <div data-controller="segmented-tabs" data-segmented-tabs-active-value="overview">
+    <%= ui_segmented_buttons(
+          id: "a11y-tabs",
+          aria_label: "Accessibility demo tabs",
+          items: [
+            {
+              id: "a11y-tab-overview",
+              label: "Overview",
+              value: "overview",
+              selected: true,
+              aria: { controls: "a11y-panel-overview" },
+              data: { action: "click->segmented-tabs#select keydown->segmented-tabs#handleKeydown", segmented_tabs_target: "tab", tab_value: "overview" }
+            },
+            {
+              id: "a11y-tab-logs",
+              label: "Logs",
+              value: "logs",
+              aria: { controls: "a11y-panel-logs" },
+              data: { action: "click->segmented-tabs#select keydown->segmented-tabs#handleKeydown", segmented_tabs_target: "tab", tab_value: "logs" }
+            }
+          ]
+        ) %>
+
+    <section id="a11y-panel-overview" role="tabpanel" aria-labelledby="a11y-tab-overview" data-segmented-tabs-target="panel" data-tab-value="overview">
+      <p>Overview panel.</p>
+    </section>
+    <section id="a11y-panel-logs" role="tabpanel" aria-labelledby="a11y-tab-logs" hidden aria-hidden="true" class="hidden" data-segmented-tabs-target="panel" data-tab-value="logs">
+      <p>Logs panel.</p>
+    </section>
+  </div>
+<% end %>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Live-region variants" } do %>
+  <div class="space-y-4">
+    <%= ui_alert(title: "Saved", body: "Profile updated successfully.", variant: :success) %>
+    <%= ui_alert(title: "Deployment failed", body: "The latest deploy rolled back.", variant: :error) %>
+    <%= ui_snackbar_stack(snackbars: [
+          { variant: :success, message: "Saved." },
+          { variant: :error, message: "Background sync failed." }
+        ]) %>
+  </div>
+<% end %>

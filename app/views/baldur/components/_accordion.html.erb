@@ -21,6 +21,7 @@
       id="<%= accordion_id %>"
       data-accordion-target="content"
       aria-hidden="<%= open ? "false" : "true" %>"
+      <%= "hidden inert" unless open %>
     >
       <div class="<%= body_class %>">
         <%= local_assigns[:body].presence || yield %>

@@ -1,0 +1,45 @@
+<% content_for :title, "Modal — Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Modal</h1>
+  <p class="showcase-page-header__lede">Dialog focus management, keyboard close, and content overflow.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Standard modal", source: "ui_modal(id: 'demo-modal', title: 'Confirm action')" } do %>
+  <%= ui_modal(
+        id: "demo-modal",
+        title: "Confirm action",
+        description: "This action cannot be undone. Are you sure you want to continue?",
+        submit_label: "Yes, continue",
+        close_label: "Cancel"
+      ) do %>
+    <p>Extra context passed as a block.</p>
+  <% end %>
+
+  <%= ui_button(label: "Open modal", data: { open_modal: "#demo-modal" }) %>
+<% end %>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Confirmation modal", source: "ui_confirmation_modal(...)" } do %>
+  <%= ui_modal_host(id: "confirm-host") %>
+  <%= ui_confirmation_modal(
+        host_id: "confirm-host",
+        dialog_id: "confirm-delete",
+        title: "Delete item?",
+        description: "This will permanently remove the record.",
+        confirm_label: "Delete",
+        cancel_label: "Keep",
+        type_to_confirm: { label: "Type DELETE to confirm", value: "DELETE" }
+      ) %>
+  <%= ui_button(
+        label: "Open confirmation",
+        variant: :danger,
+        data: { open_confirmation_modal: "#confirm-delete" }
+      ) %>
+<% end %>
+
+<p class="showcase-note">
+  Keyboard test: open button → focus should move inside modal, <kbd>Tab</kbd> trapped,
+  <kbd>Escape</kbd> closes, focus returns to trigger.
+</p>
