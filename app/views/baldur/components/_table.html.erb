@@ -19,9 +19,18 @@
   emphasize_last_column = local_assigns[:emphasize_last_column].present?
   table_modifier_class = emphasize_last_column ? "table--emphasize-last-column" : nil
   table_classes = ["table", table_modifier_class, local_assigns[:table_class], local_assigns[:class]].compact.join(" ")
+  caption = local_assigns[:caption]
+  caption_class = local_assigns[:caption_class]
+  aria_label = local_assigns[:aria_label]
+  aria_describedby = local_assigns[:aria_describedby]
 %>
 <div class="table-card__scroll">
-  <table class="<%= table_classes %>">
+  <table class="<%= table_classes %>"
+         <% if aria_label.present? %>aria-label="<%= aria_label %>"<% end %>
+         <% if aria_describedby.present? %>aria-describedby="<%= aria_describedby %>"<% end %>>
+    <% if caption.present? %>
+      <caption class="<%= caption_class %>"><%= caption %></caption>
+    <% end %>
     <thead>
       <tr>
         <% normalized_columns.each do |column| %>

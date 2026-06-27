@@ -28,6 +28,29 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
     assert_includes html, 'class="fixed inset-0 z-50'
   end
 
+  def test_ui_modal_renders_dialog_semantics
+    html = TestController.render(
+      inline: <<~ERB,
+        <%= ui_modal(
+              id: "test-dialog",
+              title: "Dialog Title",
+              description: "Dialog Description"
+            ) do %>
+          <p>Body</p>
+        <% end %>
+      ERB
+      formats: [:html]
+    )
+
+    assert_includes html, 'role="dialog"'
+    assert_includes html, 'aria-modal="true"'
+    assert_includes html, 'aria-labelledby="test-dialog-title"'
+    assert_includes html, 'aria-describedby="test-dialog-description"'
+    assert_includes html, 'data-modal-target="dialog"'
+    assert_includes html, 'id="test-dialog-title"'
+    assert_includes html, 'id="test-dialog-description"'
+  end
+
   def test_ui_modal_host_with_custom_classes
     html = TestController.render(
       inline: <<~ERB,
@@ -61,6 +84,27 @@ class BaldurConfirmationModalHelperTest < Minitest::Test
     assert_includes html, 'Confirm'
     assert_includes html, 'Cancel'
     assert_includes html, 'data-modal-close="true"'
+    assert_includes html, 'role="dialog"'
+    assert_includes html, 'aria-modal="true"'
+    assert_includes html, 'aria-labelledby="delete-dialog-title"'
+    assert_includes html, 'data-modal-target="dialog"'
+  end
+
+  def test_ui_confirmation_modal_description_wires_aria_describedby
+    html = TestController.render(
+      inline: '<%=
+        ui_confirmation_modal(
+          host_id: "desc-modal",
+          dialog_id: "desc-dialog",
+          title: "Delete item?",
+          description: "This action cannot be undone."
+        )
+      %>',
+      formats: [:html]
+    )
+
+    assert_includes html, 'aria-describedby="desc-dialog-description"'
+    assert_includes html, 'id="desc-dialog-description"'
   end
 
   def test_ui_confirmation_modal_with_danger_tone_shows_icon

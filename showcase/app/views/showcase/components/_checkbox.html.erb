@@ -1,0 +1,36 @@
+<% content_for :title, "Checkbox — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Checkbox</h1>
+  <p class="showcase-page-header__lede">Single checkbox with label, description, checked and disabled states.</p>
+</header>
+
+<% states_source = <<~ERB.strip
+  ui_checkbox_tag('notifications[email]', label: 'Email notifications', description: 'Get a daily summary.')
+  ui_checkbox_tag('notifications[push]', label: 'Push notifications', description: 'Real-time alerts.', checked: true)
+  ui_checkbox_tag('notifications[sms]', label: 'SMS notifications', description: 'Unavailable on your plan.', disabled: true)
+ERB
+
+states_content = capture do
+  concat content_tag(:div, class: "space-y-3") do
+    concat ui_checkbox_tag("notifications[email]", label: "Email notifications", description: "Get a daily summary.")
+    concat ui_checkbox_tag("notifications[push]", label: "Push notifications", description: "Real-time alerts.", checked: true)
+    concat ui_checkbox_tag("notifications[sms]", label: "SMS notifications", description: "Unavailable on your plan.", disabled: true)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "States", source: states_source } do %>
+  <%= states_content %>
+<% end %>
+
+<% required_source = <<~ERB.strip
+  ui_checkbox_tag('terms', label: 'I agree to the terms of service', required: true)
+ERB
+
+required_content = capture do
+  concat ui_checkbox_tag("terms", label: "I agree to the terms of service", required: true)
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Required", source: required_source } do %>
+  <%= required_content %>
+<% end %>

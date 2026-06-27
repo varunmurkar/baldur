@@ -53,6 +53,9 @@ module Baldur
                                    :classes)
       table_options = options.except(:title, :title_meta, :description, :actions, :controls, :controls_position,
                                      :footer, :classes)
+      if card_options[:title].present? && table_options[:caption].blank? && table_options[:aria_label].blank?
+        table_options[:aria_label] = card_options[:title]
+      end
       table_markup = baldur_render 'baldur/components/table',
                                    **{
                                      columns: columns,
@@ -119,6 +122,8 @@ module Baldur
       summary = values.join(', ')
       return ui_table_truncated_text(summary) if values.size <= 2
 
+      disclosure_id = "table-disclosure-#{SecureRandom.hex(4)}"
+
       content_tag(:div, class: 'table-disclosure', data: { controller: 'table-disclosure' }) do
         safe_join(
           [
@@ -126,7 +131,7 @@ module Baldur
               :button,
               type: 'button',
               class: 'table-disclosure__trigger',
-              aria: { expanded: 'false' },
+              aria: { expanded: 'false', controls: disclosure_id },
               data: {
                 action: 'click->table-disclosure#toggle',
                 table_disclosure_target: 'trigger'
@@ -140,7 +145,13 @@ module Baldur
                 ]
               )
             end,
-            content_tag(:div, class: 'table-disclosure__content', data: { table_disclosure_target: 'content' }) do
+            content_tag(:div,
+                        class: 'table-disclosure__content',
+                        id: disclosure_id,
+                        hidden: true,
+                        inert: true,
+                        aria: { hidden: 'true' },
+                        data: { table_disclosure_target: 'content' }) do
               safe_join(values.map { |value| content_tag(:div, value, class: 'table-disclosure__content-item') })
             end
           ]

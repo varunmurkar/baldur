@@ -5,6 +5,9 @@ export default class extends Controller {
 
   connect() {
     this.open = false;
+    this.contentTarget.hidden = true;
+    this.contentTarget.setAttribute("inert", "");
+    this.contentTarget.setAttribute("aria-hidden", "true");
     this.contentTarget.style.maxHeight = "0px";
     this.triggerTarget.setAttribute("aria-expanded", "false");
   }
@@ -25,6 +28,9 @@ export default class extends Controller {
     this.open = true;
     this.element.classList.add("is-open");
     this.triggerTarget.setAttribute("aria-expanded", "true");
+    content.hidden = false;
+    content.removeAttribute("inert");
+    content.setAttribute("aria-hidden", "false");
     content.style.maxHeight = "0px";
 
     requestAnimationFrame(() => {
@@ -37,10 +43,17 @@ export default class extends Controller {
     this.open = false;
     this.element.classList.remove("is-open");
     this.triggerTarget.setAttribute("aria-expanded", "false");
+    content.setAttribute("inert", "");
+    content.setAttribute("aria-hidden", "true");
     content.style.maxHeight = `${content.scrollHeight}px`;
 
     requestAnimationFrame(() => {
       content.style.maxHeight = "0px";
     });
+
+    clearTimeout(this.closeTimeout);
+    this.closeTimeout = setTimeout(() => {
+      if (!this.open) content.hidden = true;
+    }, 180);
   }
 }

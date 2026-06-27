@@ -1,0 +1,46 @@
+<% content_for :title, "Snackbar — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Snackbar</h1>
+  <p class="showcase-page-header__lede">Toast stack for success, notice, warning and error feedback messages.</p>
+</header>
+
+<% stack_source = <<~ERB.strip
+  ui_snackbar_stack(snackbars: [
+    { variant: :success, message: 'Settings saved' },
+    { variant: :notice, message: 'Backup scheduled' },
+    { variant: :warning, message: 'Limit nearly reached' },
+    { variant: :error, message: 'Upload failed' }
+  ])
+ERB
+
+stack_content = capture do
+  concat ui_snackbar_stack(snackbars: [
+    { variant: :success, message: "Settings saved" },
+    { variant: :notice, message: "Backup scheduled" },
+    { variant: :warning, message: "Limit nearly reached" },
+    { variant: :error, message: "Upload failed" }
+  ])
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Snackbar stack", source: stack_source } do %>
+  <%= stack_content %>
+<% end %>
+
+<% titled_source = <<~ERB.strip
+  ui_snackbar_stack(snackbars: [
+    { variant: :success, title: 'Done', message: 'Your export is ready.' },
+    { variant: :error, title: 'Error', message: 'Could not connect to the server.' }
+  ])
+ERB
+
+titled_content = capture do
+  concat ui_snackbar_stack(snackbars: [
+    { variant: :success, title: "Done", message: "Your export is ready." },
+    { variant: :error, title: "Error", message: "Could not connect to the server." }
+  ])
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Titled snackbars", source: titled_source } do %>
+  <%= titled_content %>
+<% end %>

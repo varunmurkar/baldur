@@ -6,8 +6,9 @@
 
     option.merge(
       selected: option[:value] == initial_billing,
+      aria: (option[:aria] || {}).merge(pressed: (option[:value] == initial_billing)),
       data: option_data.except(:action).merge(
-        action: ui_marketing_action_string("marketing-pricing#select", option_data[:action]),
+        action: ui_marketing_action_string("marketing-pricing#select keydown->marketing-pricing#keydown", option_data[:action]),
         marketing_pricing_target: "billingOption"
       )
     )
@@ -20,7 +21,7 @@
       <h1 class="mt-4 text-4xl md:text-6xl"><%= headline %></h1>
       <p class="mt-6 text-lg text-soft"><%= subheadline %></p>
       <div class="mt-8 flex justify-center">
-        <%= ui_segmented_buttons(aria_label: "Billing period", items: resolved_billing_options) %>
+        <%= ui_segmented_buttons(aria_label: "Billing period", role: "group", item_role: nil, items: resolved_billing_options) %>
       </div>
     </div>
 

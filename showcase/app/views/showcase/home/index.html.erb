@@ -1,0 +1,26 @@
+<% content_for :title, "Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Baldur Showcase</h1>
+  <p class="showcase-page-header__lede">
+    A committed host app for visual smoke checks, keyboard/a11y exploration,
+    and copy-paste component examples. Everything here lives outside the shipped gem code.
+  </p>
+</header>
+
+<div class="showcase-grid">
+  <%= link_to components_index_path, class: "showcase-tile" do %>
+    <div class="showcase-tile__title">Components</div>
+    <div class="showcase-tile__meta">Static inventory of every reusable helper and partial.</div>
+  <% end %>
+
+  <%= link_to interactions_index_path, class: "showcase-tile" do %>
+    <div class="showcase-tile__title">Interactions</div>
+    <div class="showcase-tile__meta">Keyboard, focus, modal, drawer, tab, and snackbar behavior.</div>
+  <% end %>
+
+  <%= link_to patterns_index_path, class: "showcase-tile" do %>
+    <div class="showcase-tile__title">Patterns</div>
+    <div class="showcase-tile__meta">Common compositions: forms, tables, marketing, auth.</div>
+  <% end %>
+</div>

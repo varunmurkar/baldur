@@ -1,0 +1,7 @@
+<% content_for :title, "#{@id.humanize} — Interactions — Baldur Showcase" %>
+
+<% begin %>
+  <%= render "showcase/interactions/#{@id}" %>
+<% rescue ActionView::MissingTemplate %>
+  <%= render "showcase/shared/not_found" %>
+<% end %>

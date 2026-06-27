@@ -1,0 +1,21 @@
+<% content_for :title, "Panel secondary — Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Panel secondary</h1>
+  <p class="showcase-page-header__lede">Side drawer with open/close focus and keyboard support.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Drawer panel", source: "ui_panel_secondary(id: 'assistant', title: 'Assistant', trigger_label: 'Open')" } do %>
+  <%= ui_panel_secondary(
+        id: "demo-panel",
+        title: "Assistant",
+        trigger_label: "Open assistant"
+      ) do %>
+    <p>Panel body content. Focus and Escape behavior TBD.</p>
+  <% end %>
+<% end %>
+
+<p class="showcase-note">
+  Keyboard test: trigger should open panel; <kbd>Escape</kbd> should close and restore focus.
+</p>

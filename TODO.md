@@ -1,5 +1,7 @@
 # Baldur TODO
 
+- [ ] Ensure everything works in `/showcase`, pr-review
+
 ## Install and Verification
 - [ ] Harden `baldur:install` so host assumptions are reduced
 - [ ] Audit generated controller shims against all shipped components
@@ -7,11 +9,12 @@
 - [ ] Add end-to-end install verification in dummy app
 
 ## Showcase App and Docs
-- [ ] Add a dedicated dummy app in the extracted gem repo for visual smoke checks
-- [ ] Add a component inventory/showcase page in that dummy app
-- [ ] Add interaction showcase pages for modal, sidebar, menu select, snackbar, and `panel_secondary`
+- [x] Add a dedicated dummy/showcase app in the extracted gem repo for visual smoke checks
+- [x] Add a component inventory/showcase page in that app
+- [x] Add interaction showcase pages for modal, sidebar, menu select, snackbar, and `panel_secondary`
 - [ ] Add copy-paste examples for core surfaces from the showcase app back into docs
-- [ ] Add a dummy-app example showing segmented tabs inside a form with hidden tab state
+- [x] Add a showcase-app example showing segmented buttons as tabs
+- [ ] Add keyboard/a11y smoke tests using showcase pages (render tests done, interactive tests pending)
 
 ## Starter Templates
 - [ ] Add dedicated password reset templates
@@ -70,7 +73,7 @@ Then adding a cell_renderer / block yield to Baldur could make sense
 
 ## Accessibility
 - [ ] Audit keyboard and focus behavior across interactive components
-- [ ] ADA WCAG 2.1 AA compliance
+- [~] ADA WCAG 2.1 AA compliance
 - [ ] Add accessibility-focused tests for core surfaces
 - [ ] Document a11y guarantees and known gaps
 

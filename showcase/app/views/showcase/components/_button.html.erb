@@ -1,0 +1,70 @@
+<% content_for :title, "Button — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Button</h1>
+  <p class="showcase-page-header__lede">Variants, sizes, icon, link, and disabled states.</p>
+</header>
+
+<% variants_source = <<~ERB.strip
+  ui_button(label: 'Primary')
+  ui_button(label: 'Outline', variant: :outline)
+  ui_button(label: 'Text', variant: :text)
+  ui_button(label: 'Tonal', variant: :tonal)
+  ui_button(label: 'Danger', variant: :danger)
+  ui_button(label: 'Elevated', variant: :elevated)
+ERB
+
+variants_content = capture do
+  concat content_tag(:div, class: "flex flex-wrap gap-2") do
+    concat ui_button(label: "Primary")
+    concat ui_button(label: "Outline", variant: :outline)
+    concat ui_button(label: "Text", variant: :text)
+    concat ui_button(label: "Tonal", variant: :tonal)
+    concat ui_button(label: "Danger", variant: :danger)
+    concat ui_button(label: "Elevated", variant: :elevated)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Variants", description: "Primary, outline, text, tonal, danger, elevated", source: variants_source } do %>
+  <%= variants_content %>
+<% end %>
+
+<% sizes_source = <<~ERB.strip
+  ui_button(label: 'Small', size: :sm)
+  ui_button(label: 'Medium')
+  ui_button(label: 'Large', size: :lg)
+ERB
+
+sizes_content = capture do
+  concat content_tag(:div, class: "flex flex-wrap items-center gap-2") do
+    concat ui_button(label: "Small", size: :sm)
+    concat ui_button(label: "Medium")
+    concat ui_button(label: "Large", size: :lg)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Sizes", source: sizes_source } do %>
+  <%= sizes_content %>
+<% end %>
+
+<% icon_content = ui_button(label: "Add user", icon: "user-plus") %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "With icon", source: "ui_button(label: 'Add user', icon: 'user-plus')" } do %>
+  <%= icon_content %>
+<% end %>
+
+<% link_disabled_source = <<~ERB.strip
+  ui_button(label: 'Go home', href: '/')
+  ui_button(label: 'Disabled', disabled: true)
+ERB
+
+link_disabled_content = capture do
+  concat content_tag(:div, class: "flex flex-wrap gap-2") do
+    concat ui_button(label: "Go home", href: "/")
+    concat ui_button(label: "Disabled", disabled: true)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Link and disabled", source: link_disabled_source } do %>
+  <%= link_disabled_content %>
+<% end %>

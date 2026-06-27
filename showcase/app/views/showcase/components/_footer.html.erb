@@ -1,0 +1,76 @@
+<% content_for :title, "Footer — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Footer</h1>
+  <p class="showcase-page-header__lede">Marketing site footer with brand, description, grouped links and copyright.</p>
+</header>
+
+<% footer_source = <<~ERB.strip
+  ui_marketing_footer(
+    brand: { name: 'Baldur' },
+    description: 'UI components and patterns built for agent-native Rails applications.',
+    columns: [
+      {
+        title: 'Product',
+        links: [
+          { label: 'Components', href: '#' },
+          { label: 'Patterns', href: '#' },
+          { label: 'Pricing', href: '#' }
+        ]
+      },
+      {
+        title: 'Resources',
+        links: [
+          { label: 'Docs', href: '#' },
+          { label: 'GitHub', href: '#' },
+          { label: 'Changelog', href: '#' }
+        ]
+      },
+      {
+        title: 'Company',
+        links: [
+          { label: 'About', href: '#' },
+          { label: 'Contact', href: '#' }
+        ]
+      }
+    ],
+    copyright: '© 2026 Baldur. All rights reserved.'
+  )
+ERB
+
+footer_content = capture do
+  concat ui_marketing_footer(
+    brand: { name: "Baldur" },
+    description: "UI components and patterns built for agent-native Rails applications.",
+    columns: [
+      {
+        title: "Product",
+        links: [
+          { label: "Components", href: "#" },
+          { label: "Patterns", href: "#" },
+          { label: "Pricing", href: "#" }
+        ]
+      },
+      {
+        title: "Resources",
+        links: [
+          { label: "Docs", href: "#" },
+          { label: "GitHub", href: "#" },
+          { label: "Changelog", href: "#" }
+        ]
+      },
+      {
+        title: "Company",
+        links: [
+          { label: "About", href: "#" },
+          { label: "Contact", href: "#" }
+        ]
+      }
+    ],
+    copyright: "© 2026 Baldur. All rights reserved."
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Marketing footer", source: footer_source } do %>
+  <%= footer_content %>
+<% end %>

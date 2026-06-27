@@ -1,0 +1,20 @@
+<% content_for :title, "Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Component Inventory</h1>
+  <p class="showcase-page-header__lede">Every group ships one example page to verify render markup and visual state.</p>
+</header>
+
+<% @component_groups.each do |group| %>
+  <section class="showcase-page-section">
+    <h2 class="showcase-page-section__title"><%= group[:title] %></h2>
+    <div class="showcase-grid">
+      <% group[:items].each do |id| %>
+        <%= link_to component_path(id), class: "showcase-tile" do %>
+          <div class="showcase-tile__title"><%= id.humanize %></div>
+          <div class="showcase-tile__meta"><%= id %></div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+<% end %>

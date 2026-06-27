@@ -3,11 +3,13 @@
   return if segments.empty?
   wrapper_classes = ['segmented', classes].compact.join(' ')
   wrapper_data = (local_assigns[:data] || {}).stringify_keys
+  wrapper_role = local_assigns.fetch(:role, 'tablist')
+  item_role = local_assigns.fetch(:item_role, 'tab')
 %>
 <%= tag.div class: wrapper_classes,
             id: local_assigns[:id],
             data: wrapper_data,
-            role: 'tablist',
+            role: wrapper_role,
             aria: { label: aria_label } do %>
   <% segments.each do |segment| %>
     <% segment = segment.respond_to?(:symbolize_keys) ? segment.symbolize_keys : segment %>
@@ -20,7 +22,11 @@
     <% icon_only = icon.present? && label.blank? %>
     <% data_attributes = (segment[:data] || {}).stringify_keys.merge('value' => value) %>
     <% button_aria = (segment[:aria] || {}).symbolize_keys %>
-    <% button_aria = button_aria.reverse_merge(selected: selected, disabled: disabled) %>
+    <% button_aria = if item_role == 'tab'
+                       button_aria.reverse_merge(selected: selected, disabled: disabled)
+                     else
+                       button_aria.reverse_merge(disabled: disabled)
+                     end %>
     <% button_classes = [
       "segmented__button",
       ("is-selected" if selected),
@@ -32,11 +38,11 @@
       type: "button",
       class: button_classes,
       id: segment[:id],
-      role: "tab",
       aria: button_aria,
-      tabindex: selected ? 0 : -1,
       data: data_attributes
     } %>
+    <% button_options[:role] = item_role if item_role.present? %>
+    <% button_options[:tabindex] = selected ? 0 : -1 if item_role == 'tab' %>
     <%= tag.button(**button_options) do %>
       <% if icon.present? %>
         <%= ui_icon(icon, class_name: "segmented__icon") %>

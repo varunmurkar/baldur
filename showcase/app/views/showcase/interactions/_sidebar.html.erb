@@ -1,0 +1,31 @@
+<% content_for :title, "Sidebar — Interactions — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Sidebar</h1>
+  <p class="showcase-page-header__lede">Collapsible navigation with responsive mobile drawer behavior.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Inline sidebar preview", source: "ui_sidebar(primary_links: [...])" } do %>
+  <div style="height: 320px;">
+    <%= ui_sidebar(
+          brand_path: root_path,
+          primary_links: [
+            { name: "Dashboard", path: root_path, icon: "layout-dashboard", active: true },
+            { name: "Projects", path: "#", icon: "folder" },
+            { name: "Settings", path: "#", icon: "settings" }
+          ],
+          secondary_links: [
+            { name: "Help", path: "#", icon: "circle-help" }
+          ],
+          shell_class: "sidebar--static-preview"
+        ) do %>
+      <div class="p-4 text-sm text-muted">Main content area rendered inside sidebar block.</div>
+    <% end %>
+  </div>
+<% end %>
+
+<p class="showcase-note">
+  Keyboard test: mobile hamburger should have <code>aria-expanded</code> and <code>aria-controls</code>;
+  collapse/expand buttons should preserve focus.
+</p>

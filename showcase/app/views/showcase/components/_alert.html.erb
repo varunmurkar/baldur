@@ -1,0 +1,46 @@
+<% content_for :title, "Alert — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Alert</h1>
+  <p class="showcase-page-header__lede">Inline notice, success, warning and error messages with optional title and actions.</p>
+</header>
+
+<% variants_source = <<~ERB.strip
+  ui_alert(body: 'This is a neutral notice alert.')
+  ui_alert(body: 'Saved successfully.', variant: :success)
+  ui_alert(body: 'Check your connection.', variant: :warning)
+  ui_alert(body: 'Something went wrong.', variant: :error)
+ERB
+
+variants_content = capture do
+  concat content_tag(:div, class: "space-y-3") do
+    concat ui_alert(body: "This is a neutral notice alert.")
+    concat ui_alert(body: "Saved successfully.", variant: :success)
+    concat ui_alert(body: "Check your connection.", variant: :warning)
+    concat ui_alert(body: "Something went wrong.", variant: :error)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Variants", source: variants_source } do %>
+  <%= variants_content %>
+<% end %>
+
+<% titled_source = <<~ERB.strip
+  ui_alert(
+    title: 'Update available',
+    body: 'A new version of the agent runtime is ready to install.',
+    actions: ui_button(label: 'Install now', size: :sm)
+  )
+ERB
+
+titled_content = capture do
+  concat ui_alert(
+    title: "Update available",
+    body: "A new version of the agent runtime is ready to install.",
+    actions: ui_button(label: "Install now", size: :sm)
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Titled alert with action", source: titled_source } do %>
+  <%= titled_content %>
+<% end %>

@@ -1,0 +1,48 @@
+<% content_for :title, "Forms — Patterns — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Form pattern</h1>
+  <p class="showcase-page-header__lede">Common field layout with action row and segmented tabs inside a form.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Mixed form", source: "form_with url: '#' do ... end" } do %>
+  <%= form_with url: "#", method: :post, class: "space-y-4" do |form| %>
+    <%= ui_text_field_tag(:name, nil, label: "Full name", required: true) %>
+    <%= ui_text_field_tag(:email, nil, label: "Email", type: :email) %>
+    <%= ui_date_field_tag(:dob, nil, label: "Date of birth") %>
+    <%= ui_menu_select_tag(
+          :role,
+          options: [
+            { value: "admin", label: "Admin" },
+            { value: "editor", label: "Editor" },
+            { value: "viewer", label: "Viewer" }
+          ],
+          selected: "editor",
+          label: "Role"
+        ) %>
+    <%= ui_checkbox_tag(:newsletter, label: "Subscribe to updates", checked: true) %>
+
+    <%= ui_action_row(
+          secondary_button: { label: "Cancel", variant: :outline, href: "/" },
+          primary_button: { label: "Save", type: :submit }
+        ) %>
+  <% end %>
+<% end %>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Tabs with hidden state", source: "ui_hidden_field_tag + ui_segmented_buttons" } do %>
+  <% current_tab = "details" %>
+
+  <%= form_with url: "#", method: :post do %>
+    <%= ui_hidden_field_tag(:planner_tab, current_tab) %>
+    <%= ui_segmented_buttons(
+          aria_label: "Planner tabs",
+          items: [
+            { label: "Details", value: "details", selected: current_tab == "details" },
+            { label: "Billing", value: "billing", selected: current_tab == "billing" },
+            { label: "Review", value: "review", selected: current_tab == "review" }
+          ]
+        ) %>
+  <% end %>
+<% end %>

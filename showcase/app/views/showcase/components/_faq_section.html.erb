@@ -1,0 +1,60 @@
+<% content_for :title, "FAQ section — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">FAQ section</h1>
+  <p class="showcase-page-header__lede">Accordion-style frequently asked questions with an optional section description.</p>
+</header>
+
+<% faq_source = <<~ERB.strip
+  ui_marketing_faq_section(
+    title: 'Frequently asked questions',
+    description: 'Everything you need to know before installing Baldur.',
+    items: [
+      { question: 'Can I use Baldur with an existing Rails app?', answer: 'Yes. Add the gem and include the helper module in your application helper.' },
+      { question: 'Does it support dark mode?', answer: 'Every component is theme-aware and respects the system preference or a data attribute.' },
+      { question: 'Is JavaScript required?', answer: 'Some interactive components use Stimulus controllers, but core markup renders without JS.' }
+    ]
+  )
+ERB
+
+faq_content = capture do
+  concat ui_marketing_faq_section(
+    title: "Frequently asked questions",
+    description: "Everything you need to know before installing Baldur.",
+    items: [
+      { question: "Can I use Baldur with an existing Rails app?", answer: "Yes. Add the gem and include the helper module in your application helper." },
+      { question: "Does it support dark mode?", answer: "Every component is theme-aware and respects the system preference or a data attribute." },
+      { question: "Is JavaScript required?", answer: "Some interactive components use Stimulus controllers, but core markup renders without JS." }
+    ]
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "FAQ accordion", source: faq_source } do %>
+  <%= faq_content %>
+<% end %>
+
+<% compact_source = <<~ERB.strip
+  ui_marketing_faq_section(
+    title: 'Billing questions',
+    items: [
+      { question: 'Can I change plans at any time?', answer: 'Yes, plan changes take effect at the next billing cycle.' },
+      { question: 'Do you offer refunds?', answer: 'We offer refunds within 14 days of your first payment.' }
+    ],
+    container_class: 'max-w-2xl'
+  )
+ERB
+
+compact_content = capture do
+  concat ui_marketing_faq_section(
+    title: "Billing questions",
+    items: [
+      { question: "Can I change plans at any time?", answer: "Yes, plan changes take effect at the next billing cycle." },
+      { question: "Do you offer refunds?", answer: "We offer refunds within 14 days of your first payment." }
+    ],
+    container_class: "max-w-2xl"
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Compact container", source: compact_source } do %>
+  <%= compact_content %>
+<% end %>

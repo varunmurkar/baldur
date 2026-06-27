@@ -1,0 +1,46 @@
+<% content_for :title, "KPI — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">KPI</h1>
+  <p class="showcase-page-header__lede">Metric cards with label, value, optional caption and trend indicator.</p>
+</header>
+
+<% default_source = <<~ERB.strip
+  ui_kpi(label: 'Total users', value: '12,340', caption: '+8% this month', trend: '+8%')
+  ui_kpi(label: 'Failed jobs', value: '3', caption: 'Needs attention', variant: :accent)
+ERB
+
+default_content = capture do
+  concat content_tag(:div, class: "grid gap-4 sm:grid-cols-2") do
+    concat ui_kpi(label: "Total users", value: "12,340", caption: "+8% this month", trend: "+8%")
+    concat ui_kpi(label: "Failed jobs", value: "3", caption: "Needs attention", variant: :accent)
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Default and accent", source: default_source } do %>
+  <%= default_content %>
+<% end %>
+
+<% action_source = <<~ERB.strip
+  ui_kpi(
+    label: 'Storage used',
+    value: '84%',
+    caption: 'Upgrade plan to add more',
+    caption_icon: { name: 'triangle-alert', tone: :warn },
+    action: { label: 'View usage', href: '#' }
+  )
+ERB
+
+action_content = capture do
+  concat ui_kpi(
+    label: "Storage used",
+    value: "84%",
+    caption: "Upgrade plan to add more",
+    caption_icon: { name: "triangle-alert", tone: :warn },
+    action: { label: "View usage", href: "#" }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "With caption icon and action", source: action_source } do %>
+  <%= action_content %>
+<% end %>

@@ -1,0 +1,70 @@
+<% content_for :title, "Features section — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Features section</h1>
+  <p class="showcase-page-header__lede">Tabbed feature section with segmented controls and benefit cards.</p>
+</header>
+
+<% features_source = <<~ERB.strip
+  ui_marketing_features_section(
+    title: 'Built for agent workflows',
+    description: 'Everything you need to ship UI that agents and humans can both trust.',
+    tabs: [
+      {
+        label: 'Components',
+        value: 'components',
+        panel_title: 'Production-ready components',
+        panel_body: 'Use Rails helpers to render accessible buttons, forms, tables and feedback.',
+        cards: [
+          { title: 'Accessible markup', body: 'Keyboard navigation and ARIA roles included by default.' },
+          { title: 'Theme aware', body: 'Light and dark mode supported out of the box.' }
+        ]
+      },
+      {
+        label: 'Patterns',
+        value: 'patterns',
+        panel_title: 'Common layouts',
+        panel_body: 'Settings pages, dashboards and wizard flows are already solved.',
+        cards: [
+          { title: 'Settings', body: 'Two-column layout with navigation and form cards.' },
+          { title: 'Dashboard', body: 'KPIs, table cards and chart cards that compose together.' }
+        ]
+      }
+    ],
+    cta: { label: 'Explore patterns', href: '#' }
+  )
+ERB
+
+features_content = capture do
+  concat ui_marketing_features_section(
+    title: "Built for agent workflows",
+    description: "Everything you need to ship UI that agents and humans can both trust.",
+    tabs: [
+      {
+        label: "Components",
+        value: "components",
+        panel_title: "Production-ready components",
+        panel_body: "Use Rails helpers to render accessible buttons, forms, tables and feedback.",
+        cards: [
+          { title: "Accessible markup", body: "Keyboard navigation and ARIA roles included by default." },
+          { title: "Theme aware", body: "Light and dark mode supported out of the box." }
+        ]
+      },
+      {
+        label: "Patterns",
+        value: "patterns",
+        panel_title: "Common layouts",
+        panel_body: "Settings pages, dashboards and wizard flows are already solved.",
+        cards: [
+          { title: "Settings", body: "Two-column layout with navigation and form cards." },
+          { title: "Dashboard", body: "KPIs, table cards and chart cards that compose together." }
+        ]
+      }
+    ],
+    cta: { label: "Explore patterns", href: "#" }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Feature tabs", source: features_source } do %>
+  <%= features_content %>
+<% end %>

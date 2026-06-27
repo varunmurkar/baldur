@@ -1,0 +1,98 @@
+<% content_for :title, "Table card — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Table card</h1>
+  <p class="showcase-page-header__lede">Card wrapper for tables with header actions, controls and footer slots.</p>
+</header>
+
+<% header_source = <<~ERB.strip
+  ui_table_card(
+    title: 'Recent runs',
+    description: 'The latest scheduled runs for this workspace.',
+    actions: ui_button(label: 'New run', icon: 'plus', size: :sm),
+    body: ui_table(
+      columns: [
+        { label: 'Run', key: :name },
+        { label: 'Status', key: :status },
+        { label: 'Started', key: :started }
+      ],
+      rows: [
+        { name: 'Nightly backup', status: 'Success', started: '2 hours ago' },
+        { name: 'Health check', status: 'Running', started: '5 minutes ago' }
+      ]
+    )
+  )
+ERB
+
+header_content = capture do
+  concat ui_table_card(
+    title: "Recent runs",
+    description: "The latest scheduled runs for this workspace.",
+    actions: ui_button(label: "New run", icon: "plus", size: :sm),
+    body: ui_table(
+      columns: [
+        { label: "Run", key: :name },
+        { label: "Status", key: :status },
+        { label: "Started", key: :started }
+      ],
+      rows: [
+        { name: "Nightly backup", status: "Success", started: "2 hours ago" },
+        { name: "Health check", status: "Running", started: "5 minutes ago" }
+      ]
+    )
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Header and actions", source: header_source } do %>
+  <%= header_content %>
+<% end %>
+
+<% footer_source = <<~ERB.strip
+  ui_table_card(
+    title: 'Users',
+    body: ui_table(
+      columns: [
+        { label: 'Name', key: :name },
+        { label: 'Role', key: :role }
+      ],
+      rows: [
+        { name: 'Ada Lovelace', role: 'Owner' },
+        { name: 'Grace Hopper', role: 'Editor' }
+      ]
+    ),
+    footer: ui_pagination(
+      current_page: 1,
+      total_pages: 4,
+      total_count: 38,
+      per_page: 10,
+      path_builder: ->(p) { "#page=#{p}" }
+    )
+  )
+ERB
+
+footer_content = capture do
+  concat ui_table_card(
+    title: "Users",
+    body: ui_table(
+      columns: [
+        { label: "Name", key: :name },
+        { label: "Role", key: :role }
+      ],
+      rows: [
+        { name: "Ada Lovelace", role: "Owner" },
+        { name: "Grace Hopper", role: "Editor" }
+      ]
+    ),
+    footer: ui_pagination(
+      current_page: 1,
+      total_pages: 4,
+      total_count: 38,
+      per_page: 10,
+      path_builder: ->(p) { "#page=#{p}" }
+    )
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "With footer pagination", source: footer_source } do %>
+  <%= footer_content %>
+<% end %>

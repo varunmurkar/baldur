@@ -1,0 +1,54 @@
+<% content_for :title, "Chart card — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Chart card</h1>
+  <p class="showcase-page-header__lede">Card wrapper for analytics content with title, description, actions and footer.</p>
+</header>
+
+<% basic_source = <<~ERB.strip
+  ui_chart_card(
+    title: 'Requests per hour',
+    description: 'Traffic over the last 24 hours.',
+    body: tag.div('[chart placeholder]', class: 'h-48 rounded-2xl border border-outline bg-surface-high flex items-center justify-center text-sm text-muted')
+  )
+ERB
+
+basic_content = capture do
+  concat ui_chart_card(
+    title: "Requests per hour",
+    description: "Traffic over the last 24 hours.",
+    body: tag.div("[chart placeholder]", class: "h-48 rounded-2xl border border-outline bg-surface-high flex items-center justify-center text-sm text-muted")
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Basic chart card", source: basic_source } do %>
+  <%= basic_content %>
+<% end %>
+
+<% rich_source = <<~ERB.strip
+  ui_chart_card(
+    title: 'Monthly active users',
+    description: 'Growth compared to the previous month.',
+    actions: ui_button(label: 'Export', variant: :outline, size: :sm),
+    body: tag.div('[chart placeholder]', class: 'h-48 rounded-2xl border border-outline bg-surface-high flex items-center justify-center text-sm text-muted'),
+    footer: content_tag(:div, class: 'flex items-center gap-2 text-sm text-muted') do
+      safe_join([ui_icon('trending-up', class_name: 'h-4 w-4'), 'Up 12% from last month'])
+    end
+  )
+ERB
+
+rich_content = capture do
+  concat ui_chart_card(
+    title: "Monthly active users",
+    description: "Growth compared to the previous month.",
+    actions: ui_button(label: "Export", variant: :outline, size: :sm),
+    body: tag.div("[chart placeholder]", class: "h-48 rounded-2xl border border-outline bg-surface-high flex items-center justify-center text-sm text-muted"),
+    footer: content_tag(:div, class: "flex items-center gap-2 text-sm text-muted") do
+      safe_join([ui_icon("trending-up", class_name: "h-4 w-4"), "Up 12% from last month"])
+    end
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "With actions and footer", source: rich_source } do %>
+  <%= rich_content %>
+<% end %>

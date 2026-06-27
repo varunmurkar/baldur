@@ -1,0 +1,22 @@
+<% content_for :title, "Auth — Patterns — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Auth pattern</h1>
+  <p class="showcase-page-header__lede">Sign-in/up shell and Google sign-in helper.</p>
+</header>
+
+<%= render layout: "showcase/shared/example_card",
+      locals: { title: "Auth page shell", source: "ui_auth_page(title: '...', description: '...')" } do %>
+  <%= ui_auth_page(
+        title: "Welcome back",
+        description: "Sign in to your account"
+      ) do %>
+    <%= ui_text_field_tag(:email, nil, label: "Email", type: :email) %>
+    <%= ui_text_field_tag(:password, nil, label: "Password", type: :password) %>
+    <%= ui_button(label: "Sign in", type: :submit, block: true) %>
+
+    <% if respond_to?(:ui_google_sign_in_button) %>
+      <%= ui_google_sign_in_button(text: "Continue with Google") %>
+    <% end %>
+  <% end %>
+<% end %>

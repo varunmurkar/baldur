@@ -1,0 +1,58 @@
+<% content_for :title, "Modal — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Modal</h1>
+  <p class="showcase-page-header__lede">Dialog shell with title, description, body and primary/secondary actions.</p>
+</header>
+
+<% basic_source = <<~ERB.strip
+  ui_modal(
+    id: 'modal-basic',
+    title: 'Invite team member',
+    description: 'They will receive an email invitation.',
+    submit_label: 'Send invite',
+    close_label: 'Cancel'
+  )
+ERB
+
+basic_content = capture do
+  concat ui_modal(
+    id: "modal-basic",
+    title: "Invite team member",
+    description: "They will receive an email invitation.",
+    submit_label: "Send invite",
+    close_label: "Cancel"
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Basic modal", source: basic_source } do %>
+  <%= basic_content %>
+<% end %>
+
+<% body_source = <<~ERB.strip
+  ui_modal(
+    id: 'modal-body',
+    title: 'Confirm changes',
+    submit_label: 'Confirm',
+    close_label: 'Go back',
+    show_footer: true
+  ) do
+    tag.p('You are about to update billing details for the entire workspace.', class: 'text-sm')
+  end
+ERB
+
+body_content = capture do
+  concat ui_modal(
+    id: "modal-body",
+    title: "Confirm changes",
+    submit_label: "Confirm",
+    close_label: "Go back",
+    show_footer: true
+  ) do
+    tag.p("You are about to update billing details for the entire workspace.", class: "text-sm")
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Modal with body block", source: body_source } do %>
+  <%= body_content %>
+<% end %>

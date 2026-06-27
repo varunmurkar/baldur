@@ -1,0 +1,40 @@
+<% content_for :title, "Text field — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Text field</h1>
+  <p class="showcase-page-header__lede">Single-line input with label, supporting text, prefix, suffix and multiline support.</p>
+</header>
+
+<% basic_source = <<~ERB.strip
+  ui_text_field_tag('user[name]', nil, label: 'Full name', placeholder: 'Ada Lovelace')
+  ui_text_field_tag('user[email]', nil, label: 'Email', type: :email, supporting_text: 'We will never share your email.')
+ERB
+
+basic_content = capture do
+  concat content_tag(:div, class: "space-y-4") do
+    concat ui_text_field_tag("user[name]", nil, label: "Full name", placeholder: "Ada Lovelace")
+    concat ui_text_field_tag("user[email]", nil, label: "Email", type: :email, supporting_text: "We will never share your email.")
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Basic fields", source: basic_source } do %>
+  <%= basic_content %>
+<% end %>
+
+<% affix_source = <<~ERB.strip
+  ui_text_field_tag('price', nil, label: 'Price', prefix: '$', placeholder: '0.00')
+  ui_text_field_tag('domain', nil, label: 'Domain', suffix: '.example.com', placeholder: 'shop')
+  ui_text_field_tag('bio', nil, label: 'Bio', multiline: true, placeholder: 'Tell us about yourself.')
+ERB
+
+affix_content = capture do
+  concat content_tag(:div, class: "space-y-4") do
+    concat ui_text_field_tag("price", nil, label: "Price", prefix: "$", placeholder: "0.00")
+    concat ui_text_field_tag("domain", nil, label: "Domain", suffix: ".example.com", placeholder: "shop")
+    concat ui_text_field_tag("bio", nil, label: "Bio", multiline: true, placeholder: "Tell us about yourself.")
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Prefix, suffix and multiline", source: affix_source } do %>
+  <%= affix_content %>
+<% end %>

@@ -13,11 +13,13 @@
     <% hidden_input_data[:menu_select_target] ||= "input" %>
     <%= hidden_field_tag name, selected_value, data: hidden_input_data %>
 
+    <% listbox_id = "#{field_id}-listbox" %>
     <button type="button"
             class="menu-select__trigger<%= disabled ? " is-disabled" : "" %>"
             id="<%= field_id %>"
-            aria-haspopup="menu"
+            aria-haspopup="listbox"
             aria-expanded="false"
+            aria-controls="<%= listbox_id %>"
             aria-disabled="<%= disabled ? "true" : "false" %>"
             <%= "disabled" if disabled %>
             data-menu-select-trigger
@@ -28,26 +30,31 @@
       <%= ui_icon("chevron-down", class_name: "menu-select__icon") %>
     </button>
 
-    <div class="menu menu--select"
-         role="menu"
+    <div id="<%= listbox_id %>"
+         class="menu menu--select"
+         role="listbox"
          aria-labelledby="<%= field_id %>"
+         hidden
          data-menu-select-list
          data-menu-select-target="list">
       <% options.each do |option| %>
         <% option_classes = ["menu__option"]
            option_classes << "is-selected" if option[:value] == selected_value
            option_classes << "is-disabled" if option[:disabled]
+           option_classes << "is-active" if option[:value] == selected_value
         %>
         <% is_selected = option[:value] == selected_value %>
-        <button type="button"
-                class="<%= option_classes.join(' ') %>"
-                role="menuitemradio"
-                aria-checked="<%= is_selected ? 'true' : 'false' %>"
-                aria-disabled="<%= option[:disabled] ? 'true' : 'false' %>"
-                data-menu-select-option="true"
-                data-value="<%= option[:value] %>"
-                data-label="<%= option[:label] %>"
-                data-disabled="<%= option[:disabled] ? 'true' : 'false' %>">
+        <% option_id = "#{field_id}-option-#{option[:value]}" %>
+        <div id="<%= option_id %>"
+             class="<%= option_classes.join(' ') %>"
+             role="option"
+             aria-selected="<%= is_selected ? 'true' : 'false' %>"
+             aria-disabled="<%= option[:disabled] ? 'true' : 'false' %>"
+             tabindex="-1"
+             data-menu-select-option="true"
+             data-value="<%= option[:value] %>"
+             data-label="<%= option[:label] %>"
+             data-disabled="<%= option[:disabled] ? 'true' : 'false' %>">
           <span class="menu__option-content">
             <span class="menu__option-head">
               <span class="menu__option-label" data-menu-select-option-label><%= option[:label] %></span>
@@ -67,7 +74,7 @@
             <% end %>
           </span>
           <%= ui_icon("check", class_name: "menu__option-icon") %>
-        </button>
+        </div>
       <% end %>
     </div>
   </div>

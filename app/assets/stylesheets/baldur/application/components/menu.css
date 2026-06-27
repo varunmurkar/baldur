@@ -172,7 +172,8 @@
     flex-shrink: 0;
   }
 
-  .menu-select .menu {
+  .menu-select .menu,
+  .menu--select {
     left: 0;
     right: auto;
     top: calc(100% + var(--space-2));
@@ -187,9 +188,18 @@
     pointer-events: none;
     opacity: 0;
     transform: scale(0.98) translateY(var(--menu-enter-y));
+    transition:
+      opacity var(--motion-duration-short4) var(--motion-easing-standard),
+      transform var(--motion-duration-short4) var(--motion-easing-standard);
   }
 
-  .menu-select[data-menu-placement="top"] .menu {
+  .menu--select[hidden],
+  .menu-select .menu[hidden] {
+    display: none;
+  }
+
+  .menu-select[data-menu-placement="top"] .menu,
+  .menu--select[data-menu-placement="top"] {
     top: auto;
     bottom: calc(100% + var(--space-2));
     transform-origin: bottom left;
@@ -204,10 +214,16 @@
     z-index: 9999;
   }
 
-  .menu-select.is-open .menu {
+  .menu-select.is-open .menu,
+  .menu--select[data-menu-state="open"],
+  .menu--select[data-menu-state="opening"] {
     pointer-events: auto;
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+
+  .menu--select[data-menu-state="closing"] {
+    pointer-events: none;
   }
 
   .menu .menu__option {
@@ -229,12 +245,14 @@
   }
 
   .menu .menu__option:hover,
-  .menu .menu__option:focus-visible {
+  .menu .menu__option:focus-visible,
+  .menu .menu__option.is-active {
     background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   }
 
   .menu .menu__option.is-disabled {
-    opacity: 0.5;
+    opacity: 1;
+    color: color-mix(in srgb, var(--color-on-surface) 45%, transparent);
     cursor: not-allowed;
   }
 

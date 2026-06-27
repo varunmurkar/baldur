@@ -20,7 +20,7 @@
           <span class="settings-nav__summary-label"><%= item[:label] %></span>
           <span aria-hidden="true" data-accordion-target="icon"><%= ui_icon("chevron-right", class_name: "settings-nav__summary-icon") %></span>
         </button>
-        <div id="<%= accordion_id %>" class="settings-nav__children-shell" data-accordion-target="content" aria-hidden="<%= item[:expanded] ? "false" : "true" %>">
+        <div id="<%= accordion_id %>" class="settings-nav__children-shell" data-accordion-target="content" aria-hidden="<%= item[:expanded] ? "false" : "true" %>" <%= "hidden inert" unless item[:expanded] %>>
           <div class="settings-nav__children">
             <% children.each do |child| %>
               <%= link_to child[:label],

@@ -1,0 +1,70 @@
+<% content_for :title, "Confirmation modal — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Confirmation modal</h1>
+  <p class="showcase-page-header__lede">Destructive or important confirmation dialog with optional type-to-confirm guard.</p>
+</header>
+
+<% default_source = <<~ERB.strip
+  ui_confirmation_modal(
+    host_id: 'confirm-delete-host',
+    dialog_id: 'confirm-delete-dialog',
+    title: 'Delete project?',
+    description: 'This action cannot be undone.',
+    confirm_label: 'Delete',
+    cancel_label: 'Cancel'
+  )
+ERB
+
+default_content = capture do
+  concat ui_confirmation_modal(
+    host_id: "confirm-delete-host",
+    dialog_id: "confirm-delete-dialog",
+    title: "Delete project?",
+    description: "This action cannot be undone.",
+    confirm_label: "Delete",
+    cancel_label: "Cancel"
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Default confirmation", source: default_source } do %>
+  <%= default_content %>
+<% end %>
+
+<% danger_source = <<~ERB.strip
+  ui_confirmation_modal(
+    host_id: 'confirm-remove-host',
+    dialog_id: 'confirm-remove-dialog',
+    title: 'Remove workspace',
+    description: 'All data will be permanently deleted.',
+    tone: :danger,
+    confirm_label: 'Remove everything',
+    cancel_label: 'Keep workspace',
+    type_to_confirm: {
+      expected_text: 'remove',
+      label: 'Type "remove" to confirm',
+      hint: 'This helps prevent accidental deletions.'
+    }
+  )
+ERB
+
+danger_content = capture do
+  concat ui_confirmation_modal(
+    host_id: "confirm-remove-host",
+    dialog_id: "confirm-remove-dialog",
+    title: "Remove workspace",
+    description: "All data will be permanently deleted.",
+    tone: :danger,
+    confirm_label: "Remove everything",
+    cancel_label: "Keep workspace",
+    type_to_confirm: {
+      expected_text: "remove",
+      label: 'Type "remove" to confirm',
+      hint: "This helps prevent accidental deletions."
+    }
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Danger with type-to-confirm", source: danger_source } do %>
+  <%= danger_content %>
+<% end %>

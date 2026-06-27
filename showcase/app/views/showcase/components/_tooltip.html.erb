@@ -1,0 +1,52 @@
+<% content_for :title, "Tooltip — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Tooltip</h1>
+  <p class="showcase-page-header__lede">Inline text triggers and icon-only helpers that reveal extra context on focus or hover.</p>
+</header>
+
+<% link_source = <<~ERB.strip
+  ui_tooltip(
+    text: 'Data retention',
+    content: 'Backups are kept for 30 days on the Standard plan and 90 days on Enterprise.'
+  )
+ERB
+
+link_content = capture do
+  concat content_tag(:p, class: "text-sm text-on-surface") do
+    concat "Storage policy: "
+    concat ui_tooltip(
+      text: "Data retention",
+      content: "Backups are kept for 30 days on the Standard plan and 90 days on Enterprise."
+    )
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Inline text trigger", source: link_source } do %>
+  <%= link_content %>
+<% end %>
+
+<% icon_source = <<~ERB.strip
+  ui_tooltip(
+    text: 'Only admins can edit roles',
+    content: 'Contact your workspace admin to change permissions.',
+    variant: :icon,
+    icon: 'info'
+  )
+ERB
+
+icon_content = capture do
+  concat content_tag(:div, class: "flex items-center gap-2 text-sm text-on-surface") do
+    concat "Roles"
+    concat ui_tooltip(
+      text: "Only admins can edit roles",
+      content: "Contact your workspace admin to change permissions.",
+      variant: :icon,
+      icon: "info"
+    )
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Icon trigger", source: icon_source } do %>
+  <%= icon_content %>
+<% end %>

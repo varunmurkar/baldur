@@ -42,10 +42,6 @@ export default class extends Controller {
     requestAnimationFrame(() => {
       if (this.isOpen()) this.applyBestPlacement();
     });
-
-    if (this.hasTriggerTarget) {
-      this.triggerTarget.setAttribute("aria-expanded", "true");
-    }
   }
 
   close(event) {
@@ -55,10 +51,6 @@ export default class extends Controller {
     this.bubbleTarget.dataset.state = "closed";
     this.bubbleTarget.setAttribute("aria-hidden", "true");
     this.resetPlacement();
-
-    if (this.hasTriggerTarget) {
-      this.triggerTarget.setAttribute("aria-expanded", "false");
-    }
   }
 
   isOpen() {

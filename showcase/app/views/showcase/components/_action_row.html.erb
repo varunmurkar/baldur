@@ -1,0 +1,38 @@
+<% content_for :title, "Action row — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Action row</h1>
+  <p class="showcase-page-header__lede">Right-aligned row of primary, secondary, and extra buttons for forms and dialogs.</p>
+</header>
+
+<% standard_source = <<~ERB.strip
+  ui_action_row(
+    primary_button: { label: 'Save changes' },
+    secondary_button: { label: 'Cancel', variant: :ghost },
+    extra_buttons: [{ label: 'Delete', variant: :danger }]
+  )
+ERB
+
+standard_content = capture do
+  concat ui_action_row(
+    primary_button: { label: "Save changes" },
+    secondary_button: { label: "Cancel", variant: :ghost },
+    extra_buttons: [{ label: "Delete", variant: :danger }]
+  )
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Standard row", source: standard_source } do %>
+  <%= standard_content %>
+<% end %>
+
+<% single_source = <<~ERB.strip
+  ui_action_row(primary_button: { label: 'Continue' })
+ERB
+
+single_content = capture do
+  concat ui_action_row(primary_button: { label: "Continue" })
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Single primary action", source: single_source } do %>
+  <%= single_content %>
+<% end %>

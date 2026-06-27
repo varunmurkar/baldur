@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import { queryAll, addClass, removeClass, toggleClass } from "baldur/lib/dom-helpers";
 import { updateAriaExpanded, updateAriaChecked } from "baldur/lib/focus-management";
-import { smoothScroll } from "baldur/lib/animation-helpers";
+import { smoothScroll, getMotionTimings } from "baldur/lib/animation-helpers";
 
 export default class MenuSelectController extends Controller {
   static targets = ["trigger", "list", "input", "label"];
@@ -18,6 +18,9 @@ export default class MenuSelectController extends Controller {
     this.listPlaceholder = null;
     this.listOriginalParent = null;
     this.listOriginalNextSibling = null;
+    this.activeOptionIndex = -1;
+    this.closeTimeout = null;
+    this.timings = getMotionTimings();
     this.init();
   }
 
@@ -35,17 +38,31 @@ export default class MenuSelectController extends Controller {
       e.preventDefault();
       this.toggleOpen();
     });
+
+    this.triggerTarget.addEventListener("keydown", (e) => this.handleTriggerKeydown(e));
   }
 
   toggleOpen() {
-    if (this.element.classList.contains("is-open")) {
+    if (this.isOpen()) {
       this.close();
     } else {
       this.open();
     }
   }
 
+  isOpen() {
+    const state = this.listElement?.dataset.menuState;
+    return state === "open" || state === "opening";
+  }
+
+  isClosed() {
+    const state = this.listElement?.dataset.menuState;
+    return !state || state === "closed";
+  }
+
   open() {
+    this.cancelClose();
+
     if (MenuSelectController.activeMenu && MenuSelectController.activeMenu !== this.element) {
       MenuSelectController.activeMenu.__stimulusController?.close();
     }
@@ -53,24 +70,75 @@ export default class MenuSelectController extends Controller {
     this.resetPlacement();
     this.portalListIfNeeded();
     addClass(this.element, "is-open");
+    this.listElement.removeAttribute("hidden");
+    this.setListState("closed");
     updateAriaExpanded(this.triggerTarget, true);
     MenuSelectController.activeMenu = this.element;
     this.toggleOverflowContainer(true);
     this.attachViewportListeners();
-    requestAnimationFrame(() => this.applyBestPlacement());
+    this.setActiveOptionToSelected();
+
+    this.applyBestPlacement();
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.setListState("open");
+      });
+    });
   }
 
   close() {
-    removeClass(this.element, "is-open");
+    this.cancelClose();
+
+    if (this.listElement && (this.listElement.dataset.menuState === "open" || this.listElement.dataset.menuState === "opening")) {
+      this.startCloseAnimation();
+    } else {
+      this.finalizeClose();
+    }
+  }
+
+  startCloseAnimation() {
+    this.cancelClose();
     updateAriaExpanded(this.triggerTarget, false);
-    this.resetTypeahead();
     this.detachViewportListeners();
     this.toggleOverflowContainer(false);
+    this.setListState("closing");
+    this.closeTimeout = setTimeout(() => this.finalizeClose(), this.motionDuration());
+  }
+
+  finalizeClose() {
+    this.cancelClose();
+    removeClass(this.element, "is-open");
+    this.listElement?.setAttribute("hidden", "");
+    this.setListState("closed");
+    this.resetTypeahead();
     this.resetPlacement();
     this.restorePortaledList();
     if (MenuSelectController.activeMenu === this.element) {
       MenuSelectController.activeMenu = null;
     }
+  }
+
+  cancelClose() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
+  }
+
+  setListState(state) {
+    if (!this.listElement) return;
+    this.listElement.dataset.menuState = state;
+    this.element.dataset.menuState = state;
+  }
+
+  motionDuration() {
+    if (!this.listElement) return 200;
+    const computed = window.getComputedStyle(this.listElement);
+    const raw = computed.getPropertyValue("--motion-duration-short4");
+    if (!raw) return 200;
+    const parsed = parseFloat(raw);
+    return Number.isNaN(parsed) ? 200 : Math.max(0, parsed);
   }
 
   setupMenuSelection() {
@@ -83,30 +151,174 @@ export default class MenuSelectController extends Controller {
       const label = option.dataset.label || option.textContent.trim();
       this.syncValue(value, label, true);
       this.close();
+      this.triggerTarget.focus();
     });
 
-    this.element.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
+    this.listElement.addEventListener("keydown", (e) => this.handleListKeydown(e));
+  }
+
+  getOptions() {
+    return queryAll("[data-menu-select-option]", this.listElement);
+  }
+
+  enabledOptions() {
+    return this.getOptions().filter((option) => option.dataset.disabled !== "true");
+  }
+
+  activeOption() {
+    const options = this.enabledOptions();
+    if (this.activeOptionIndex < 0 || this.activeOptionIndex >= options.length) return null;
+    return options[this.activeOptionIndex];
+  }
+
+  setActiveOption(index, scroll = true) {
+    const options = this.enabledOptions();
+    if (options.length === 0) return;
+
+    this.activeOptionIndex = Math.max(0, Math.min(index, options.length - 1));
+    this.getOptions().forEach((option) => removeClass(option, "is-active"));
+
+    const active = options[this.activeOptionIndex];
+    addClass(active, "is-active");
+    this.triggerTarget.setAttribute("aria-activedescendant", active.id);
+    if (scroll) smoothScroll(active, { block: "nearest" });
+  }
+
+  setActiveOptionToSelected() {
+    const options = this.enabledOptions();
+    const currentValue = this.inputTarget.value;
+    const selectedIndex = options.findIndex((option) => option.dataset.value === currentValue);
+    this.setActiveOption(selectedIndex >= 0 ? selectedIndex : 0, false);
+  }
+
+  clearActiveOption() {
+    this.activeOptionIndex = -1;
+    this.getOptions().forEach((option) => removeClass(option, "is-active"));
+    this.triggerTarget.removeAttribute("aria-activedescendant");
+  }
+
+  moveActiveOption(step) {
+    const options = this.enabledOptions();
+    if (options.length === 0) return;
+
+    if (this.activeOptionIndex < 0) {
+      this.setActiveOption(step > 0 ? 0 : options.length - 1);
+      return;
+    }
+
+    let nextIndex = this.activeOptionIndex + step;
+    nextIndex = Math.max(0, Math.min(nextIndex, options.length - 1));
+    this.setActiveOption(nextIndex);
+  }
+
+  selectActiveOption() {
+    const active = this.activeOption();
+    if (!active) return;
+
+    const value = active.dataset.value;
+    const label = active.dataset.label || active.textContent.trim();
+    this.syncValue(value, label, true);
+    this.close();
+    this.triggerTarget.focus();
+  }
+
+  handleTriggerKeydown(e) {
+    if (e.altKey) return;
+
+    const isOpen = this.isOpen();
+
+    switch (e.key) {
+      case "ArrowDown":
+      case "ArrowUp":
+        e.preventDefault();
+        if (!isOpen) {
+          this.open();
+        }
+        this.moveActiveOption(e.key === "ArrowDown" ? 1 : -1);
+        break;
+      case "Enter":
+      case " ":
+        e.preventDefault();
+        if (isOpen) {
+          this.selectActiveOption();
+        } else {
+          this.open();
+        }
+        break;
+      case "Home":
+        e.preventDefault();
+        if (!isOpen) this.open();
+        this.setActiveOption(0);
+        break;
+      case "End":
+        e.preventDefault();
+        if (!isOpen) this.open();
+        this.setActiveOption(this.enabledOptions().length - 1);
+        break;
+      case "Escape":
+        if (isOpen) {
+          e.preventDefault();
+          this.close();
+          this.triggerTarget.focus();
+        }
+        break;
+      default:
+        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          this.handleTypeahead(e.key);
+        }
+        break;
+    }
+  }
+
+  handleListKeydown(e) {
+    if (e.altKey) return;
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        this.moveActiveOption(1);
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        this.moveActiveOption(-1);
+        break;
+      case "Home":
+        e.preventDefault();
+        this.setActiveOption(0);
+        break;
+      case "End":
+        e.preventDefault();
+        this.setActiveOption(this.enabledOptions().length - 1);
+        break;
+      case "Enter":
+      case " ":
+        e.preventDefault();
+        this.selectActiveOption();
+        break;
+      case "Escape":
+        e.preventDefault();
         this.close();
-        return;
-      }
-
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-
-      if (e.key.length === 1 && e.key.trim().length) {
-        this.handleTypeahead(e.key);
+        this.triggerTarget.focus();
+        break;
+      case "Tab":
         e.preventDefault();
-      }
-
-      if (e.key === " ") {
-        this.handleTypeahead(" ");
-        e.preventDefault();
-      }
-    });
+        break;
+      default:
+        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          this.handleTypeahead(e.key);
+        }
+        break;
+    }
   }
 
   handleTypeahead(char) {
     if (!char) return;
+
+    if (!this.isOpen()) {
+      this.open();
+    }
 
     this.typeaheadState.query += char.toLowerCase();
 
@@ -118,18 +330,14 @@ export default class MenuSelectController extends Controller {
       this.typeaheadState.query = "";
     }, this.typeaheadTimeoutValue);
 
-    if (!this.element.classList.contains("is-open")) {
-      this.triggerTarget.click();
-    }
-
     const match = this.findMatchInOptions(this.typeaheadState.query);
     if (!match && this.typeaheadState.query.length > 1) {
       const singleCharMatch = this.findMatchInOptions(char.toLowerCase());
       if (singleCharMatch) {
-        this.applyMatch(singleCharMatch);
+        this.applyMatch(singleCharMatch, false);
       }
     } else if (match) {
-      this.applyMatch(match);
+      this.applyMatch(match, false);
     }
   }
 
@@ -137,11 +345,9 @@ export default class MenuSelectController extends Controller {
     if (!query) return null;
 
     const normalized = query.toLowerCase();
-    const options = queryAll("[data-menu-select-option]", this.listElement);
+    const options = this.enabledOptions();
 
     for (const option of options) {
-      if (option.dataset.disabled === "true") continue;
-
       const label = (option.dataset.label || option.textContent || "").toLowerCase();
       if (label.indexOf(normalized) === 0) {
         return option;
@@ -151,11 +357,17 @@ export default class MenuSelectController extends Controller {
     return null;
   }
 
-  applyMatch(option) {
-    const value = option.dataset.value;
-    const label = option.dataset.label || option.textContent.trim();
-    this.syncValue(value, label, true);
-    smoothScroll(option, { block: "nearest" });
+  applyMatch(option, select = true) {
+    if (select) {
+      const value = option.dataset.value;
+      const label = option.dataset.label || option.textContent.trim();
+      this.syncValue(value, label, true);
+    }
+    const options = this.enabledOptions();
+    const index = options.indexOf(option);
+    if (index >= 0) {
+      this.setActiveOption(index);
+    }
   }
 
   syncOptions(value = null, label = null, emitEvents = false) {
@@ -196,7 +408,7 @@ export default class MenuSelectController extends Controller {
   }
 
   handleViewportChange(event) {
-    if (!this.element.classList.contains("is-open")) return;
+    if (!this.isOpen()) return;
     if (this.shouldIgnoreViewportEvent(event)) return;
     requestAnimationFrame(() => this.applyBestPlacement());
   }
@@ -270,9 +482,6 @@ export default class MenuSelectController extends Controller {
     list.style.right = "auto";
     list.style.bottom = "auto";
     list.style.display = "block";
-    list.style.pointerEvents = "auto";
-    list.style.opacity = "1";
-    list.style.transform = "none";
     list.style.transformOrigin = placement === "top" ? "bottom left" : "top left";
     list.style.zIndex = "10050";
     list.style.maxHeight = maxHeight > 0 ? `${maxHeight}px` : "";
@@ -337,7 +546,8 @@ export default class MenuSelectController extends Controller {
   }
 
   disconnect() {
-    this.close();
+    this.cancelClose();
+    this.finalizeClose();
     if (this.documentClickHandler) {
       document.removeEventListener("click", this.documentClickHandler);
       this.documentClickHandler = null;
@@ -351,7 +561,25 @@ export default class MenuSelectController extends Controller {
   }
 
   shouldPortalList() {
-    return this.element.closest("[data-modal]") !== null;
+    return this.findClippingAncestor(this.element) !== null;
+  }
+
+  findClippingAncestor(element) {
+    let node = element.parentElement;
+    while (node) {
+      const style = window.getComputedStyle(node);
+      const overflowX = style.overflowX;
+      const overflowY = style.overflowY;
+      if (
+        (overflowX !== "visible" && overflowX !== "clip") ||
+        (overflowY !== "visible" && overflowY !== "clip")
+      ) {
+        return node;
+      }
+      if (node.tagName === "BODY" || node.tagName === "HTML") break;
+      node = node.parentElement;
+    }
+    return null;
   }
 
   portalListIfNeeded() {

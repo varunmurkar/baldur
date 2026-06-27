@@ -1,0 +1,68 @@
+<% content_for :title, "Panel secondary — Components — Baldur Showcase" %>
+
+<header class="showcase-page-header">
+  <h1 class="showcase-page-header__title">Panel secondary</h1>
+  <p class="showcase-page-header__lede">Slide-over panel triggered by a button, useful for filters, details and quick actions.</p>
+</header>
+
+<% panel_source = <<~ERB.strip
+  ui_panel_secondary(
+    id: 'filters-panel',
+    title: 'Filters',
+    trigger_label: 'Open filters',
+    trigger_icon: 'sliders-horizontal'
+  ) do
+    tag.p('Filter options go here.', class: 'text-sm text-on-surface')
+  end
+ERB
+
+panel_content = capture do
+  concat ui_panel_secondary(
+    id: "filters-panel",
+    title: "Filters",
+    trigger_label: "Open filters",
+    trigger_icon: "sliders-horizontal"
+  ) do
+    tag.p("Filter options go here.", class: "text-sm text-on-surface")
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Slide-over panel", source: panel_source } do %>
+  <%= panel_content %>
+<% end %>
+
+<% rich_source = <<~ERB.strip
+  ui_panel_secondary(
+    id: 'details-panel',
+    title: 'Run details',
+    trigger_label: 'View details',
+    trigger_icon: 'info'
+  ) do
+    content_tag(:div, class: 'space-y-4') do
+      safe_join([
+        tag.p('Triggered by schedule.', class: 'text-sm text-muted'),
+        ui_button(label: 'Download logs', variant: :outline, size: :sm)
+      ])
+    end
+  end
+ERB
+
+rich_content = capture do
+  concat ui_panel_secondary(
+    id: "details-panel",
+    title: "Run details",
+    trigger_label: "View details",
+    trigger_icon: "info"
+  ) do
+    content_tag(:div, class: "space-y-4") do
+      safe_join([
+        tag.p("Triggered by schedule.", class: "text-sm text-muted"),
+        ui_button(label: "Download logs", variant: :outline, size: :sm)
+      ])
+    end
+  end
+end %>
+
+<%= render layout: "showcase/shared/example_card", locals: { title: "Panel with content", source: rich_source } do %>
+  <%= rich_content %>
+<% end %>
