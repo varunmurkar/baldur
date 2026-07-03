@@ -1,5 +1,7 @@
 # Baldur TODO
 
+- [ ] `auth-page__container` class should not have `w-full` with it
+- [ ] show/hide password masked text toggle
 - [ ] Ensure everything works in `/showcase`, pr-review
 
 ## Install and Verification
