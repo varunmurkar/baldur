@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Herb ERB linter wrapper.
+# Uses bunx instead of npx to avoid Node.js dependency.
+# Passes app/views as the default target if no paths are given.
+
+args = ARGV
+
+# Default to app/views if no file/directory arguments are given
+has_path_arg = args.any? { |arg| !arg.start_with?("-") }
+targets = has_path_arg ? [] : [ "app/views" ]
+
+exec "bunx", "@herb-tools/linter", *args, *targets

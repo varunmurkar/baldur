@@ -11,7 +11,7 @@
             data-date-field-target="toggle"
             aria-label="<%= toggle_label %>"
             title="<%= toggle_label %>"
-            <%= "disabled" if native_input_options[:disabled] %>>
+            <% if native_input_options[:disabled] %>disabled<% end %>>
       <%= ui_icon(icon_name, class_name: "h-[18px] w-[18px]") %>
     </button>
   </div>

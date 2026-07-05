@@ -5,7 +5,7 @@
   }
   section_attributes[:id] = payload[:id] if payload[:id].present?
 %>
-<section <%= tag.attributes(section_attributes) %>>
+<%= tag.section(section_attributes) do %>
   <div class="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
     <div class="max-w-3xl">
       <h2 class="text-neutral-50"><%= payload[:title] %></h2>
@@ -17,4 +17,4 @@
                   class: "inline-flex h-11 items-center justify-center rounded-[1rem] bg-white px-5 text-base font-semibold text-[#1f1f27] shadow-[var(--elev-1)] transition-transform duration-150 hover:-translate-y-0.5" %>
     </div>
   </div>
-</section>
+<% end %>

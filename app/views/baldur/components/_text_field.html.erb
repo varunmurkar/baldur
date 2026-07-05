@@ -27,7 +27,7 @@
      data-field-support="true"
      data-default-support="<%= supporting_text.to_s %>"
      aria-live="polite"
-     <%= "hidden" if support_hidden %>>
+     <% if support_hidden %>hidden<% end %>>
     <%= support_output %>
   </p>
 </div>

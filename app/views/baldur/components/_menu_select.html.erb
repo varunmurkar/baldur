@@ -7,7 +7,7 @@
        data-controller="menu-select"
        data-menu-select="true"
        data-menu-placement="bottom"
-       <%= %(data-menu-select-disabled="true") if disabled %>>
+       <% if disabled %>data-menu-select-disabled="true"<% end %>>
     <% hidden_input_data = input_data.present? ? input_data.dup : {} %>
     <% hidden_input_data[:"menu-select-input"] = true %>
     <% hidden_input_data[:menu_select_target] ||= "input" %>
@@ -18,9 +18,9 @@
             id="<%= field_id %>"
             aria-haspopup="menu"
             aria-expanded="false"
-            aria-disabled="<%= disabled ? "true" : "false" %>"
-            <%= "disabled" if disabled %>
-            data-menu-select-trigger
+           aria-disabled="<%= disabled ? "true" : "false" %>"
+           <% if disabled %>disabled<% end %>
+           data-menu-select-trigger
             data-menu-select-target="trigger">
       <span class="menu-select__label"
             data-menu-select-label

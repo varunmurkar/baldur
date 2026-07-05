@@ -87,25 +87,30 @@
           </td>
         </tr>
       <% else %>
-        <% rows.each do |row|
-             cells = if row.is_a?(Hash)
-                       normalized_columns.map { |column| row[column[:key]] }
-                     else
-                       Array(row)
-                     end
-             dynamic_attributes =
-               case row_attributes_config
-               when Proc
-                 row_attributes_config.call(row) || {}
-               when Hash
-                 row_attributes_config
-               else
-                 {}
-               end
-             attributes = dynamic_attributes.deep_dup
-             classes = [row_classes, attributes.delete(:class)].compact.join(" ").presence
-             attributes[:class] = classes if classes.present?
-        %>
+        <% rows.each do |row| %>
+          <%
+            cells = if row.is_a?(Hash)
+                      normalized_columns.map { |column| row[column[:key]] }
+                    else
+                      Array(row)
+                    end
+          %>
+          <%
+            dynamic_attributes =
+              case row_attributes_config
+              when Proc
+                row_attributes_config.call(row) || {}
+              when Hash
+                row_attributes_config
+              else
+                {}
+              end
+          %>
+          <%
+            attributes = dynamic_attributes.deep_dup
+            classes = [row_classes, attributes.delete(:class)].compact.join(" ").presence
+            attributes[:class] = classes if classes.present?
+          %>
           <%= tag.tr(**attributes) do %>
             <% cells.each_with_index do |cell, index| %>
               <% column_cell_class = [cell_classes, ("text-right" if normalized_columns[index]&.fetch(:numeric, nil)), normalized_columns[index]&.fetch(:cell_class, nil)].compact.join(" ") %>

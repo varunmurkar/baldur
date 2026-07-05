@@ -22,7 +22,7 @@
     <li
       class="stepper__item <%= status_class %>"
       role="listitem"
-      <%= 'aria-current="step"' if status == :current %>>
+      <% if status == :current %>aria-current="step"<% end %>>
       <div class="stepper__indicator-row">
         <div class="<%= left_classes.join(" ") %>" aria-hidden="true"></div>
         <div class="stepper__indicator" aria-hidden="true">

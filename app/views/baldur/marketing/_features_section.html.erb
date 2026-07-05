@@ -32,7 +32,7 @@
                data-tab="<%= tab[:value] %>"
                role="tabpanel"
                class="<%= panel_classes %>"
-               <%= 'hidden aria-hidden="true"' unless active %>>
+               <% unless active %>hidden aria-hidden="true"<% end %>>
             <div class="grid items-start gap-8 md:grid-cols-[0.9fr_1.1fr]">
               <div class="rounded-3xl border border-outline-variant bg-surface p-6">
                 <h3 class="text-2xl font-semibold text-on-surface"><%= tab[:panel_title].presence || tab[:label] %></h3>

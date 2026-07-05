@@ -39,12 +39,12 @@
   <% if actions.present? || collapsible %>
     <div class="alert__rail">
       <% if actions.present? %>
-        <div class="alert__actions" data-alert-target="actions" <%= "hidden" if collapsed %>>
+        <div class="alert__actions" data-alert-target="actions" <% if collapsed %>hidden<% end %>>
           <%= actions %>
         </div>
       <% end %>
       <% if collapsible %>
-        <div class="alert__summary-action" data-alert-target="expandButton" <%= "hidden" unless collapsed %>>
+        <div class="alert__summary-action" data-alert-target="expandButton" <% if !collapsed %>hidden<% end %>>
           <%= ui_button(
                 label: local_assigns[:collapsed_summary_action_label].presence || "More",
                 variant: :text,
