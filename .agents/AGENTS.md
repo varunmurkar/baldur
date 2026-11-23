@@ -23,6 +23,7 @@ Before making any code changes, read these project files first:
 
 ## Important Context
 
+- CI uses Bun 1.4.5 to run the Herb ERB linter via `bin/herb`. Gem builds and tests still use Ruby.
 - New UI primitives should stay in `app/views/baldur/components/` and `app/helpers/baldur/`.
 - Optional surfaces should ship with their own generator in `lib/generators/baldur/`.
 - Host-app files must not be duplicated inside Baldur.

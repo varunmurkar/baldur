@@ -1,6 +1,7 @@
 # Baldur TODO
 
 ## Install and Verification
+- [ ] Resolve Herb's `html-head-only-elements` finding in `app/views/baldur/marketing/_hero_section.html.erb`. Preserve the hero styling and CSP behavior, then rerun `bin/herb --github` and the Ruby suite.
 - [ ] Harden `baldur:install` so host assumptions are reduced
 - [ ] Audit generated controller shims against all shipped components
 - [ ] Expand `script/verify_host_install` coverage
